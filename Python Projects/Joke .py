@@ -16,3 +16,4 @@ print("\nReady? Aavto joke...\n")
 time.sleep(1)
 
 print(random.choice(jokes))
+                                                     # Created By Manthan Vinzuda....
