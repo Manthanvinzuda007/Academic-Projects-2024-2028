@@ -147,3 +147,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = MindStrikeApp(root)
     root.mainloop()```
+                                                                                                                                                     # Created By Manthan Vinzuda....

@@ -1,4 +1,3 @@
-
 def longest_palindrome(s)
   return s if s.length < 2
 

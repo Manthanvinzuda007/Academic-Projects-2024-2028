@@ -88,3 +88,4 @@ class GameEngine:
         time_bonus = max(0, 500 - int(time.time() - self.start_time))
         focus_bonus = int(self.focus_level * 2)
         return base + time_bonus + focus_bonus
+                                                                                                             # Created By Manthan Vinzuda....
