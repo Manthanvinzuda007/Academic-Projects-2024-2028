@@ -1,0 +1,251 @@
+ :root {
+            --primary: #4a6fa5;
+            --bg-selected: #e2ebf3;
+            --bg-related: #f0f4f8;
+            --text-main: #334e68;
+            --text-num: #2563eb;
+            --error: #ef4444;
+            --border: #cbd5e1;
+            --border-thick: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Header / Difficulty */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .difficulty-selector span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .difficulty-selector span.active {
+            color: var(--primary);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* Main Game Area */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sudoku Board */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            aspect-ratio: 1 / 1;
+            border: 2px solid var(--border-thick);
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .cell {
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.1s;
+        }
+
+        .cell.bold-right { border-right: 2px solid var(--border-thick); }
+        .cell.bold-bottom { border-bottom: 2px solid var(--border-thick); }
+
+        .cell.selected { background-color: var(--bg-selected) !important; }
+        .cell.related { background-color: var(--bg-related); }
+        .cell.error { color: var(--error); }
+        .cell.fixed { font-weight: bold; color: #1e293b; }
+        .cell.user-value { color: var(--text-num); }
+        .cell.highlight-same { background-color: #d1d5db; }
+
+        /* Pencil Marks (Notes) */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 100%;
+            height: 100%;
+            padding: 2px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .note {
+            font-size: 10px;
+            color: #64748b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Controls Panel */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 10px 5px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover { background-color: #f1f5f9; }
+        .action-btn svg { width: 24px; height: 24px; stroke-width: 2; }
+        
+        .action-btn.active {
+            color: white;
+            background-color: var(--primary);
+        }
+
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .num-btn {
+            aspect-ratio: 1.2 / 1;
+            background-color: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-num);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-btn:hover { background-color: #e2e8f0; }
+        .num-btn:active { transform: scale(0.95); }
+
+        .new-game-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .new-game-btn:hover { opacity: 0.9; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .toggle-notes {
+            position: relative;
+        }
+
+        .notes-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #475569;
+            color: white;
+            font-size: 8px;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
