@@ -1,3 +1,4 @@
+// Created By Manthan Viznuda //
 const GRID_SIZE = 12;
         const WORD_POOL = [
             { word: "REACT", clue: "The foundation of this app's logic" },
