@@ -1,4 +1,5 @@
 /** Created By Manthan Vinzuda */
+
 const EngineState = {
             seed: "QUANTUM-7",
             resolution: 96,

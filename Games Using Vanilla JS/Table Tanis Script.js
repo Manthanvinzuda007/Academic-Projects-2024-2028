@@ -1,4 +1,5 @@
-        const canvas = document.getElementById('pongCanvas');
+// Created By MANTHAN VINZUDA 
+const canvas = document.getElementById('pongCanvas');
         const ctx = canvas.getContext('2d');
         const container = document.getElementById('game-container');
         const overlay = document.getElementById('overlay');
