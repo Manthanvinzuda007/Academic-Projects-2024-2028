@@ -1,8 +1,6 @@
 <h1>Next Games</h1>
-
    <h1> 0  Checkers </h1>
    <h1>1  Snake </h1>
-   <h1>2  UNO Card Game</h1>
    <h1>2  UNO Card Game</h1>
    <h1>3  Monopoly Lite</h1>
    <h1>4  Battleship</h1>
