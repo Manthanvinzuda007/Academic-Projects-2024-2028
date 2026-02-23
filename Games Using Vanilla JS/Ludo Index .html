@@ -3,62 +3,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Ludo </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ludo Royal - Accurate Edition</title>
     <link rel="stylesheet" href="Ludo Style.css">
 </head>
 <body>
-     <!-- STARTUP FLOW -->
-    <div id="modal-overlay">
-        <!-- Screen 1: Player Count -->
-        <div class="setup-card" id="setup-players">
+
+    <!-- STARTUP SCREEN -->
+    <div id="setup-screen" class="overlay">
+        <div class="card" id="mode-select">
             <h1>LUDO ROYAL</h1>
-            <h2>Select Game Mode</h2>
-            <div class="option-grid">
-                <button class="btn" onclick="Setup.selectMode('AI')">🎮 1 vs AI</button>
-                <button class="btn" onclick="Setup.selectMode('2')">👥 2 Players</button>
-                <button class="btn" onclick="Setup.selectMode('3')">👥 3 Players</button>
-                <button class="btn" onclick="Setup.selectMode('4')">👥 4 Players</button>
+            <p>Select your gameplay mode</p>
+            <div class="btn-grid">
+                <button class="btn" onclick="Setup.setMode('AI')">👤 vs 🤖</button>
+                <button class="btn" onclick="Setup.setMode('2')">👤 vs 👤</button>
+                <button class="btn" onclick="Setup.setMode('3')">👤 x 3</button>
+                <button class="btn" onclick="Setup.setMode('4')">👤 x 4</button>
             </div>
         </div>
 
-        <!-- Screen 2: Color Picker -->
-        <div class="setup-card" id="setup-colors" style="display:none;">
-            <h1>LUDO ROYAL</h1>
-            <h2 id="color-setup-text">Player 1, Choose Color</h2>
-            <div class="color-picker-row" id="color-dots-container">
-                <div class="color-dot red" onclick="Setup.pickColor('red')"></div>
-                <div class="color-dot green" onclick="Setup.pickColor('green')"></div>
-                <div class="color-dot yellow" onclick="Setup.pickColor('yellow')"></div>
-                <div class="color-dot blue" onclick="Setup.pickColor('blue')"></div>
+        <div class="card" id="color-select" style="display:none;">
+            <h1>CHOOSE COLOR</h1>
+            <p id="picker-msg">Player 1, select your faction</p>
+            <div class="color-row">
+                <div class="dot red" onclick="Setup.chooseColor('red')"></div>
+                <div class="dot green" onclick="Setup.chooseColor('green')"></div>
+                <div class="dot yellow" onclick="Setup.chooseColor('yellow')"></div>
+                <div class="dot blue" onclick="Setup.chooseColor('blue')"></div>
             </div>
-            <p id="setup-hint" style="margin-top:25px; font-size: 0.85rem; opacity: 0.5;">Human choices come first.</p>
         </div>
     </div>
 
     <!-- WIN SCREEN -->
-    <div id="winner-screen">
-        <h1 id="winner-text" style="font-size: 4rem; margin-bottom: 10px; color: gold;">RED VICTORIOUS!</h1>
-        <p style="margin-bottom: 40px; font-size: 1.2rem; opacity: 0.7;">The board is yours, Emperor.</p>
-        <button class="btn" onclick="location.reload()" style="padding: 20px 60px; font-size: 1.2rem;">New Campaign</button>
-    </div>
-
-    <!-- HUD -->
-    <div class="status-header">
-        <div id="turn-msg">Classic Ludo</div>
-    </div>
-
-    <div class="game-stage">
-        <!-- Dice Indicators -->
-        <div id="dice-red" class="dice-box dice-red disabled-dice" onclick="Game.roll()"><div class="dice-body"></div></div>
-        <div id="dice-green" class="dice-box dice-green disabled-dice" onclick="Game.roll()"><div class="dice-body"></div></div>
-        <div id="dice-yellow" class="dice-box dice-yellow disabled-dice" onclick="Game.roll()"><div class="dice-body"></div></div>
-        <div id="dice-blue" class="dice-box dice-blue disabled-dice" onclick="Game.roll()"><div class="dice-body"></div></div>
-
-        <div id="board" class="ludo-board">
-            <!-- Dynamic Grid & Content -->
+    <div id="win-overlay" class="overlay">
+        <div class="card">
+            <h1 id="win-name">VICTORY!</h1>
+            <p>The empire is yours.</p>
+            <button class="btn" onclick="location.reload()" style="width: 100%; background: var(--border); color: white;">Restart Match</button>
         </div>
     </div>
-    <script src="Ludo Script.js"></script>
-</body>
+
+    <div class="hud">
+        <div id="turn-indicator">Ludo Royal</div>
+    </div>
+
+    <div class="board-wrapper">
+        <!-- Interactive Dice -->
+        <div id="dw-red" class="dice-wrap dw-red disabled" onclick="Ludo.roll()"><div class="dice-face"></div></div>
+        <div id="dw-green" class="dice-wrap dw-green disabled" onclick="Ludo.roll()"><div class="dice-face"></div></div>
+        <div id="dw-yellow" class="dice-wrap dw-yellow disabled" onclick="Ludo.roll()"><div class="dice-face"></div></div>
+        <div id="dw-blue" class="dice-wrap dw-blue disabled" onclick="Ludo.roll()"><div class="dice-face"></div></div>
+
+        <div class="ludo-board" id="board">
+            <!-- Board structure generated via JS for accuracy -->
+        </div>
+    </div>
+        <script src="Ludo Script.js"></script>
 </html>
