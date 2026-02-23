@@ -1,402 +1,394 @@
-// Created By MANTHAN VINZUDA 
-const Setup = (() => {
-    let mode = '';
-    let playersCount = 0;
-    let currentPickingPlayer = 0;
-    let playerConfigs = []; 
-    let takenColors = [];
+/* Created By Manthan Vinzuda */
 
-    const selectMode = (m) => {
-        mode = m;
-        playersCount = m === 'AI' ? 2 : parseInt(m);
-        document.getElementById('setup-players').style.display = 'none';
-        document.getElementById('setup-colors').style.display = 'block';
-        updateColorPicker();
-    };
+/** * SETUP MODULE
+         * Handles game configuration
+         */
+        const Setup = (() => {
+            let mode = '';
+            let totalPlayers = 0;
+            let currentPicker = 0;
+            let playerList = [];
+            let taken = [];
 
-    const updateColorPicker = () => {
-        const text = document.getElementById('color-setup-text');
-        const count = mode === 'AI' ? 1 : playersCount;
-        text.innerText = `Player ${currentPickingPlayer + 1}, Choose Color`;
-        
-        document.querySelectorAll('.color-dot').forEach(dot => {
-            const color = dot.classList[1];
-            dot.classList.toggle('locked', takenColors.includes(color));
-        });
-    };
-
-    const pickColor = (color) => {
-        if (takenColors.includes(color)) return;
-
-        playerConfigs.push({ color, isAI: false });
-        takenColors.push(color);
-        currentPickingPlayer++;
-
-        const targetCount = mode === 'AI' ? 1 : playersCount;
-
-        if (currentPickingPlayer === targetCount) {
-            if (mode === 'AI') {
-                const available = ['red', 'green', 'yellow', 'blue'].filter(c => !takenColors.includes(c));
-                playerConfigs.push({ color: available[0], isAI: true });
-            }
-            finishSetup();
-        } else {
-            updateColorPicker();
-        }
-    };
-
-    const finishSetup = () => {
-        const overlay = document.getElementById('modal-overlay');
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            Game.init(playerConfigs);
-        }, 400);
-    };
-
-    return { selectMode, pickColor };
-})();
-
-const Game = (() => {
-    const COLORS = ['red', 'green', 'yellow', 'blue'];
-    const SAFE_POINTS = ["6,1", "1,8", "8,13", "13,6", "8,2", "2,6", "6,12", "12,8"];
-    
-    // Path definition per starting color
-    // Corrected path definitions to avoid using cell coordinates that are part of the center-house (6,7,8)
-    const PATHS = {
-        red: [[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[7,1],[7,2],[7,3],[7,4],[7,5]],
-        green: [[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[1,7],[2,7],[3,7],[4,7],[5,7]],
-        yellow: [[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[7,13],[7,12],[7,11],[7,10],[7,9]],
-        blue: [[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[13,7],[12,7],[11,7],[10,7],[9,7]]
-    };
-
-    let state = {
-        players: [], 
-        turnIdx: 0,
-        diceValue: 0,
-        isRolling: false,
-        isMoving: false,
-        sixCount: 0
-    };
-
-    const init = (configs) => {
-        state.players = COLORS.map(c => {
-            const cfg = configs.find(x => x.color === c);
-            if (!cfg) return null;
             return {
-                color: c,
-                isAI: cfg.isAI,
-                tokens: [-1, -1, -1, -1],
-                finished: 0
-            };
-        }).filter(x => x !== null);
+                setMode(m) {
+                    mode = m;
+                    totalPlayers = m === 'AI' ? 2 : parseInt(m);
+                    document.getElementById('mode-select').style.display = 'none';
+                    document.getElementById('color-select').style.display = 'block';
+                    this.refreshDots();
+                },
+                refreshDots() {
+                    const msg = document.getElementById('picker-msg');
+                    msg.innerText = `Player ${currentPicker + 1}, Choose Color`;
+                    document.querySelectorAll('.dot').forEach(d => {
+                        const c = d.classList[1];
+                        d.classList.toggle('locked', taken.includes(c));
+                    });
+                },
+                chooseColor(color) {
+                    if (taken.includes(color)) return;
+                    playerList.push({ color, isAI: false });
+                    taken.push(color);
+                    currentPicker++;
 
-        drawBoard();
-        updateUI();
-        
-        if (state.players[0].isAI) setTimeout(roll, 1000);
-    };
-
-    const drawBoard = () => {
-        const board = document.getElementById('board');
-        board.innerHTML = '';
-
-        // Generate Homes
-        COLORS.forEach(c => {
-            const home = document.createElement('div');
-            home.className = `home ${c}`;
-            const inner = document.createElement('div');
-            inner.className = 'home-inner';
-            for (let i = 0; i < 4; i++) {
-                const slot = document.createElement('div');
-                slot.className = 'home-slot';
-                slot.id = `slot-${c}-${i}`;
-                inner.appendChild(slot);
-            }
-            home.appendChild(inner);
-            board.appendChild(home);
-        });
-
-        // Path Grid
-        for (let r = 0; r < 15; r++) {
-            for (let c = 0; c < 15; c++) {
-                // Modified skip logic:
-                // Skip the 4 Home Bases (6x6 corners)
-                if ((r < 6 && c < 6) || (r < 6 && c > 8) || (r > 8 && c < 6) || (r > 8 && c > 8)) continue;
-                // Skip the 3x3 Center House (Rows 6,7,8 AND Cols 6,7,8)
-                if (r >= 6 && r <= 8 && c >= 6 && c <= 8) continue;
-                
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                cell.dataset.pos = `${r},${c}`;
-                cell.style.gridArea = `${r+1} / ${c+1}`;
-                if (SAFE_POINTS.includes(`${r},${c}`)) cell.classList.add('safe-star');
-                
-                if (r === 7 && c > 0 && c < 7) cell.classList.add('path-red');
-                if (c === 7 && r > 0 && r < 7) cell.classList.add('path-green');
-                if (r === 7 && c > 8 && c < 14) cell.classList.add('path-yellow');
-                if (c === 7 && r > 8 && r < 14) cell.classList.add('path-blue');
-
-                board.appendChild(cell);
-            }
-        }
-
-        const center = document.createElement('div');
-        center.className = 'center-house';
-        ['r','g','y','b'].forEach(x => {
-            const tri = document.createElement('div');
-            tri.className = `tri tri-${x}`;
-            center.appendChild(tri);
-        });
-        board.appendChild(center);
-
-        state.players.forEach(p => {
-            p.tokens.forEach((_, i) => {
-                const token = document.createElement('div');
-                token.className = `token ${p.color}`;
-                token.id = `token-${p.color}-${i}`;
-                token.onclick = () => handleTokenInput(p.color, i);
-                document.getElementById(`slot-${p.color}-${i}`).appendChild(token);
-            });
-        });
-    };
-
-    const roll = async () => {
-        if (state.isRolling || state.isMoving) return;
-        const player = state.players[state.turnIdx];
-        const diceEl = document.getElementById(`dice-${player.color}`);
-        
-        state.isRolling = true;
-        diceEl.classList.add('shake');
-
-        await new Promise(r => setTimeout(r, 700));
-
-        state.diceValue = Math.floor(Math.random() * 6) + 1;
-        renderDice(player.color, state.diceValue);
-        diceEl.classList.remove('shake');
-        state.isRolling = false;
-
-        if (state.diceValue === 6) {
-            state.sixCount++;
-            if (state.sixCount === 3) {
-                state.sixCount = 0;
-                return nextTurn();
-            }
-        } else {
-            state.sixCount = 0;
-        }
-
-        const moves = getValidMoves();
-        if (moves.length === 0) {
-            setTimeout(nextTurn, 1000);
-        } else if (player.isAI) {
-            setTimeout(aiLogic, 900);
-        } else {
-            moves.forEach(i => {
-                const tok = document.getElementById(`token-${player.color}-${i}`);
-                if (tok) tok.classList.add('active');
-            });
-        }
-    };
-
-    const handleTokenInput = async (color, idx) => {
-        if (state.isMoving || state.isRolling || state.diceValue === 0) return;
-        if (state.players[state.turnIdx].color !== color) return;
-        if (!getValidMoves().includes(idx)) return;
-
-        state.isMoving = true;
-        document.querySelectorAll('.token').forEach(t => t.classList.remove('active'));
-
-        const player = state.players[state.turnIdx];
-        const startPos = player.tokens[idx];
-
-        if (startPos === -1) {
-            player.tokens[idx] = 0;
-            renderPosition(color, idx);
-            await new Promise(r => setTimeout(r, 200));
-        } else {
-            for (let i = 0; i < state.diceValue; i++) {
-                player.tokens[idx]++;
-                renderPosition(color, idx);
-                await new Promise(r => setTimeout(r, 160));
-            }
-        }
-
-        finalizeTurn(color, idx);
-    };
-
-    const renderPosition = (color, idx) => {
-        const player = state.players.find(p => p.color === color);
-        if (!player) return;
-        const pos = player.tokens[idx];
-        const token = document.getElementById(`token-${color}-${idx}`);
-        if (!token) return;
-        
-        if (pos === -1) {
-            const slot = document.getElementById(`slot-${color}-${idx}`);
-            if (slot) slot.appendChild(token);
-        } else if (pos >= 56) {
-            token.style.display = 'none';
-        } else {
-            const coords = PATHS[color][pos];
-            if (coords) {
-                const cell = document.querySelector(`.cell[data-pos="${coords[0]},${coords[1]}"]`);
-                // Robust check to prevent appendChild error on null cell
-                if (cell) {
-                    cell.appendChild(token);
-                    stackAdjust(cell);
-                } else {
-                    // Fallback: If cell doesn't exist but token is supposed to be on path, 
-                    // it might be at the finish threshold
-                    token.style.display = 'none';
+                    const humans = mode === 'AI' ? 1 : totalPlayers;
+                    if (currentPicker === humans) {
+                        if (mode === 'AI') {
+                            const avail = ['red', 'green', 'yellow', 'blue'].filter(c => !taken.includes(c));
+                            playerList.push({ color: avail[0], isAI: true });
+                        }
+                        this.launch();
+                    } else {
+                        this.refreshDots();
+                    }
+                },
+                launch() {
+                    document.getElementById('setup-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('setup-screen').style.display = 'none';
+                        Ludo.init(playerList);
+                    }, 400);
                 }
-            }
-        }
-    };
+            };
+        })();
 
-    const stackAdjust = (cell) => {
-        if (!cell) return;
-        const tokens = cell.querySelectorAll('.token');
-        tokens.forEach((t, i) => {
-            if (tokens.length > 1) {
-                t.style.width = '60%'; t.style.height = '60%';
-                t.style.transform = `translate(${(i%2)*10 - 5}px, ${Math.floor(i/2)*10 - 5}px)`;
-            } else {
-                t.style.width = '80%'; t.style.height = '80%';
-                t.style.transform = 'translate(0,0)';
-            }
-        });
-    };
+        /**
+         * LUDO ENGINE
+         * Core game mechanics
+         */
+        const Ludo = (() => {
+            const COLORS = ['red', 'green', 'yellow', 'blue'];
+            // Precise Standard Ludo Path Indices
+            const STAR_COORDS = ["6,1", "1,8", "8,13", "13,6", "8,2", "2,6", "6,12", "12,8"];
+            
+            // Standard Paths (57 positions: 0 is start, 56 is home)
+            const PATHS = {
+                red: [[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
+                green: [[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
+                yellow: [[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],
+                blue: [[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]]
+            };
 
-    const finalizeTurn = (color, idx) => {
-        const player = state.players[state.turnIdx];
-        const pos = player.tokens[idx];
-        const coords = PATHS[color][pos];
-        
-        // Final threshold reached (56 is the finish marker)
-        if (pos >= 56) {
-            player.finished++;
-            if (player.finished === 4) return declareWinner(color);
-            return bonusTurn();
-        }
+            let state = {
+                players: [],
+                turnIdx: 0,
+                dice: 0,
+                rolling: false,
+                moving: false,
+                sixChain: 0
+            };
 
-        let killed = false;
-        if (coords && !SAFE_POINTS.includes(`${coords[0]},${coords[1]}`)) {
-            state.players.forEach(p => {
-                if (p.color === color) return;
-                p.tokens.forEach((tPos, tIdx) => {
-                    if (tPos === -1 || tPos >= 56) return;
-                    const enemyCoords = PATHS[p.color][tPos];
-                    if (enemyCoords && enemyCoords[0] === coords[0] && enemyCoords[1] === coords[1]) {
-                        p.tokens[tIdx] = -1;
-                        renderPosition(p.color, tIdx);
-                        killed = true;
+            const init = (configs) => {
+                state.players = configs.map(c => ({
+                    ...c,
+                    tokens: [-1, -1, -1, -1],
+                    finished: 0
+                }));
+                buildBoard();
+                renderUI();
+                processTurn();
+            };
+
+            const buildBoard = () => {
+                const b = document.getElementById('board');
+                b.innerHTML = '';
+
+                // Homes
+                COLORS.forEach(c => {
+                    const h = document.createElement('div');
+                    h.className = `home ${c}`;
+                    const inner = document.createElement('div');
+                    inner.className = 'home-inner';
+                    for(let i=0; i<4; i++) {
+                        const slot = document.createElement('div');
+                        slot.className = 'slot';
+                        slot.id = `slot-${c}-${i}`;
+                        inner.appendChild(slot);
+                    }
+                    h.appendChild(inner);
+                    b.appendChild(h);
+                });
+
+                // Path cells
+                for(let r=0; r<15; r++) {
+                    for(let c=0; c<15; c++) {
+                        if ((r<6 && c<6) || (r<6 && c>8) || (r>8 && c<6) || (r>8 && c>8)) continue;
+                        if (r>=6 && r<=8 && c>=6 && c<=8) continue;
+
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.dataset.pos = `${r},${c}`;
+                        cell.style.gridArea = `${r+1} / ${c+1}`;
+                        if (STAR_COORDS.includes(`${r},${c}`)) cell.classList.add('star');
+                        
+                        // Path coloring
+                        if (r === 7 && c > 0 && c < 7) cell.classList.add('bg-red');
+                        if (c === 7 && r > 0 && r < 7) cell.classList.add('bg-green');
+                        if (r === 7 && c > 8 && c < 14) cell.classList.add('bg-yellow');
+                        if (c === 7 && r > 8 && r < 14) cell.classList.add('bg-blue');
+
+                        // Start cell colors
+                        if (r===6 && c===1) cell.classList.add('start-red');
+                        if (r===1 && c===8) cell.classList.add('start-green');
+                        if (r===8 && c===13) cell.classList.add('start-yellow');
+                        if (r===13 && c===6) cell.classList.add('start-blue');
+
+                        b.appendChild(cell);
+                    }
+                }
+
+                // Center House
+                const center = document.createElement('div');
+                center.className = 'center-house';
+                ['r','g','y','b'].forEach(x => {
+                    const t = document.createElement('div');
+                    t.className = `tri tri-${x}`;
+                    center.appendChild(t);
+                });
+                b.appendChild(center);
+
+                // Tokens
+                state.players.forEach(p => {
+                    p.tokens.forEach((_, i) => {
+                        const t = document.createElement('div');
+                        t.className = `token ${p.color}`;
+                        t.id = `tok-${p.color}-${i}`;
+                        t.onclick = () => handleInput(p.color, i);
+                        document.getElementById(`slot-${p.color}-${i}`).appendChild(t);
+                    });
+                });
+            };
+
+            const roll = async () => {
+                if (state.rolling || state.moving) return;
+                const p = state.players[state.turnIdx];
+                const dw = document.getElementById(`dw-${p.color}`);
+                
+                state.rolling = true;
+                dw.querySelector('.dice-face').classList.add('rolling');
+
+                await new Promise(r => setTimeout(r, 700));
+
+                state.dice = Math.floor(Math.random() * 6) + 1;
+                drawDice(p.color, state.dice);
+                dw.querySelector('.dice-face').classList.remove('rolling');
+                state.rolling = false;
+
+                if (state.dice === 6) {
+                    state.sixChain++;
+                    if (state.sixChain === 3) {
+                        state.sixChain = 0;
+                        return nextTurn();
+                    }
+                } else {
+                    state.sixChain = 0;
+                }
+
+                const moves = getMoves();
+                if (moves.length === 0) {
+                    setTimeout(nextTurn, 800);
+                } else {
+                    if (p.isAI) {
+                        setTimeout(() => runAI(moves), 800);
+                    } else {
+                        moves.forEach(mIdx => {
+                            document.getElementById(`tok-${p.color}-${mIdx}`).classList.add('active');
+                        });
+                    }
+                }
+            };
+
+            const handleInput = async (color, idx) => {
+                const p = state.players[state.turnIdx];
+                if (p.color !== color || state.moving || state.dice === 0) return;
+                const valid = getMoves();
+                if (!valid.includes(idx)) return;
+
+                state.moving = true;
+                document.querySelectorAll('.token').forEach(t => t.classList.remove('active'));
+
+                const cur = p.tokens[idx];
+                if (cur === -1) {
+                    p.tokens[idx] = 0;
+                    updateTok(color, idx);
+                } else {
+                    for (let i = 0; i < state.dice; i++) {
+                        p.tokens[idx]++;
+                        updateTok(color, idx);
+                        await new Promise(r => setTimeout(r, 160));
+                    }
+                }
+
+                finalize(color, idx);
+            };
+
+            const finalize = (color, idx) => {
+                const p = state.players[state.turnIdx];
+                const step = p.tokens[idx];
+                const coords = PATHS[color][step];
+
+                // Check Victory
+                if (step === 56) {
+                    p.finished++;
+                    document.getElementById(`tok-${color}-${idx}`).style.display = 'none';
+                    if (p.finished === 4) return win(color);
+                    return bonus();
+                }
+
+                // Check Kill
+                let kill = false;
+                if (coords && !STAR_COORDS.includes(`${coords[0]},${coords[1]}`)) {
+                    state.players.forEach((op, opIdx) => {
+                        if (opIdx === state.turnIdx) return;
+                        op.tokens.forEach((ostep, oidx) => {
+                            if (ostep === -1 || ostep === 56) return;
+                            const oc = PATHS[op.color][ostep];
+                            if (oc && oc[0] === coords[0] && oc[1] === coords[1]) {
+                                op.tokens[oidx] = -1;
+                                updateTok(op.color, oidx);
+                                kill = true;
+                            }
+                        });
+                    });
+                }
+
+                if (kill || state.dice === 6) {
+                    bonus();
+                } else {
+                    nextTurn();
+                }
+            };
+
+            const bonus = () => {
+                state.dice = 0;
+                state.moving = false;
+                renderUI();
+                processTurn();
+            };
+
+            const nextTurn = () => {
+                state.turnIdx = (state.turnIdx + 1) % state.players.length;
+                state.dice = 0;
+                state.moving = false;
+                state.sixChain = 0;
+                renderUI();
+                processTurn();
+            };
+
+            const processTurn = () => {
+                const p = state.players[state.turnIdx];
+                if (p.isAI) setTimeout(roll, 1000);
+            };
+
+            const getMoves = () => {
+                const p = state.players[state.turnIdx];
+                return p.tokens.map((s, i) => {
+                    if (s === -1 && state.dice === 6) return i;
+                    if (s !== -1 && s + state.dice <= 56) return i;
+                    return null;
+                }).filter(x => x !== null);
+            };
+
+            const runAI = (moves) => {
+                const p = state.players[state.turnIdx];
+                let best = moves[0];
+
+                // Smart AI Priorities: Finish > Kill > Exit Base > Furthest
+                for (let m of moves) {
+                    const step = p.tokens[m];
+                    const target = step === -1 ? 0 : step + state.dice;
+
+                    if (target === 56) { best = m; break; }
+
+                    const tc = PATHS[p.color][target];
+                    if (tc && !STAR_COORDS.includes(`${tc[0]},${tc[1]}`)) {
+                        const killChance = state.players.some((op, opi) => 
+                            opi !== state.turnIdx && op.tokens.some(os => {
+                                const oc = PATHS[op.color][os];
+                                return oc && oc[0] === tc[0] && oc[1] === tc[1];
+                            })
+                        );
+                        if (killChance) { best = m; break; }
+                    }
+
+                    if (step === -1) best = m;
+                    else if (step > p.tokens[best]) best = m;
+                }
+                handleInput(p.color, best);
+            };
+
+            const updateTok = (color, idx) => {
+                const p = state.players.find(x => x.color === color);
+                const step = p.tokens[idx];
+                const el = document.getElementById(`tok-${color}-${idx}`);
+                
+                if (step === -1) {
+                    document.getElementById(`slot-${color}-${idx}`).appendChild(el);
+                    el.style.transform = 'translate(0,0)';
+                } else if (step === 56) {
+                    el.style.display = 'none';
+                } else {
+                    const c = PATHS[color][step];
+                    const cell = document.querySelector(`[data-pos="${c[0]},${c[1]}"]`);
+                    cell.appendChild(el);
+                    adjustStack(cell);
+                }
+            };
+
+            const adjustStack = (cell) => {
+                const toks = cell.querySelectorAll('.token');
+                toks.forEach((t, i) => {
+                    if (toks.length > 1) {
+                        t.style.width = '60%'; t.style.height = '60%';
+                        const offset = (i * 3) - (toks.length * 1.5);
+                        t.style.transform = `translate(${offset}px, ${offset}px)`;
+                    } else {
+                        t.style.width = '80%'; t.style.height = '80%';
+                        t.style.transform = 'translate(0,0)';
                     }
                 });
-            });
-        }
+            };
 
-        if (killed || state.diceValue === 6) {
-            bonusTurn();
-        } else {
-            nextTurn();
-        }
-    };
+            const drawDice = (color, val) => {
+                const face = document.querySelector(`#dw-${color} .dice-face`);
+                face.innerHTML = '';
+                const dots = {
+                    1:[[2,2]], 2:[[1,1],[3,3]], 3:[[1,1],[2,2],[3,3]],
+                    4:[[1,1],[1,3],[3,1],[3,3]], 5:[[1,1],[1,3],[2,2],[3,1],[3,3]],
+                    6:[[1,1],[1,3],[2,1],[2,3],[3,1],[3,3]]
+                };
+                dots[val].forEach(pos => {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot-dice';
+                    dot.style.gridArea = `${pos[0]} / ${pos[1]}`;
+                    face.appendChild(dot);
+                });
+            };
 
-    const bonusTurn = () => {
-        state.diceValue = 0;
-        state.isMoving = false;
-        state.isRolling = false;
-        updateUI();
-        if (state.players[state.turnIdx].isAI) setTimeout(roll, 1000);
-    };
+            const renderUI = () => {
+                const p = state.players[state.turnIdx];
+                const label = document.getElementById('turn-indicator');
+                label.innerText = p.isAI ? `AI (${p.color}) thinking...` : `${p.color}'s turn`;
+                label.style.borderColor = `var(--${p.color})`;
+                label.style.color = `var(--${p.color})`;
 
-    const nextTurn = () => {
-        state.turnIdx = (state.turnIdx + 1) % state.players.length;
-        state.diceValue = 0;
-        state.isMoving = false;
-        state.isRolling = false;
-        state.sixCount = 0;
-        updateUI();
-        if (state.players[state.turnIdx].isAI) setTimeout(roll, 1200);
-    };
+                document.querySelectorAll('.dice-wrap').forEach(d => d.classList.add('disabled'));
+                document.getElementById(`dw-${p.color}`).classList.remove('disabled');
+            };
 
-    const getValidMoves = () => {
-        const p = state.players[state.turnIdx];
-        if (!p) return [];
-        return p.tokens.map((pos, i) => {
-            if (pos === -1 && state.diceValue === 6) return i;
-            if (pos !== -1 && pos + state.diceValue <= 56) return i;
-            return null;
-        }).filter(x => x !== null);
-    };
+            const win = (color) => {
+                const overlay = document.getElementById('win-overlay');
+                const name = document.getElementById('win-name');
+                name.innerText = `${color.toUpperCase()} VICTORIOUS!`;
+                name.style.color = `var(--${color})`;
+                overlay.style.display = 'flex';
+            };
 
-    const aiLogic = () => {
-        const p = state.players[state.turnIdx];
-        const moves = getValidMoves();
-        if (moves.length === 0) return;
-        let choice = moves[0];
+            return { init, roll };
+        })();
 
-        for (const m of moves) {
-            const pos = p.tokens[m];
-            if (pos + state.diceValue === 56) { choice = m; break; }
-            const target = PATHS[p.color][pos + state.diceValue];
-            if (target && isEnemyNearby(target)) { choice = m; break; }
-            if (p.tokens[choice] === -1 && state.diceValue === 6) choice = m;
-            if (pos > p.tokens[choice]) choice = m;
-        }
-
-        handleTokenInput(p.color, choice);
-    };
-
-    const isEnemyNearby = (coords) => {
-        return state.players.some((p, i) => {
-            if (i === state.turnIdx) return false;
-            return p.tokens.some(pos => {
-                if (pos === -1 || pos >= 56) return false;
-                const ec = PATHS[p.color][pos];
-                return ec && ec[0] === coords[0] && ec[1] === coords[1];
-            });
-        });
-    };
-
-    const updateUI = () => {
-        const player = state.players[state.turnIdx];
-        if (!player) return;
-        const msg = document.getElementById('turn-msg');
-        msg.innerText = `${player.isAI ? 'AI THINKING...' : player.color + "'S TURN"}`;
-        msg.style.borderColor = `var(--${player.color})`;
-        msg.style.color = `var(--${player.color})`;
-
-        document.querySelectorAll('.dice-box').forEach(d => d.classList.add('disabled-dice'));
-        const activeDice = document.getElementById(`dice-${player.color}`);
-        if (activeDice) activeDice.classList.remove('disabled-dice');
-    };
-
-    const renderDice = (color, val) => {
-        const body = document.querySelector(`#dice-${color} .dice-body`);
-        if (!body) return;
-        body.innerHTML = '';
-        const dots = {
-            1: [[2,2]], 2: [[1,1],[3,3]], 3: [[1,1],[2,2],[3,3]],
-            4: [[1,1],[1,3],[3,1],[3,3]], 5: [[1,1],[1,3],[2,2],[3,1],[3,3]],
-            6: [[1,1],[1,3],[2,1],[2,3],[3,1],[3,3]]
-        };
-        dots[val].forEach(p => {
-            const d = document.createElement('div');
-            d.className = 'dice-dot';
-            d.style.gridArea = `${p[0]}/${p[1]}`;
-            body.appendChild(d);
-        });
-    };
-
-    const declareWinner = (color) => {
-        const scr = document.getElementById('winner-screen');
-        const txt = document.getElementById('winner-text');
-        txt.innerText = `${color.toUpperCase()} VICTORIOUS!`;
-        txt.style.color = `var(--${color})`;
-        scr.style.display = 'flex';
-    };
-
-    return { init, roll };
-})();
+        // Touch handling
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
