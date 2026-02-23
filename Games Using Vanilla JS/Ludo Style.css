@@ -1,49 +1,37 @@
 /* Created By MANTHAN VINZUDA */
-:root {
-            --red: #b71c1c;
+   :root {
+            --red: #e53935;
             --red-bg: #ffebee;
-            --green: #1b5e20;
+            --green: #43a047;
             --green-bg: #e8f5e9;
-            --blue: #0d47a1;
+            --blue: #1e88e5;
             --blue-bg: #e3f2fd;
-            --yellow: #f57f17;
+            --yellow: #fdd835;
             --yellow-bg: #fffde7;
-            --board-border: #3e2723;
-            --paper: #fdfaf5;
-            --text: #2c1e14;
-            --gold: #d4af37;
-            --shadow-soft: rgba(0, 0, 0, 0.15);
+            --border: #3e2723;
+            --bg-canvas: #eceff1;
+            --panel: #ffffff;
+            --token-shadow: rgba(0,0,0,0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
         body {
             height: 100vh;
-            width: 100vw;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #d7ccc8;
-            background-image: 
-                radial-gradient(var(--paper) 30%, transparent 100%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 10px);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-canvas);
             overflow: hidden;
-            color: var(--text);
+            touch-action: manipulation;
         }
 
-        /* --- MODALS & SCREENS --- */
-        #modal-overlay {
+        /* --- SCREENS --- */
+        .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(44, 39, 35, 0.95);
+            background: rgba(0,0,0,0.9);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -51,246 +39,180 @@
             transition: opacity 0.4s ease;
         }
 
-        .setup-card {
-            background: var(--paper);
-            width: 90%;
-            max-width: 440px;
+        .card {
+            background: white;
             padding: 2.5rem;
             border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 420px;
             text-align: center;
-            border: 6px double var(--board-border);
-            animation: cardIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 6px double var(--border);
+            animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes cardIn {
-            from { transform: translateY(30px); opacity: 0; }
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
-        .setup-card h1 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: 4px; color: var(--board-border); font-weight: 900; }
-        .setup-card h2 { font-size: 1rem; margin-bottom: 2rem; opacity: 0.7; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+        .card h1 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--border); font-weight: 900; }
+        .card p { margin-bottom: 2rem; opacity: 0.6; }
 
-        .option-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn {
             background: white;
-            border: 2px solid #e0e0e0;
-            padding: 16px;
-            border-radius: 14px;
+            border: 2px solid #eee;
+            padding: 18px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 800;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--board-border);
+            transition: all 0.2s;
+            color: var(--border);
         }
+        .btn:hover { border-color: var(--border); background: #fdfdfd; transform: scale(1.05); }
 
-        .btn:hover:not(:disabled) { border-color: var(--board-border); background: #fffcf9; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .btn:active { transform: translateY(-1px); }
-
-        .color-picker-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+        .color-row { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .dot {
+            width: 55px; height: 55px; border-radius: 50%; border: 4px solid white;
+            cursor: pointer; box-shadow: 0 8px 15px var(--token-shadow); transition: 0.2s;
         }
+        .dot:hover { transform: scale(1.2); z-index: 10; }
+        .dot.locked { opacity: 0.1; filter: grayscale(1); cursor: not-allowed; }
 
-        .color-dot {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 4px solid white;
-            cursor: pointer;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        .color-dot:hover { transform: scale(1.2); }
-        .color-dot.locked { opacity: 0.1; cursor: not-allowed; filter: grayscale(1); transform: scale(0.85); }
-        .color-dot.selected { border-color: var(--board-border); transform: scale(1.1); box-shadow: 0 0 0 4px var(--paper), 0 0 0 6px var(--board-border); }
-
-        /* --- TOP STATUS BAR --- */
-        .status-header { margin-bottom: 20px; z-index: 10; height: 60px; display: flex; align-items: center; justify-content: center; }
-        #turn-msg {
-            font-size: 1.1rem;
-            font-weight: 900;
-            padding: 14px 40px;
+        /* --- UI ELEMENTS --- */
+        .hud { margin-bottom: 20px; z-index: 10; display: flex; align-items: center; gap: 15px; }
+        #turn-indicator {
+            padding: 12px 35px;
             background: white;
-            border-radius: 50px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-            border: 2.5px solid var(--board-border);
+            border-radius: 40px;
+            font-weight: 900;
+            border: 3px solid var(--border);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
         }
 
         /* --- THE BOARD --- */
-        .game-stage { position: relative; padding: 10px; }
-
+        .board-wrapper { position: relative; perspective: 1000px; }
         .ludo-board {
-            width: 94vmin;
-            height: 94vmin;
-            max-width: 600px;
-            max-height: 600px;
-            background: var(--paper);
-            border: 12px solid var(--board-border);
+            width: 96vmin; height: 96vmin;
+            max-width: 600px; max-height: 600px;
+            background: white;
+            border: 10px solid var(--border);
             display: grid;
             grid-template-columns: repeat(15, 1fr);
             grid-template-rows: repeat(15, 1fr);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.45);
             border-radius: 12px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3);
             position: relative;
         }
 
-        .cell {
-            border: 0.5px solid rgba(62, 39, 35, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .cell.safe-star::after {
-            content: "★";
-            font-size: 1.4rem;
-            color: rgba(62, 39, 35, 0.15);
-            pointer-events: none;
-        }
-
-        .home {
-            grid-column: span 6;
-            grid-row: span 6;
-            border: 1px solid var(--board-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: white;
-        }
-
+        /* Home Bases */
+        .home { grid-column: span 6; grid-row: span 6; border: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; }
         .home-inner {
-            width: 75%; height: 75%;
-            background: #fcfcfc;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            padding: 14%;
-            gap: 20%;
-            border-radius: 14px;
-            box-shadow: inset 0 2px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.05);
+            width: 75%; height: 75%; background: rgba(255,255,255,0.8);
+            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+            padding: 12%; gap: 15%; border-radius: 15%; border: 2px solid rgba(0,0,0,0.05);
         }
-
-        .home-slot { width: 100%; height: 100%; border-radius: 50%; background: #f0f0f0; border: 1px dashed #bbb; position: relative; }
+        .slot { 
+            width: 100%; height: 100%; border-radius: 50%; 
+            background: #eee; border: 2px dashed #ccc; 
+            position: relative; display: flex; align-items: center; justify-content: center;
+        }
 
         .red { background-color: var(--red); }
         .green { background-color: var(--green); }
-        .blue { background-color: var(--blue); }
         .yellow { background-color: var(--yellow); }
+        .blue { background-color: var(--blue); }
 
-        .path-red { background: var(--red-bg); }
-        .path-green { background: var(--green-bg); }
-        .path-blue { background: var(--blue-bg); }
-        .path-yellow { background: var(--yellow-bg); }
+        .cell {
+            border: 0.5px solid rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
 
+        .star::after {
+            content: "★"; font-size: 1.4rem; color: rgba(0,0,0,0.15);
+            position: absolute; pointer-events: none;
+        }
+
+        /* Tracks */
+        .bg-red { background: var(--red-bg); }
+        .bg-green { background: var(--green-bg); }
+        .bg-yellow { background: var(--yellow-bg); }
+        .bg-blue { background: var(--blue-bg); }
+        
+        /* Start cells coloring */
+        .start-red { background: var(--red) !important; }
+        .start-green { background: var(--green) !important; }
+        .start-yellow { background: var(--yellow) !important; }
+        .start-blue { background: var(--blue) !important; }
+
+        /* Center */
         .center-house {
             grid-area: 7 / 7 / 10 / 10;
-            border: 3px solid var(--board-border);
+            border: 4px solid var(--border);
+            display: grid;
             position: relative;
             overflow: hidden;
             background: white;
         }
-
         .tri { position: absolute; width: 100%; height: 100%; }
         .tri-r { clip-path: polygon(0 0, 50% 50%, 0 100%); background: var(--red); }
         .tri-g { clip-path: polygon(0 0, 100% 0, 50% 50%); background: var(--green); }
         .tri-y { clip-path: polygon(100% 0, 100% 100%, 50% 50%); background: var(--yellow); }
-        .tri-b { clip-path: polygon(0 100%, 100% 100%, 50% 50%); background: var(--blue); }
+        .tri-b { clip-path: polygon(100% 100%, 0 100%, 50% 50%); background: var(--blue); }
 
-        /* --- TOKENS --- */
+        /* Tokens */
         .token {
-            width: 80%; height: 80%;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.35), inset 0 -4px 6px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 100;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: absolute;
+            width: 80%; height: 80%; border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.9);
+            box-shadow: 0 6px 10px var(--token-shadow), inset 0 -4px 6px rgba(0,0,0,0.2);
+            cursor: pointer; z-index: 100; position: absolute;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .token::after {
-            content: ''; position: absolute; top: 15%; left: 15%; width: 35%; height: 35%;
+        .token::before {
+            content: ""; position: absolute; top: 15%; left: 15%; width: 30%; height: 30%;
             background: rgba(255,255,255,0.4); border-radius: 50%;
         }
 
-        .token.active { animation: glowToken 1s infinite; z-index: 500; }
-
-        @keyframes glowToken {
-            0% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.15); filter: brightness(1.2); box-shadow: 0 0 20px white; }
-            100% { transform: scale(1); filter: brightness(1); }
+        .token.active {
+            animation: tokenPulse 0.6s infinite alternate;
+            z-index: 500;
         }
 
-        /* --- DICE --- */
-        .dice-box {
-            position: absolute;
-            width: 65px; height: 65px;
-            cursor: pointer;
-            z-index: 600;
-            transition: all 0.3s ease;
-        }
-        .dice-red { top: -25px; left: -25px; }
-        .dice-green { top: -25px; right: -25px; }
-        .dice-blue { bottom: -25px; left: -25px; }
-        .dice-yellow { bottom: -25px; right: -25px; }
-
-        .dice-body {
-            width: 100%; height: 100%;
-            background: white;
-            border: 4px solid var(--board-border);
-            border-radius: 14px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            padding: 8px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        @keyframes tokenPulse {
+            from { transform: scale(1); filter: brightness(1); }
+            to { transform: scale(1.15); filter: brightness(1.2); box-shadow: 0 0 15px white; }
         }
 
-        .dice-dot { background: #333; border-radius: 50%; width: 80%; height: 80%; margin: auto; }
-
-        .shake { animation: shakeDice 0.6s infinite; }
-        @keyframes shakeDice {
-            0% { transform: rotate(0deg) scale(1); }
-            20% { transform: rotate(20deg) scale(1.1); }
-            40% { transform: rotate(-20deg) scale(1.1); }
-            60% { transform: rotate(10deg) scale(1.1); }
-            80% { transform: rotate(-10deg) scale(1.1); }
-            100% { transform: rotate(0deg) scale(1); }
+        /* Dice */
+        .dice-wrap {
+            position: absolute; width: 60px; height: 60px;
+            cursor: pointer; z-index: 600; transition: transform 0.3s ease;
         }
+        .dw-red { top: -30px; left: -30px; }
+        .dw-green { top: -30px; right: -30px; }
+        .dw-blue { bottom: -30px; left: -30px; }
+        .dw-yellow { bottom: -30px; right: -30px; }
 
-        .disabled-dice { opacity: 0.1; filter: grayscale(1); pointer-events: none; transform: scale(0.8); }
-
-        /* --- WIN SCREEN --- */
-        #winner-screen {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 3000;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
+        .dice-face {
+            width: 100%; height: 100%; background: white;
+            border: 4px solid var(--border); border-radius: 12px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr); padding: 6px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
         }
-
-        @media (max-width: 500px) {
-            .dice-box { width: 50px; height: 50px; }
-            #turn-msg { font-size: 0.85rem; padding: 10px 25px; min-width: 160px; }
-            .setup-card { padding: 1.5rem; }
+        .dot-dice { background: #333; border-radius: 50%; width: 80%; height: 80%; margin: auto; }
+        
+        .rolling { animation: rollAnim 0.15s infinite linear; }
+        @keyframes rollAnim {
+            0% { transform: rotate(0) scale(1.1); }
+            50% { transform: rotate(180deg) scale(0.9); }
+            100% { transform: rotate(360deg) scale(1.1); }
         }
+        .dice-wrap.disabled { opacity: 0.1; pointer-events: none; filter: grayscale(1); transform: scale(0.85); }
+
+        /* Winning Overlay */
+        #win-overlay { display: none; }
