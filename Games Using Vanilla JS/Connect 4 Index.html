@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Four Elite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="Connect 4 Style.css">  
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="fixed top-4 right-4 z-50">
+        <button id="mute-btn" class="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors border border-white/20">
+            <svg id="sound-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        </button>
+    </div>
+
+    <div class="text-center mb-8">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">
+            CONNECT FOUR
+        </h1>
+        <div id="status-display" class="text-xl font-medium opacity-90 h-8">
+            Player 1's Turn
+        </div>
+    </div>
+
+    <!-- Game Stats -->
+    <div class="flex gap-8 mb-6 text-sm font-bold uppercase tracking-widest">
+        <div class="flex flex-col items-center">
+            <span class="text-red-500 mb-1">Player 1</span>
+            <span id="score-1" class="text-2xl">0</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <span class="text-gray-500 mb-1">Draws</span>
+            <span id="score-draw" class="text-2xl">0</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <span class="text-yellow-400 mb-1">Player 2</span>
+            <span id="score-2" class="text-2xl">0</span>
+        </div>
+    </div>
+
+    <!-- The Game Board -->
+    <div class="board-container relative w-full flex justify-center">
+        <div id="game-board" class="board cursor-pointer">
+            <!-- Slots injected by JS -->
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-8 flex gap-4">
+        <button id="reset-btn" class="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-all font-semibold uppercase text-xs tracking-widest border border-white/20">
+            Reset Game
+        </button>
+    </div>
+
+    <!-- Game Message Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-800 p-8 rounded-2xl text-center shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300">
+            <h2 id="win-message" class="text-3xl font-bold mb-4">Player 1 Wins!</h2>
+            <button id="play-again-btn" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg transition-all">
+                Play Again
+            </button>
+        </div>
+    </div>
+    <script src="Connect 4 Script.js"></script>
+</body>
+</html>
