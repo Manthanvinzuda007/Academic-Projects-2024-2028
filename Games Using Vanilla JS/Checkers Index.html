@@ -5,8 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chekaers Game</title>
+    <link rel="stylesheet" href="Checkers Style.css">
 </head>
 <body>
-    
+    <!-- TOP: Player 2 (Black) -->
+    <div class="player-container">
+        <div id="card-p2" class="player-card">
+            <div class="player-name">PLAYER 2 (EBONY)</div>
+            <div id="timer-p2" class="player-timer">05:00</div>
+        </div>
+    </div>
+
+    <div class="board-wrapper">
+        <div id="board"></div>
+    </div>
+
+    <!-- BOTTOM: Player 1 (White) -->
+    <div class="player-container">
+        <div id="card-p1" class="player-card active">
+            <div class="player-name">PLAYER 1 (IVORY)</div>
+            <div id="timer-p1" class="player-timer">05:00</div>
+        </div>
+    </div>
+
+    <button class="reset-btn" onclick="initGame()">RESET MATCH</button>
+
+    <div id="modal">
+        <div class="modal-content">
+            <h2 id="modal-title" style="color:var(--brass); font-size: 2.5rem; margin-top:0">MATCH OVER</h2>
+            <p id="modal-body" style="font-size: 1.2rem; margin-bottom: 30px"></p>
+            <button class="reset-btn" onclick="initGame()">PLAY AGAIN</button>
+        </div>
+    </div>
+    <script src="Checkers Script.js"></script>
 </body>
 </html>
