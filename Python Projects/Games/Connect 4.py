@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import pygame
 import sys
 import math
@@ -338,6 +337,3 @@ def game_loop(vs_ai):
 
 if __name__ == "__main__":
     main_menu()
-=======
-
->>>>>>> 0b441ace453417fe36c2092f6844d2c4a9db615e

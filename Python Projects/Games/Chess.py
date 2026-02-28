@@ -255,8 +255,4 @@ def main():
     sys.exit()
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> 0b441ace453417fe36c2092f6844d2c4a9db615e
