@@ -1,0 +1,93 @@
+:root {
+            --board-bg: #2563eb;
+            --slot-bg: #1e3a8a;
+            --player1-color: #ef4444;
+            --player2-color: #facc15;
+            --player1-shadow: #b91c1c;
+            --player2-shadow: #ca8a04;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .board-container {
+            perspective: 1000px;
+        }
+
+        .board {
+            background-color: var(--board-bg);
+            border: 8px solid #1d4ed8;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2), inset 0 2px 4px 0 rgba(255, 255, 255, 0.1);
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            padding: 12px;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .slot {
+            aspect-ratio: 1 / 1;
+            background-color: var(--slot-bg);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        .token {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: transform 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            z-index: 10;
+        }
+
+        .token.red {
+            background: radial-gradient(circle at 30% 30%, var(--player1-color), var(--player1-shadow));
+            box-shadow: 0 4px 0 var(--player1-shadow);
+        }
+
+        .token.yellow {
+            background: radial-gradient(circle at 30% 30%, var(--player2-color), var(--player2-shadow));
+            box-shadow: 0 4px 0 var(--player2-shadow);
+        }
+
+        .falling {
+            animation: drop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(-500%); }
+            100% { transform: translateY(0); }
+        }
+
+        .win-highlight {
+            animation: pulse 1s infinite alternate;
+            z-index: 20;
+            border: 4px solid white;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); box-shadow: 0 0 0px white; }
+            to { transform: scale(1.1); box-shadow: 0 0 20px white; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .board {
+                gap: 4px;
+                padding: 6px;
+                border-width: 4px;
+            }
+        }
