@@ -1,1 +1,119 @@
+<html>
+  <head>
+        <title> Backgammon Game </title>
+        <link rel="stylesheet" href="Backgammon Style.css">
+</head>
+<body>
+  <div class="header">
+        <div class="score-board">
+            <div class="score-box" style="color: var(--checker-p1);">
+                <div class="dot" style="background: var(--checker-p1);"></div>
+                P1 (White) Off: <span id="score-p1">0</span>
+            </div>
+            <div class="score-box" style="color: #bbb;">
+                <div class="dot" style="background: var(--checker-p2);"></div>
+                P2 (Black) Off: <span id="score-p2">0</span>
+            </div>
+        </div>
+        <div class="turn-indicator" id="turn-display">Player 1 (White)'s Turn</div>
+    </div>
 
+    <div class="game-area">
+        <div class="board-wrapper" id="board">
+            <!-- Left Half -->
+            <div class="board-half left-board">
+                <!-- Top Left (Indices 12-17) -->
+                <div class="point top-row" data-idx="12"></div>
+                <div class="point top-row" data-idx="13"></div>
+                <div class="point top-row" data-idx="14"></div>
+                <div class="point top-row" data-idx="15"></div>
+                <div class="point top-row" data-idx="16"></div>
+                <div class="point top-row" data-idx="17"></div>
+                
+                <!-- Bottom Left (Indices 11-6) -->
+                <div class="point bottom-row" data-idx="11"></div>
+                <div class="point bottom-row" data-idx="10"></div>
+                <div class="point bottom-row" data-idx="9"></div>
+                <div class="point bottom-row" data-idx="8"></div>
+                <div class="point bottom-row" data-idx="7"></div>
+                <div class="point bottom-row" data-idx="6"></div>
+            </div>
+
+            <!-- Bar (Hinge) -->
+            <div class="bar">
+                <div class="bar-slot" id="bar-p1" data-idx="bar1" style="height:50%; width:100%; position:relative;"></div>
+                <div class="bar-slot" id="bar-p2" data-idx="bar2" style="height:50%; width:100%; position:relative;"></div>
+            </div>
+
+            <!-- Right Half -->
+            <div class="board-half right-board">
+                <!-- Top Right (Indices 18-23) -->
+                <div class="point top-row" data-idx="18"></div>
+                <div class="point top-row" data-idx="19"></div>
+                <div class="point top-row" data-idx="20"></div>
+                <div class="point top-row" data-idx="21"></div>
+                <div class="point top-row" data-idx="22"></div>
+                <div class="point top-row" data-idx="23"></div>
+                
+                <!-- Bottom Right (Indices 5-0) -->
+                <div class="point bottom-row" data-idx="5"></div>
+                <div class="point bottom-row" data-idx="4"></div>
+                <div class="point bottom-row" data-idx="3"></div>
+                <div class="point bottom-row" data-idx="2"></div>
+                <div class="point bottom-row" data-idx="1"></div>
+                <div class="point bottom-row" data-idx="0"></div>
+            </div>
+
+            <!-- Checkers Container Overlay -->
+            <div id="checkers-layer"></div>
+        </div>
+
+        <!-- Homes / Bear Off Area -->
+        <div class="homes">
+            <div class="home-slot" id="home-p2" data-idx="off2">
+                <div class="off-count" id="count-off2">0</div>
+            </div>
+            <div class="home-slot" id="home-p1" data-idx="off1">
+                <div class="off-count" id="count-off1">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="controls-group">
+            <select id="mode-select">
+                <option value="pvp">P to P (Player vs Player)</option>
+                <option value="ai" selected>P to AI (Player vs Computer)</option>
+            </select>
+            <button class="btn" id="btn-restart">Restart</button>
+            <button class="btn" id="btn-sound">Sound: ON</button>
+        </div>
+        <div class="dice-container" id="dice-container">
+            <button class="btn" id="btn-undo" disabled>Undo Move</button>
+            <div class="die" id="die1" data-val="1">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <div class="die" id="die2" data-val="2">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <button class="btn" id="btn-roll">Roll Dice</button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="win-modal">
+        <div class="modal-content">
+            <h1 id="win-text">Player 1 Wins!</h1>
+            <p id="win-stats"></p>
+            <button class="btn" id="btn-play-again">Play Again</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notif">No Valid Moves</div>
+
+</body>  
+</html>
