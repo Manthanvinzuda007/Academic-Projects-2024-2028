@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reversi Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="Reversi Style.css"> 
+</head>
+<body class="antialiased selection:bg-green-500 selection:text-white">
 
+    <!-- Screen 1: Main Menu -->
+    <div id="screen-menu" class="screen active bg-gradient-to-br from-slate-900 to-slate-800">
+        <div class="text-center mb-12">
+            <h1 class="text-6xl font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 drop-shadow-lg">
+                REVERSI
+            </h1>
+            <p class="text-slate-400 font-medium tracking-widest text-sm uppercase">Pro Edition</p>
+        </div>
+
+        <div class="flex flex-col gap-4 w-64">
+            <button onclick="ui.showScreen('screen-mode')" class="btn py-4 rounded-xl text-lg font-semibold shadow-lg shadow-black/20 flex items-center justify-center gap-2">
+                ▶ Play Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Screen 2: Mode Selection -->
+    <div id="screen-mode" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
+        <h2 class="text-3xl font-bold mb-8">Select Mode</h2>
+        <div class="flex flex-col gap-4 w-64">
+            <button onclick="game.setMode('PVP')" class="btn py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2">
+                👤 Player vs Player
+            </button>
+            <button onclick="ui.showScreen('screen-difficulty')" class="btn py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2">
+                🤖 Player vs AI
+            </button>
+            <button onclick="ui.showScreen('screen-menu')" class="mt-4 text-slate-400 hover:text-white transition">← Back</button>
+        </div>
+    </div>
+
+    <!-- Screen 3: AI Difficulty -->
+    <div id="screen-difficulty" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
+        <h2 class="text-3xl font-bold mb-8">AI Difficulty</h2>
+        <div class="flex flex-col gap-4 w-64">
+            <button onclick="game.setMode('PVAI', 'easy')" class="btn py-4 rounded-xl text-lg font-semibold text-green-400">🟢 Easy</button>
+            <button onclick="game.setMode('PVAI', 'medium')" class="btn py-4 rounded-xl text-lg font-semibold text-yellow-400">🟡 Medium</button>
+            <button onclick="game.setMode('PVAI', 'hard')" class="btn py-4 rounded-xl text-lg font-semibold text-red-400">🔴 Hard</button>
+            <button onclick="ui.showScreen('screen-mode')" class="mt-4 text-slate-400 hover:text-white transition">← Back</button>
+        </div>
+    </div>
+
+    <!-- Screen 4: Side Selection -->
+    <div id="screen-side" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
+        <h2 class="text-3xl font-bold mb-8">Choose Your Side</h2>
+        <p class="text-slate-400 mb-6 text-sm">Black always moves first.</p>
+        <div class="flex gap-6">
+            <button onclick="game.start(1)" class="btn p-6 rounded-2xl flex flex-col items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-[#111] shadow-lg border-2 border-slate-700"></div>
+                <span class="font-bold">Play Black</span>
+            </button>
+            <button onclick="game.start(2)" class="btn p-6 rounded-2xl flex flex-col items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-[#eee] shadow-lg border-2 border-slate-300"></div>
+                <span class="font-bold text-slate-900">Play White</span>
+            </button>
+        </div>
+        <button onclick="ui.showScreen('screen-mode')" class="mt-8 text-slate-400 hover:text-white transition">← Back</button>
+    </div>
+
+    <!-- Screen 5: Game Board -->
+    <div id="screen-game" class="screen bg-slate-900">
+        
+        <div id="message-toast" class="message-toast text-white"></div>
+
+        <!-- Top Bar -->
+        <div class="w-full max-w-[450px] flex justify-between items-center mb-6 px-4">
+            <button onclick="game.undo()" class="btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 flex items-center gap-1">
+                ↩ Undo
+            </button>
+            <button onclick="ui.showScreen('screen-menu')" class="btn px-4 py-2 rounded-lg text-sm font-semibold text-rose-400">
+                Exit
+            </button>
+        </div>
+
+        <!-- Score Board -->
+        <div class="flex gap-4 mb-8 w-full max-w-[450px] px-4">
+            <div id="score-black" class="score-pill flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="minidisc black"></div>
+                    <span class="font-bold text-slate-300" id="name-black">Black</span>
+                </div>
+                <span class="text-2xl font-black" id="count-black">2</span>
+            </div>
+            <div id="score-white" class="score-pill flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
+                <span class="text-2xl font-black" id="count-white">2</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-300" id="name-white">White</span>
+                    <div class="minidisc white"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Board -->
+        <div class="board-container">
+            <div id="board" class="board">
+                <!-- Cells generated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 6: Game Over -->
+    <div id="screen-result" class="screen bg-slate-900/90 backdrop-blur-sm">
+        <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 text-center max-w-sm w-[90%] shadow-2xl">
+            <div id="winner-icon" class="text-6xl mb-4">🏆</div>
+            <h2 id="winner-text" class="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Black Wins!</h2>
+            <p id="winner-score" class="text-slate-400 mb-8 text-lg">34 - 30</p>
+            
+            <div class="flex flex-col gap-3">
+                <button onclick="game.restart()" class="btn py-3 rounded-xl font-bold bg-white/10">🔄 Play Again</button>
+                <button onclick="ui.showScreen('screen-menu')" class="btn py-3 rounded-xl font-bold text-slate-400">🏠 Main Menu</button>
+            </div>
+        </div>
+    </div>
+    <script src="Reversi Script.js"></script>
+</body>
+</html>
