@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Minesweeper Pro</title>
 
+</head>
+<body>
+
+    <div class="flash-overlay" id="flash"></div>
+    <canvas id="effects-canvas"></canvas>
+
+    <!-- Menu Screen -->
+    <div class="screen active" id="menu-screen">
+        <div class="menu-panel">
+            <h1 class="menu-title">MINESWEEPER</h1>
+            
+            <div class="btn-group">
+                <button class="btn active-btn" data-diff="easy" onclick="setDifficulty('easy')">Easy (9x9, 10 Mines)</button>
+                <button class="btn" data-diff="medium" onclick="setDifficulty('medium')">Medium (16x16, 40 Mines)</button>
+                <button class="btn" data-diff="hard" onclick="setDifficulty('hard')">Hard (24x24, 99 Mines)</button>
+                <button class="btn" data-diff="custom" onclick="setDifficulty('custom')">Custom Setup</button>
+            </div>
+
+            <div class="custom-inputs" id="custom-inputs">
+                <input type="number" id="c-rows" class="custom-input" placeholder="R" min="5" max="50" value="10">
+                <input type="number" id="c-cols" class="custom-input" placeholder="C" min="5" max="50" value="10">
+                <input type="number" id="c-mines" class="custom-input" placeholder="M" min="1" max="999" value="15">
+            </div>
+
+            <button class="btn start-btn" onclick="startGame()">START GAME</button>
+
+            <div class="theme-selector">
+                <div class="theme-dot light active-theme" onclick="setTheme('light')" title="Light Mode"></div>
+                <div class="theme-dot dark" onclick="setTheme('dark')" title="Dark Mode"></div>
+                <div class="theme-dot neon" onclick="setTheme('neon')" title="Neon Mode"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div class="screen" id="game-screen">
+        <div class="game-wrapper" id="game-wrapper">
+            <div class="top-bar">
+                <div class="lcd-text" id="mines-count">010</div>
+                <button class="face-btn" id="face-btn" onclick="resetGame()">🙂</button>
+                <div class="lcd-text" id="timer">000</div>
+            </div>
+
+            <div class="board-scroll-container">
+                <div class="grid" id="board"></div>
+            </div>
+
+            <div class="stats-panel">
+                Best Time: <span id="best-time-display">--</span> s
+            </div>
+
+            <div class="controls">
+                <button class="icon-btn" onclick="showMenu()" title="Back to Menu">🏠</button>
+                <button class="icon-btn" id="mute-btn" onclick="toggleMute()" title="Mute/Unmute">🔊</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
