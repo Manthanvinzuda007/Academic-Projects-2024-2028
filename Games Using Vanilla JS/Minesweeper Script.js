@@ -2,38 +2,95 @@
     let config = { rows: 9, cols: 9, mines: 10, difficulty: 'easy' };
     let board = [];
     let state = {
-        status: 'menu', // menu, playing, won, lost
+        status: 'menu', // menu, playing, paused, won, lost
         minesLeft: 0,
         revealedCount: 0,
-        time: 0,
-        timerId: null,
         firstClick: true,
         muted: false
     };
-
-    // In-Memory Best Times (per session)
-    const bestTimes = { easy: null, medium: null, hard: null };
 
     // DOM Elements
     const screens = { menu: document.getElementById('menu-screen'), game: document.getElementById('game-screen') };
     const boardEl = document.getElementById('board');
     const faceBtn = document.getElementById('face-btn');
     const minesCountEl = document.getElementById('mines-count');
-    const timerEl = document.getElementById('timer');
     const flashEl = document.getElementById('flash');
-    const gameWrapper = document.getElementById('game-wrapper');
     const customInputs = document.getElementById('custom-inputs');
-    const bestTimeDisplay = document.getElementById('best-time-display');
     const canvas = document.getElementById('effects-canvas');
     const ctx = canvas.getContext('2d');
 
-    /* ================= Theming & Menu ================= */
-    function setTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
-        document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active-theme'));
-        document.querySelector(`.theme-dot.${theme}`).classList.add('active-theme');
+    /* ================= Educational Facts System ================= */
+    const educationalFacts = [
+        "Octopuses have three hearts and blue blood! 🐙",
+        "Honey never spoils. Explorers found 3,000-year-old honey in Egypt and it was still good! 🍯",
+        "Bananas are officially berries, but strawberries are not! 🍌",
+        "A day on Venus is longer than a year on Venus! 🪐",
+        "Water makes up about 71% of the Earth's surface! 🌊",
+        "Wombat poop is cube-shaped so it doesn't roll away! 🦡",
+        "A single cloud can weigh more than a million pounds! ☁️",
+        "Sharks existed on Earth before trees did! 🦈",
+        "Butterflies taste their food with their feet! 🦋",
+        "Space is completely silent because there is no air for sound to travel through! 🌌",
+        "A single strand of spaghetti is called a 'spaghetto'! 🍝",
+        "Cows have best friends and get stressed when separated! 🐄",
+        "Snails can sleep for up to three years! 🐌"
+    ];
+
+    let factTimeout = null;
+
+    function scheduleNextFact() {
+        clearTimeout(factTimeout);
+        if (state.status === 'playing' || state.firstClick) {
+            factTimeout = setTimeout(() => {
+                showEducationalFact();
+            }, 15000); // Pops up every 15 seconds of gameplay
+        }
     }
 
+    function showEducationalFact() {
+        if (state.status !== 'playing' && state.status !== 'firstClick') return;
+        
+        // PAUSE THE GAME
+        state.status = 'paused';
+        faceBtn.innerText = '🤔'; // Thinking face while reading
+
+        // Show Fact
+        const randomFact = educationalFacts[Math.floor(Math.random() * educationalFacts.length)];
+        document.getElementById('fun-fact-text').innerText = randomFact;
+        document.getElementById('fact-overlay').classList.add('show');
+        
+        playSound('pop');
+    }
+
+    function resumeGameFromFact() {
+        // RESUME THE GAME
+        document.getElementById('fact-overlay').classList.remove('show');
+        state.status = 'playing';
+        
+        faceBtn.innerText = '😎';
+        playSound('click');
+        
+        // Schedule the next fact
+        scheduleNextFact();
+    }
+
+    function clearFactsTimer() {
+        clearTimeout(factTimeout);
+        document.getElementById('fact-overlay').classList.remove('show');
+    }
+
+
+    /* ================= Theming ================= */
+    function toggleTheme() {
+        const body = document.body;
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+        }
+    }
+
+    /* Set Difficulty */
     function setDifficulty(diff) {
         document.querySelectorAll('.btn-group .btn').forEach(b => b.classList.remove('active-btn'));
         document.querySelector(`[data-diff="${diff}"]`).classList.add('active-btn');
@@ -46,13 +103,14 @@
     }
 
     function showMenu() {
-        stopTimer();
+        clearFactsTimer(); // Stop popups
         screens.game.classList.remove('active');
         screens.menu.classList.add('active');
         state.status = 'menu';
+        document.body.classList.remove('shake-screen');
     }
 
-    /* ================= Audio System (Web Audio API) ================= */
+    /* ================= Audio System ================= */
     let audioCtx = null;
     function initAudio() {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -68,21 +126,22 @@
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             gain.gain.setValueAtTime(vol, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        } catch(e) { console.warn("Audio error", e); }
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {}
     }
 
     function playSound(action) {
         initAudio();
         if (state.muted) return;
         switch(action) {
-            case 'click': playTone(800, 'sine', 0.05, 0.05); break;
-            case 'flag': playTone(1200, 'square', 0.1, 0.05); setTimeout(()=>playTone(1500, 'square', 0.1, 0.05), 100); break;
+            case 'click': playTone(600, 'sine', 0.1, 0.05); break;
+            case 'pop': playTone(1200, 'triangle', 0.05, 0.03); break; 
+            case 'flag': playTone(800, 'square', 0.1, 0.05); setTimeout(()=>playTone(1200, 'square', 0.1, 0.05), 80); break;
+            case 'unflag': playTone(600, 'square', 0.1, 0.05); break;
+            case 'chord': playTone(1000, 'triangle', 0.15, 0.05); break;
             case 'win': 
-                [400, 500, 600, 800].forEach((f, i) => setTimeout(() => playTone(f, 'triangle', 0.2, 0.1), i * 100));
+                [440, 554, 659, 880, 1108].forEach((f, i) => setTimeout(() => playTone(f, 'square', 0.2, 0.1), i * 150));
                 break;
             case 'explosion': playExplosion(); break;
         }
@@ -94,15 +153,15 @@
             const bufferSize = audioCtx.sampleRate * 0.5;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+            for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.15));
             const noise = audioCtx.createBufferSource();
             noise.buffer = buffer;
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(1000, audioCtx.currentTime);
+            filter.frequency.setValueAtTime(500, audioCtx.currentTime);
             filter.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.5);
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
             noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
             noise.start();
@@ -112,23 +171,24 @@
     function toggleMute() {
         state.muted = !state.muted;
         document.getElementById('mute-btn').innerText = state.muted ? '🔇' : '🔊';
+        document.getElementById('mute-btn').classList.add('anim-pop');
+        setTimeout(()=>document.getElementById('mute-btn').classList.remove('anim-pop'), 400);
     }
 
     /* ================= Core Game Logic ================= */
     function startGame() {
         initAudio();
         if (config.difficulty === 'custom') {
-            config.rows = Math.max(5, Math.min(50, parseInt(document.getElementById('c-rows').value) || 10));
-            config.cols = Math.max(5, Math.min(50, parseInt(document.getElementById('c-cols').value) || 10));
-            const maxMines = (config.rows * config.cols) - 9; // Leave room for safe first click
+            config.rows = Math.max(5, Math.min(30, parseInt(document.getElementById('c-rows').value) || 10));
+            config.cols = Math.max(5, Math.min(30, parseInt(document.getElementById('c-cols').value) || 10));
+            const maxMines = (config.rows * config.cols) - 9;
             config.mines = Math.max(1, Math.min(maxMines, parseInt(document.getElementById('c-mines').value) || 15));
         }
 
-        // Adjust CSS vars for scaling based on cols
-        const maxW = window.innerWidth * 0.9;
-        let cSize = 32;
-        if (config.cols * 32 > maxW) {
-            cSize = Math.max(18, Math.floor(maxW / config.cols));
+        const maxW = window.innerWidth * 0.85;
+        let cSize = 40;
+        if (config.cols * 40 > maxW) {
+            cSize = Math.max(22, Math.floor(maxW / config.cols));
         }
         document.documentElement.style.setProperty('--cell-size', `${cSize}px`);
 
@@ -136,21 +196,25 @@
         screens.menu.classList.remove('active');
         screens.game.classList.add('active');
 
-        // Show best time if available
-        const bt = bestTimes[config.difficulty];
-        bestTimeDisplay.innerText = bt ? bt : '--';
+        scheduleNextFact(); 
     }
 
     function resetGame() {
-        stopTimer();
-        state = { ...state, status: 'playing', minesLeft: config.mines, revealedCount: 0, time: 0, firstClick: true };
-        faceBtn.innerText = '🙂';
+        clearFactsTimer(); 
+
+        state = { ...state, status: 'playing', minesLeft: config.mines, revealedCount: 0, firstClick: true };
+        faceBtn.innerText = '😎';
+        faceBtn.classList.remove('anim-pop');
+        void faceBtn.offsetWidth; 
+        faceBtn.classList.add('anim-pop');
+        
         updateLCD();
-        timerEl.innerText = '000';
         boardEl.innerHTML = '';
         boardEl.style.gridTemplateColumns = `repeat(${config.cols}, 1fr)`;
         board = [];
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // clear particles
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles = [];
+        document.body.classList.remove('shake-screen');
 
         for (let r = 0; r < config.rows; r++) {
             let row = [];
@@ -161,16 +225,11 @@
                 cell.dataset.c = c;
                 boardEl.appendChild(cell);
                 
-                row.push({
-                    isMine: false,
-                    isRevealed: false,
-                    isFlagged: false,
-                    neighborMines: 0,
-                    el: cell
-                });
+                row.push({ isMine: false, isRevealed: false, isFlagged: false, neighborMines: 0, el: cell });
             }
             board.push(row);
         }
+        scheduleNextFact(); 
     }
 
     function placeMines(firstR, firstC) {
@@ -178,8 +237,6 @@
         while (placed < config.mines) {
             let r = Math.floor(Math.random() * config.rows);
             let c = Math.floor(Math.random() * config.cols);
-            
-            // First click is safe, and ideally its direct neighbors too
             const isSafeZone = Math.abs(r - firstR) <= 1 && Math.abs(c - firstC) <= 1;
 
             if (!board[r][c].isMine && !isSafeZone) {
@@ -198,9 +255,7 @@
                 let count = 0;
                 dirs.forEach(([dr, dc]) => {
                     let nr = r + dr, nc = c + dc;
-                    if (nr>=0 && nr<config.rows && nc>=0 && nc<config.cols && board[nr][nc].isMine) {
-                        count++;
-                    }
+                    if (nr>=0 && nr<config.rows && nc>=0 && nc<config.cols && board[nr][nc].isMine) count++;
                 });
                 board[r][c].neighborMines = count;
             }
@@ -208,48 +263,53 @@
     }
 
     /* ================= Interaction Logic ================= */
-    
-    // Prevent context menu
-    boardEl.addEventListener('contextmenu', e => { e.preventDefault(); });
+    boardEl.addEventListener('contextmenu', e => e.preventDefault()); 
 
-    // Handle mouse down/up for face emoji reaction
     boardEl.addEventListener('mousedown', e => {
         if(e.button === 0 && state.status === 'playing' && !e.target.classList.contains('revealed')) {
-            faceBtn.innerText = '😮';
+            faceBtn.innerText = '😲';
         }
     });
     window.addEventListener('mouseup', () => {
-        if(state.status === 'playing') faceBtn.innerText = '🙂';
+        if(state.status === 'playing') faceBtn.innerText = '😎';
     });
 
-    // Main interaction
-    boardEl.addEventListener('mouseup', e => {
+    boardEl.addEventListener('dblclick', e => {
         if (state.status !== 'playing') return;
         const cell = e.target.closest('.cell');
         if (!cell) return;
-        
-        let r = parseInt(cell.dataset.r);
-        let c = parseInt(cell.dataset.c);
+        let r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
+        handleChord(r, c);
+    });
 
-        if (e.button === 2) { // Right click
-            toggleFlag(r, c);
-        } else if (e.button === 0) { // Left click
-            revealCell(r, c);
+    boardEl.addEventListener('mouseup', e => {
+        if (state.status !== 'playing') return; 
+        const cell = e.target.closest('.cell');
+        if (!cell) return;
+        
+        let r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
+
+        if (e.button === 2) { 
+            toggleFlag(r, c); 
+        } else if (e.button === 0) { 
+            if(board[r][c].isRevealed) {
+                if (window.innerWidth <= 768) handleChord(r, c); 
+            } else {
+                revealCell(r, c); 
+            }
         }
     });
 
-    // Touch logic for long press
+    // Touch logic
     let touchTimer = null;
     let touchMoved = false;
-
     boardEl.addEventListener('touchstart', e => {
         if (e.touches.length > 1 || state.status !== 'playing') return;
         const cell = e.target.closest('.cell');
         if (!cell) return;
         touchMoved = false;
-        faceBtn.innerText = '😮';
-        let r = parseInt(cell.dataset.r);
-        let c = parseInt(cell.dataset.c);
+        if(!cell.classList.contains('revealed')) faceBtn.innerText = '😲';
+        let r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
         
         touchTimer = setTimeout(() => {
             if(!touchMoved) {
@@ -257,22 +317,26 @@
                 toggleFlag(r, c);
                 touchTimer = null;
             }
-        }, 400); // 400ms long press
+        }, 300); 
     }, {passive: true});
 
-    boardEl.addEventListener('touchmove', () => { touchMoved = true; });
+    boardEl.addEventListener('touchmove', () => touchMoved = true);
     
     boardEl.addEventListener('touchend', e => {
-        if (state.status === 'playing') faceBtn.innerText = '🙂';
+        if (state.status === 'playing') faceBtn.innerText = '😎';
         if (touchTimer) {
             clearTimeout(touchTimer);
             touchTimer = null;
-            if (!touchMoved) {
+            if (!touchMoved && state.status === 'playing') { 
                 const cell = e.target.closest('.cell');
-                if(cell) revealCell(parseInt(cell.dataset.r), parseInt(cell.dataset.c));
+                if(cell) {
+                    let r = parseInt(cell.dataset.r), c = parseInt(cell.dataset.c);
+                    if(board[r][c].isRevealed) handleChord(r,c);
+                    else revealCell(r, c);
+                }
             }
         }
-        e.preventDefault(); // prevent mouse events firing
+        e.preventDefault(); 
     });
 
 
@@ -280,31 +344,58 @@
         let cellData = board[r][c];
         if (cellData.isRevealed) return;
 
-        playSound('flag');
         if (cellData.isFlagged) {
+            playSound('unflag');
             cellData.isFlagged = false;
             cellData.el.innerHTML = '';
             cellData.el.classList.remove('flagged');
             state.minesLeft++;
         } else {
-            if(state.minesLeft <= 0) return; // Optional strict flagging
+            if(state.minesLeft <= 0) return; 
+            playSound('flag');
             cellData.isFlagged = true;
             cellData.el.innerHTML = '🚩';
-            cellData.el.classList.add('flagged');
-            cellData.el.classList.add('anim-pop');
-            setTimeout(()=> cellData.el.classList.remove('anim-pop'), 300);
+            cellData.el.classList.add('flagged', 'anim-pop');
+            setTimeout(()=> cellData.el.classList.remove('anim-pop'), 400);
+            createCartoonDust(r, c); 
             state.minesLeft--;
         }
         updateLCD();
     }
 
-    function revealCell(r, c) {
+    function handleChord(r, c) {
+        let cellData = board[r][c];
+        if (!cellData.isRevealed || cellData.neighborMines === 0) return;
+
+        const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+        let flagCount = 0;
+        let hiddenNeighbors = [];
+
+        dirs.forEach(([dr, dc]) => {
+            let nr = r + dr, nc = c + dc;
+            if (nr>=0 && nr<config.rows && nc>=0 && nc<config.cols) {
+                if (board[nr][nc].isFlagged) flagCount++;
+                else if (!board[nr][nc].isRevealed) hiddenNeighbors.push([nr, nc]);
+            }
+        });
+
+        if (flagCount === cellData.neighborMines) {
+            playSound('chord');
+            cellData.el.classList.add('anim-rubber');
+            setTimeout(()=> cellData.el.classList.remove('anim-rubber'), 500);
+
+            hiddenNeighbors.forEach(([nr, nc]) => {
+                revealCell(nr, nc, true); 
+            });
+        }
+    }
+
+    function revealCell(r, c, isChord = false) {
         let cellData = board[r][c];
         if (cellData.isRevealed || cellData.isFlagged) return;
 
         if (state.firstClick) {
             state.firstClick = false;
-            startTimer();
             placeMines(r, c);
         }
 
@@ -313,28 +404,35 @@
             return;
         }
 
-        playSound('click');
+        if(!isChord) {
+            playSound('click');
+            createCartoonDust(r, c);
+        }
         
-        // Flood fill (Iterative BFS to avoid stack overflow on huge grids)
-        let queue = [[r, c]];
-        let visited = new Set();
-        visited.add(`${r},${c}`);
+        let queue = [{r: r, c: c, dist: 0}];
+        let visited = new Set([`${r},${c}`]);
+        let delayBase = 20; 
 
         while (queue.length > 0) {
-            let [currR, currC] = queue.shift();
+            let {r: currR, c: currC, dist} = queue.shift();
             let currCell = board[currR][currC];
             
-            if (currCell.isFlagged) continue;
+            if (currCell.isFlagged || currCell.isRevealed) continue;
             
             currCell.isRevealed = true;
-            currCell.el.classList.add('revealed');
             state.revealedCount++;
 
-            if (currCell.neighborMines > 0) {
-                currCell.el.innerText = currCell.neighborMines;
-                currCell.el.classList.add(`num-${currCell.neighborMines}`);
-            } else {
-                // If 0, add neighbors
+            setTimeout(() => {
+                currCell.el.classList.add('revealed', 'anim-pop');
+                if(!isChord && dist > 0 && dist % 4 === 0) playSound('pop'); 
+                
+                if (currCell.neighborMines > 0) {
+                    currCell.el.innerText = currCell.neighborMines;
+                    currCell.el.classList.add('num', `num-${currCell.neighborMines}`);
+                }
+            }, dist * delayBase);
+
+            if (currCell.neighborMines === 0) {
                 const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
                 dirs.forEach(([dr, dc]) => {
                     let nr = currR + dr, nc = currC + dc;
@@ -342,14 +440,14 @@
                         let key = `${nr},${nc}`;
                         if (!visited.has(key) && !board[nr][nc].isRevealed && !board[nr][nc].isMine) {
                             visited.add(key);
-                            queue.push([nr, nc]);
+                            queue.push({r: nr, c: nc, dist: dist + 1});
                         }
                     }
                 });
             }
         }
 
-        checkWin();
+        setTimeout(checkWin, 200); 
     }
 
     /* ================= Game Flow & UI ================= */
@@ -358,98 +456,77 @@
         minesCountEl.innerText = count.toString().padStart(3, '0');
     }
 
-    function startTimer() {
-        state.timerId = setInterval(() => {
-            state.time++;
-            if(state.time > 999) state.time = 999;
-            timerEl.innerText = state.time.toString().padStart(3, '0');
-        }, 1000);
-    }
-
-    function stopTimer() {
-        if (state.timerId) {
-            clearInterval(state.timerId);
-            state.timerId = null;
-        }
-    }
-
     function gameOver(hitR, hitC) {
         state.status = 'lost';
-        stopTimer();
-        faceBtn.innerText = '💀';
+        clearFactsTimer(); // Stop popups
+        faceBtn.innerText = '😵';
         playSound('explosion');
         
-        gameWrapper.classList.add('shake');
+        document.body.classList.add('shake-screen');
         flashEl.classList.add('active');
-        setTimeout(() => flashEl.classList.remove('active'), 150);
-        setTimeout(() => gameWrapper.classList.remove('shake'), 500);
+        setTimeout(() => flashEl.classList.remove('active'), 200);
 
-        // Reveal all mines progressively
         let mines = [];
         for(let r=0; r<config.rows; r++) {
             for(let c=0; c<config.cols; c++) {
                 if(board[r][c].isMine && !(r===hitR && c===hitC) && !board[r][c].isFlagged) {
                     mines.push(board[r][c]);
                 }
-                // False flag marker
                 if(!board[r][c].isMine && board[r][c].isFlagged) {
                     board[r][c].el.innerHTML = '❌';
+                    board[r][c].el.style.backgroundColor = 'var(--danger)';
+                    board[r][c].el.classList.add('anim-pop');
                 }
             }
         }
         
-        // Hit mine
         board[hitR][hitC].el.classList.add('revealed', 'mine');
+        board[hitR][hitC].el.style.transform = "scale(1.5)";
+        board[hitR][hitC].el.style.zIndex = "20";
         board[hitR][hitC].el.innerHTML = '💣';
-        createParticles(hitR, hitC, 'explosion');
+        createComicExplosion(hitR, hitC);
 
-        // Chain explosion
-        mines.sort(() => Math.random() - 0.5);
+        mines.sort((a, b) => {
+             let dA = Math.hypot(a.el.dataset.r - hitR, a.el.dataset.c - hitC);
+             let dB = Math.hypot(b.el.dataset.r - hitR, b.el.dataset.c - hitC);
+             return dA - dB;
+        });
+        
         mines.forEach((m, idx) => {
             setTimeout(() => {
-                m.el.classList.add('revealed');
+                m.el.classList.add('revealed', 'anim-pop', 'mine');
                 m.el.innerHTML = '💣';
-            }, idx * (800 / Math.max(1, mines.length))); // Scale timing
+                if(idx % 4 === 0) playSound('pop'); 
+            }, idx * (1200 / Math.max(1, mines.length))); 
         });
     }
 
     function checkWin() {
+        if(state.status !== 'playing') return;
         const totalSafe = (config.rows * config.cols) - config.mines;
         if (state.revealedCount === totalSafe) {
             state.status = 'won';
-            stopTimer();
-            faceBtn.innerText = '😎';
+            clearFactsTimer(); // Stop popups
+            faceBtn.innerText = '🤩';
+            faceBtn.classList.add('anim-rubber');
             playSound('win');
             
-            // Flag remaining mines
             for(let r=0; r<config.rows; r++) {
                 for(let c=0; c<config.cols; c++) {
                     if(board[r][c].isMine && !board[r][c].isFlagged) {
-                        board[r][c].el.innerHTML = '🚩';
-                        board[r][c].el.classList.add('flagged');
+                        board[r][c].el.innerHTML = '🌟';
+                        board[r][c].el.classList.add('flagged', 'anim-pop');
                     }
                 }
             }
             state.minesLeft = 0;
             updateLCD();
-            
-            // Save Best Time (In-Memory per session requirements)
-            if (config.difficulty !== 'custom') {
-                const prevBest = bestTimes[config.difficulty];
-                if (!prevBest || state.time < prevBest) {
-                    bestTimes[config.difficulty] = state.time;
-                    bestTimeDisplay.innerText = state.time;
-                    bestTimeDisplay.style.color = 'var(--primary)';
-                    bestTimeDisplay.classList.add('anim-pop');
-                    setTimeout(()=>bestTimeDisplay.classList.remove('anim-pop'), 500);
-                }
-            }
 
-            triggerConfetti();
+            triggerCartoonConfetti();
         }
     }
 
-    /* ================= Visual Effects (Canvas) ================= */
+    /* ================= Cartoon Visual Effects ================= */
     let particles = [];
     let animFrame = null;
 
@@ -460,41 +537,101 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    function createParticles(r, c, type) {
+    function createCartoonDust(r, c) {
         const cell = board[r][c].el;
         const rect = cell.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 8; i++) {
             particles.push({
+                type: 'dust',
                 x: x, y: y,
-                vx: (Math.random() - 0.5) * 10,
-                vy: (Math.random() - 0.5) * 10,
+                vx: (Math.random() - 0.5) * 8,
+                vy: (Math.random() - 0.5) * 8,
+                radius: Math.random() * 8 + 4,
                 life: 1,
-                decay: Math.random() * 0.03 + 0.02,
-                color: type === 'explosion' ? `hsl(${Math.random()*60}, 100%, 50%)` : `hsl(${Math.random()*360}, 100%, 50%)`,
-                size: Math.random() * 4 + 2
+                decay: 0.05
             });
         }
         if(!animFrame) updateParticles();
     }
 
-    function triggerConfetti() {
-        for (let i = 0; i < 150; i++) {
+    function createComicExplosion(r, c) {
+        const cell = board[r][c].el;
+        const rect = cell.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        particles.push({
+            type: 'boom',
+            x: x, y: y,
+            radius: 10,
+            maxRadius: 150,
+            life: 1,
+            decay: 0.03
+        });
+
+        for (let i = 0; i < 15; i++) {
             particles.push({
-                x: Math.random() * canvas.width,
-                y: -10 - Math.random() * 50,
-                vx: (Math.random() - 0.5) * 5,
-                vy: Math.random() * 3 + 2,
+                type: 'star',
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 20,
+                vy: (Math.random() - 0.5) * 20,
+                rotation: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 15,
+                radius: Math.random() * 10 + 5,
                 life: 1,
-                decay: Math.random() * 0.005 + 0.005,
-                color: `hsl(${Math.random()*360}, 100%, 50%)`,
-                size: Math.random() * 6 + 4,
-                wobble: Math.random() * 10
+                decay: 0.02
             });
         }
         if(!animFrame) updateParticles();
+    }
+
+    function triggerCartoonConfetti() {
+        const colors = ['#e84118', '#4cd137', '#00a8ff', '#fbc531', '#9c88ff'];
+        for (let i = 0; i < 150; i++) {
+            particles.push({
+                type: 'confetti',
+                x: canvas.width / 2 + (Math.random() - 0.5) * 300,
+                y: canvas.height / 2 + (Math.random() - 0.5) * 300,
+                vx: (Math.random() - 0.5) * 15,
+                vy: (Math.random() - 0.5) * 20 - 5,
+                life: 1,
+                decay: Math.random() * 0.008 + 0.003,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                width: Math.random() * 15 + 10,
+                height: Math.random() * 15 + 10,
+                gravity: 0.3,
+                friction: 0.95,
+                rotation: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 20
+            });
+        }
+        if(!animFrame) updateParticles();
+    }
+
+    function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        let rot = Math.PI / 2 * 3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI / spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+            x = cx + Math.cos(rot) * outerRadius;
+            y = cy + Math.sin(rot) * outerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+
+            x = cx + Math.cos(rot) * innerRadius;
+            y = cy + Math.sin(rot) * innerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+        }
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
     }
 
     function updateParticles() {
@@ -503,22 +640,70 @@
 
         for (let i = particles.length - 1; i >= 0; i--) {
             let p = particles[i];
-            p.x += p.vx + Math.sin(p.life * p.wobble || 0) * 2;
-            p.y += p.vy;
-            p.life -= p.decay;
             
+            p.life -= p.decay;
+
             if (p.life > 0) {
                 active = true;
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.save();
+                
+                if (p.type === 'dust') {
+                    p.x += p.vx; p.y += p.vy;
+                    p.radius += 0.5; 
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = "#fff";
+                    ctx.fill();
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = "#111";
+                    ctx.stroke();
+                } 
+                else if (p.type === 'boom') {
+                    p.radius += (p.maxRadius - p.radius) * 0.2;
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = "#ff9f43";
+                    ctx.fill();
+                    ctx.lineWidth = 5;
+                    ctx.strokeStyle = "#111";
+                    ctx.stroke();
+                }
+                else if (p.type === 'star') {
+                    p.x += p.vx; p.y += p.vy;
+                    p.rotation += p.rotSpeed;
+                    ctx.globalAlpha = p.life;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    drawStar(0, 0, 5, p.radius * 2, p.radius);
+                    ctx.fillStyle = "#feca57";
+                    ctx.fill();
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = "#111";
+                    ctx.stroke();
+                }
+                else if (p.type === 'confetti') {
+                    p.vx *= p.friction; p.vy *= p.friction;
+                    p.vy += p.gravity;
+                    p.x += p.vx; p.y += p.vy;
+                    p.rotation += p.rotSpeed;
+                    ctx.globalAlpha = p.life;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.width/2, -p.height/2, p.width, p.height);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = "#111";
+                    ctx.strokeRect(-p.width/2, -p.height/2, p.width, p.height);
+                }
+
+                ctx.restore();
             } else {
                 particles.splice(i, 1);
             }
         }
-        ctx.globalAlpha = 1;
 
         if (active) {
             animFrame = requestAnimationFrame(updateParticles);
