@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Tetris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Tetris Style.css">
+</head>
+<body>
 
+    <h1>Neon Tetris</h1>
+
+    <div class="game-wrapper">
+        <!-- Left Stats Panel -->
+        <div class="side-panel left">
+            <div class="stat-box">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Lines</div>
+                <div class="stat-value" id="lines">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+        </div>
+
+        <!-- Main Game Canvas -->
+        <div class="canvas-container">
+            <canvas id="tetris" width="300" height="600"></canvas>
+            
+            <!-- Overlays -->
+            <div id="start-screen" class="overlay">
+                <button class="btn" id="start-btn">Start Game</button>
+            </div>
+            <div id="game-over" class="overlay hidden">
+                <h2>GAME OVER</h2>
+                <div style="margin-bottom: 20px; font-size: 1.2rem;">Final Score: <span id="final-score" style="color:var(--neon-cyan)">0</span></div>
+                <button class="btn" id="restart-btn">Play Again</button>
+            </div>
+            <div id="pause-screen" class="overlay hidden">
+                <h2>PAUSED</h2>
+                <button class="btn" id="resume-btn">Resume</button>
+            </div>
+        </div>
+
+        <!-- Right Preview Panel -->
+        <div class="side-panel right">
+            <div class="stat-box">
+                <div class="stat-label">Next</div>
+                <canvas id="next-piece" width="120" height="120"></canvas>
+            </div>
+            <div class="controls-hint">
+                <div><span>← / →</span> Move</div>
+                <div><span>↑</span> Rotate</div>
+                <div><span>↓</span> Soft Drop</div>
+                <div><span>Space</span> Hard Drop</div>
+                <div><span>P</span> Pause</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Controls -->
+    <div class="mobile-controls">
+        <div class="d-pad">
+            <div class="ctrl-btn" id="btn-left">←</div>
+            <div class="ctrl-btn" style="transform: translateY(20px);" id="btn-down">↓</div>
+            <div class="ctrl-btn" id="btn-right">→</div>
+        </div>
+        <div class="action-buttons">
+            <div class="ctrl-btn btn-large" id="btn-rotate">↻</div>
+            <div class="ctrl-btn btn-large" style="border-color:var(--neon-cyan); color:var(--neon-cyan);" id="btn-drop">⤓</div>
+        </div>
+    </div>
+  <script src="Tetris Script,js"> </script>
+</body>
+</html>
