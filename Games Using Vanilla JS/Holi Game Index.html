@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌈 Holi Color Battle – Auto-Shooter Edition</title>
+</head>
+<body>
 
+<!-- Canvas -->
+<canvas id="gameCanvas"></canvas>
+
+<!-- Color Splash Layer -->
+<div id="splashLayer"></div>
+
+<!-- Hit Flash -->
+<div id="hitFlash"></div>
+
+<!-- Festival Banner -->
+<div id="festivalBanner">
+  <div class="banner-text" id="mainBannerText">🌈 HAPPY HOLI! 🌈</div>
+  <div class="banner-text" style="font-size:clamp(18px,3vw,32px);">बुरा न मानो होली है!</div>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-panel" id="scoreBox">
+    <span class="label">Score</span>
+    <span class="val" id="scoreVal">0</span>
+  </div>
+  <div class="hud-panel" id="statsRow">
+    <div class="stat"><div class="s-label">Hits</div><div class="s-val" id="hitsVal">0</div></div>
+    <div class="stat"><div class="s-label">Accuracy</div><div class="s-val" id="accVal">0%</div></div>
+    <div class="stat"><div class="s-label">Enemies</div><div class="s-val" id="enemyCount">0</div></div>
+  </div>
+  <div class="hud-panel" id="comboBox">
+    <div class="combo-label">Combo</div>
+    <div id="combo-display">x1</div>
+  </div>
+  <div class="hud-panel" id="timerBox">
+    <div class="t-label">Time</div>
+    <div id="timer">03:00</div>
+  </div>
+</div>
+
+<!-- Ammo -->
+<div id="ammoBar"></div>
+<div id="reloadMsg">⟳ RELOADING...</div>
+
+<!-- Weapon Bar -->
+<div id="weaponBar">
+  <div class="weapon-slot active" id="w0"><span class="wkey">1</span>🎨<span class="wname">Pink Gulal</span></div>
+  <div class="weapon-slot" id="w1"><span class="wkey">2</span>💛<span class="wname">Yellow Cannon</span></div>
+  <div class="weapon-slot" id="w2"><span class="wkey">3</span>🌈<span class="wname">Rainbow Spray</span></div>
+  <div class="weapon-slot" id="w3"><span class="wkey">4</span>💧<span class="wname">Water Bomb</span></div>
+</div>
+
+<!-- Controls Hint -->
+<div id="controlsHint">
+  <div><span class="ch">WASD</span> Move Character</div>
+  <div><span class="ch">AUTO</span> Automatically shoots near enemies!</div>
+  <div><span class="ch">AOE</span> Massive Color Spread when surrounded</div>
+  <div><span class="ch">1-4</span> Change Color/Weapon</div>
+  <div><span class="ch">Space</span> Dash</div>
+  <div><span class="ch">H</span> Happy Holi!</div>
+</div>
+
+<!-- Menu Screen -->
+<div id="menuScreen">
+  <div class="menu-particles" id="menuParticles"></div>
+  <div class="menu-title">
+    <div class="holi-text">🌈 HOLI BATTLE 🌈</div>
+    <div class="subtitle">Auto-Shooter Edition</div>
+    <div class="devanagari">होली है! रंगों का त्योहार</div>
+  </div>
+  <div class="mode-grid">
+    <div class="mode-btn" onclick="selectMode('vs-ai')">
+      <span class="mode-icon">🤖</span>
+      <div class="mode-name">VS AI</div>
+      <div class="mode-desc">Survive the Color War</div>
+    </div>
+    <div class="mode-btn" onclick="selectMode('multiplayer')">
+      <span class="mode-icon">👥</span>
+      <div class="mode-name">Endless</div>
+      <div class="mode-desc">Enemies never stop</div>
+    </div>
+    <div class="mode-btn" onclick="selectMode('freeplay')">
+      <span class="mode-icon">🎉</span>
+      <div class="mode-name">Free Play</div>
+      <div class="mode-desc">Celebrate freely!</div>
+    </div>
+  </div>
+  <div class="diff-row" id="diffRow">
+    <div class="diff-btn active" onclick="selectDiff('easy',this)">😊 Easy</div>
+    <div class="diff-btn" onclick="selectDiff('medium',this)">😤 Medium</div>
+    <div class="diff-btn" onclick="selectDiff('madness',this)">🔥 Festival Madness</div>
+  </div>
+  <button class="start-btn" onclick="startGame()">🎨 THROW COLORS!</button>
+</div>
+
+<!-- End Screen -->
+<div id="endScreen">
+  <div class="end-title">🌈 HOLI CHAMPION 🌈</div>
+  <div class="end-score">Score: <span id="finalScore">0</span></div>
+  <div class="end-acc">Accuracy: <span id="finalAcc">0%</span> &nbsp;|&nbsp; Hits: <span id="finalHits">0</span></div>
+  <div class="end-btns">
+    <button class="end-btn primary" onclick="startGame()">🎨 Play Again</button>
+    <button class="end-btn secondary" onclick="changeMode()">🎮 Change Mode</button>
+  </div>
+</div>
+</body>
+</html>
