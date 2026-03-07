@@ -1,5 +1,5 @@
 // Manthan Vinzuda  //
-//<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
 // ═══════════════════════════════════════════════════
 //  HOLI COLOR BATTLE GAME – Vanilla JS + Three.js
