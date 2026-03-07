@@ -1,1 +1,476 @@
+  @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Baloo+2:wght@400;600;800&family=Space+Grotesk:wght@400;700&display=swap');
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --pink: #FF2E63;
+    --yellow: #FFD93D;
+    --cyan: #00EAD3;
+    --orange: #FF6B35;
+    --purple: #845EC2;
+    --green: #00C897;
+    --blue: #4FC3F7;
+    --red: #FF4757;
+  }
+
+  body {
+    background: #0a0a0a;
+    overflow: hidden;
+    font-family: 'Baloo 2', cursive;
+    user-select: none;
+  }
+
+  #gameCanvas {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+  }
+
+  /* ─── HUD ─── */
+  #hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    pointer-events: none;
+    z-index: 100;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .hud-panel {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 10px 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  #scoreBox {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  #scoreBox .label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+  #scoreBox .val { font-size: 28px; font-weight: 800; color: var(--yellow); line-height: 1; }
+
+  #statsRow {
+    display: flex;
+    gap: 20px;
+  }
+  .stat { text-align: center; }
+  .stat .s-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+  .stat .s-val { font-size: 18px; font-weight: 700; color: #fff; }
+
+  #comboBox {
+    text-align: center;
+    min-width: 90px;
+  }
+  #comboBox .combo-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+  #combo-display {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--pink);
+    transition: transform 0.15s;
+  }
+  #combo-display.pop { transform: scale(1.4); }
+
+  #timerBox { text-align: center; }
+  #timerBox .t-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+  #timer { font-size: 28px; font-weight: 800; color: var(--cyan); }
+
+  /* ─── Weapon HUD ─── */
+  #weaponBar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .weapon-slot {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.15);
+    transition: all 0.2s;
+    font-size: 26px;
+    gap: 2px;
+    position: relative;
+  }
+  .weapon-slot.active {
+    border-color: var(--yellow);
+    box-shadow: 0 0 20px rgba(255,217,61,0.5);
+    transform: translateY(-6px) scale(1.08);
+  }
+  .weapon-slot .wkey {
+    font-size: 10px;
+    color: #888;
+    position: absolute;
+    top: 4px; right: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .weapon-slot .wname {
+    font-size: 8px;
+    color: #ccc;
+    text-align: center;
+    line-height: 1.2;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ─── Color splash overlay ─── */
+  #splashLayer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 300;
+    overflow: hidden;
+  }
+
+  .splash {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: splashAnim 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes splashAnim {
+    0% { transform: translate(-50%,-50%) scale(0); opacity:1; }
+    60% { transform: translate(-50%,-50%) scale(1); opacity:0.7; }
+    100% { transform: translate(-50%,-50%) scale(1.5); opacity:0; }
+  }
+
+  /* ─── HIT text ─── */
+  .hit-text {
+    position: absolute;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 28px;
+    pointer-events: none;
+    animation: hitFloat 1s ease-out forwards;
+    z-index: 400;
+    text-shadow: 0 0 10px currentColor;
+  }
+  @keyframes hitFloat {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    80% { transform: translate(-50%, -120%) scale(1.1); opacity: 1; }
+    100% { transform: translate(-50%, -160%) scale(1); opacity: 0; }
+  }
+
+  /* ─── Menu Screen ─── */
+  #menuScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a0a2e 0%, #0d1b2a 50%, #1a0d0a 100%);
+    overflow: hidden;
+  }
+
+  .menu-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .menu-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0.6; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .menu-title {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 8px;
+  }
+
+  .holi-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(52px, 10vw, 96px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #FF2E63, #FFD93D, #00EAD3, #845EC2, #FF6B35);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    line-height: 1;
+    text-shadow: none;
+    filter: drop-shadow(0 0 30px rgba(255,46,99,0.5));
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .subtitle {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(16px, 3vw, 24px);
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+    letter-spacing: 2px;
+  }
+
+  .devanagari {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: clamp(14px, 2.5vw, 20px);
+    color: var(--yellow);
+    margin-top: 8px;
+    opacity: 0.9;
+  }
+
+  .mode-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 32px 0 24px;
+    position: relative;
+    z-index: 10;
+    max-width: 640px;
+    width: 90vw;
+  }
+
+  .mode-btn {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 20px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'Baloo 2', cursive;
+    color: #fff;
+    pointer-events: all;
+  }
+
+  .mode-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    border-color: var(--yellow);
+    background: rgba(255,217,61,0.1);
+    box-shadow: 0 10px 30px rgba(255,217,61,0.2);
+  }
+
+  .mode-btn .mode-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+  .mode-btn .mode-name { font-size: 15px; font-weight: 700; }
+  .mode-btn .mode-desc { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .diff-row {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 20px;
+  }
+
+  .diff-btn {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+    pointer-events: all;
+  }
+  .diff-btn:hover, .diff-btn.active {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: rgba(0,234,211,0.1);
+  }
+
+  .start-btn {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    border: none;
+    border-radius: 50px;
+    padding: 16px 60px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    z-index: 10;
+    pointer-events: all;
+    box-shadow: 0 8px 32px rgba(255,46,99,0.4);
+    letter-spacing: 1px;
+  }
+  .start-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 12px 40px rgba(255,46,99,0.6);
+  }
+
+  /* ─── End Screen ─── */
+  #endScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 0, 15, 0.92);
+    backdrop-filter: blur(8px);
+  }
+
+  .end-title {
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFD93D, #FF2E63, #00EAD3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    animation: gradientShift 2s ease infinite;
+  }
+
+  .end-score { font-size: clamp(18px, 4vw, 36px); color: #fff; margin: 16px 0 8px; font-weight: 700; }
+  .end-acc { font-size: 20px; color: #aaa; margin-bottom: 32px; }
+
+  .end-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .end-btn {
+    padding: 12px 32px;
+    border-radius: 50px;
+    border: 2px solid;
+    font-family: 'Baloo 2', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    pointer-events: all;
+  }
+  .end-btn.primary { background: var(--pink); border-color: var(--pink); color: #fff; box-shadow: 0 6px 20px rgba(255,46,99,0.4); }
+  .end-btn.secondary { background: transparent; border-color: var(--cyan); color: var(--cyan); }
+  .end-btn:hover { transform: scale(1.06); }
+
+  /* ─── Controls hint ─── */
+  #controlsHint {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 100;
+    font-size: 12px;
+    color: #eee;
+    line-height: 1.8;
+    pointer-events: none;
+    display: none;
+  }
+  #controlsHint .ch { color: var(--yellow); font-weight: 800; padding-right: 6px; }
+
+  /* ─── Color hit screen flash ─── */
+  #hitFlash {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 250;
+    opacity: 0;
+    transition: opacity 0.1s;
+    border: 8px solid transparent;
+  }
+  #hitFlash.flash {
+    animation: flashAnim 0.4s forwards;
+  }
+  @keyframes flashAnim {
+    0% { opacity: 0.6; }
+    100% { opacity: 0; }
+  }
+
+  /* ─── Ammo bar ─── */
+  #ammoBar {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .ammo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 6px var(--yellow);
+    transition: all 0.2s;
+  }
+  .ammo-dot.empty { background: #333; box-shadow: none; }
+
+  /* ─── Reload indicator ─── */
+  #reloadMsg {
+    position: fixed;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 71, 87, 0.9);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 20px;
+    border-radius: 20px;
+    z-index: 101;
+    pointer-events: none;
+    display: none;
+    font-family: 'Baloo 2', cursive;
+    letter-spacing: 1px;
+  }
+
+  /* ─── Banner ─── */
+  #festivalBanner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    pointer-events: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .banner-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFD93D, #FF2E63, #00EAD3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    animation: gradientShift 1.5s ease infinite;
+    filter: drop-shadow(0 0 20px rgba(255,217,61,0.8));
+  }
+  @keyframes bannerIn {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    60% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
