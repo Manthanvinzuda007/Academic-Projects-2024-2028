@@ -170,20 +170,22 @@
 
                 await new Promise(r => setTimeout(r, 700));
 
-                state.dice = Math.floor(Math.random() * 6) + 1;
+                state.dice = Math.floor(Math.random() * 6);
                 drawDice(p.color, state.dice);
                 dw.querySelector('.dice-face').classList.remove('rolling');
                 state.rolling = false;
 
-                if (state.dice === 6) {
+                 if (state.dice == 6) {
                     state.sixChain++;
-                    if (state.sixChain === 3) {
+                   if (state.sixChain === 3) {
                         state.sixChain = 0;
                         return nextTurn();
-                    }
-                } else {
-                    state.sixChain = 0;
-                }
+                     }
+                     
+                    } 
+                    else {
+                        state.sixChain = 0;
+                     }
 
                 const moves = getMoves();
                 if (moves.length === 0) {
