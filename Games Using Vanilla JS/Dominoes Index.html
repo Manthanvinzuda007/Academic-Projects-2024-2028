@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> The Dominoes Game || By Manthan Vinzuda </title>
+    <link rel="stylesheet" href="Dominoes Style.css">  
+</head>
+<body>
+
+    <!-- Main Menu -->
+    <div id="menu-screen">
+        <div class="menu-modal">
+            <h1>DOMINOES</h1>
+            <p style="color: #aaa; margin-bottom: 20px;">Classic Draw Rules</p>
+            
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="color: var(--highlight-color); font-weight: bold;">Game Mode:</label>
+                <select id="mode-select" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; background: #333; color: white; border: 1px solid #555;">
+                    <option value="pvai-easy">Player vs AI (Easy)</option>
+                    <option value="pvai-medium" selected>Player vs AI (Medium)</option>
+                    <option value="pvai-hard">Player vs AI (Hard)</option>
+                    <option value="pvp">Player vs Player (Local)</option>
+                </select>
+            </div>
+
+            <div class="menu-options">
+                <button onclick="app.startGame()" style="background: var(--highlight-color); color: #000; font-size: 1.2rem; padding: 15px;">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game UI -->
+    <div id="game-screen" class="hidden">
+        <header>
+            <div class="score-board">
+                <div>P1 Score: <span id="ui-p1-score" style="color: var(--highlight-color);">0</span></div>
+                <div>P2/AI Score: <span id="ui-p2-score" style="color: var(--danger-color);">0</span></div>
+            </div>
+            <div class="turn-indicator" id="ui-turn-msg">Game Starting...</div>
+            <div class="controls">
+                <button id="btn-sound" onclick="app.toggleSound()" title="Toggle Sound">🔊</button>
+                <button id="btn-theme" onclick="app.toggleTheme()" title="Toggle Dark Mode">🌙</button>
+                <button id="btn-hint" onclick="app.game.showHint()" title="Hint">💡</button>
+                <button id="btn-undo" onclick="app.game.undoMove()" title="Undo Move (PvP)" class="hidden">↩️</button>
+                <button onclick="app.quitToMenu()" title="Quit">❌</button>
+            </div>
+        </header>
+
+        <div id="opponent-area">
+            <!-- Opponent hand renders here -->
+        </div>
+
+        <div id="middle-section">
+            <div id="boneyard-area">
+                <div style="font-size: 0.8rem; color: #ccc; font-weight: bold;">BONEYARD</div>
+                <div id="ui-boneyard" class="boneyard-pile" onclick="app.game.handleBoneyardClick()"></div>
+                <div id="ui-boneyard-count" style="font-weight: bold;">14</div>
+            </div>
+            
+            <div id="board-container">
+                <div id="board">
+                    <!-- Played tiles render here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="player-area">
+            <div class="player-info">
+                <span id="ui-player-name">Player 1</span>
+                <button id="btn-pass" class="hidden" onclick="app.game.passTurn()">Pass Turn</button>
+            </div>
+            <div id="player-hand">
+                <!-- Current player hand renders here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="choice-modal" class="overlay hidden">
+        <div class="modal-box">
+            <h2>Where to play?</h2>
+            <div id="choice-preview" style="display: flex; justify-content: center; margin-bottom: 20px;"></div>
+            <div class="flex-buttons">
+                <button onclick="app.game.executePlay('left')">Play Left</button>
+                <button onclick="app.game.executePlay('right')">Play Right</button>
+            </div>
+            <button onclick="app.game.cancelPlay()" style="margin-top: 15px; background: transparent; border: 1px solid #555;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="game-over-modal" class="overlay hidden">
+        <div class="modal-box">
+            <h2 id="go-title" style="font-size: 2.5rem; margin-bottom: 10px;">Game Over</h2>
+            <p id="go-desc" style="font-size: 1.2rem;"></p>
+            
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-around;">
+                <div>
+                    <div style="font-size: 0.8rem; color: #aaa;">P1 Pips</div>
+                    <div id="go-p1-score" style="font-size: 1.5rem; font-weight: bold; color: var(--highlight-color);">0</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.8rem; color: #aaa;">P2 Pips</div>
+                    <div id="go-p2-score" style="font-size: 1.5rem; font-weight: bold; color: var(--danger-color);">0</div>
+                </div>
+            </div>
+
+            <button onclick="app.startGame()" style="width: 100%; padding: 15px; background: var(--highlight-color); color: black;">Play Again</button>
+            <button onclick="app.quitToMenu()" style="width: 100%; padding: 10px; margin-top: 10px; background: transparent; border: 1px solid #555;">Main Menu</button>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas" class="hidden"></canvas>
+    <script src="Dominoes Script.js"></script>
+</body>
+</html>
