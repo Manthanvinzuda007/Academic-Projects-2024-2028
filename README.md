@@ -1,18 +1,32 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,40:0f2942,80:1a4a7a,100:2d6db5&height=230&section=header&text=Ultimate%20Programming%20Projects&fontSize=40&fontColor=ffffff&fontAlignY=38&desc=A%20Multi-Language%20Programming%20Portfolio%20by%20M.S.Vinzuda&descAlignY=58&descSize=17&animation=fadeIn"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=240&section=header&text=Ultimate%20Programming%20Projects&fontSize=42&fontColor=ffffff&fontAlignY=38&desc=A%20Multi-Language%20Programming%20Portfolio%20by%20M.S.Vinzuda&descAlignY=60&descSize=18&animation=fadeIn"/>
 
 <br/>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=20&pause=900&color=4D9DE0&center=true&vCenter=true&width=750&height=52&lines=Multi-Language+Programming+Portfolio+%F0%9F%8C%90;C+%7C+C%2B%2B+%7C+Python+%7C+Java+%7C+JavaScript+%7C+Rust;Data+Structures+%26+Algorithms+%F0%9F%A7%A0;25%2B+Games+Across+Python+%26+JavaScript+%F0%9F%8E%AE;System+Programming+%26+Networking+%E2%9A%99%EF%B8%8F;Built+by+M.S.Vinzuda+%F0%9F%9A%80)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=21&duration=2800&pause=800&color=58A6FF&center=true&vCenter=true&width=780&height=56&lines=Multi+Language+Programming+Projects+%F0%9F%8C%90;Game+Development+Experiments+%F0%9F%8E%AE;Algorithms+%26+Data+Structures+%F0%9F%A7%A0;System+Programming+Projects+%E2%9A%99%EF%B8%8F;25%2B+Games+Across+Python+%26+JavaScript;Built+by+M.S.Vinzuda+%F0%9F%9A%80)](https://git.io/typing-svg)
 
 <br/>
 
-[![Repo Size](https://img.shields.io/github/repo-size/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=databricks&logoColor=white&color=0f6cbd&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028)
-[![Stars](https://img.shields.io/github/stars/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=starship&logoColor=white&color=e8a838&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/stargazers)
-[![Last Commit](https://img.shields.io/github/last-commit/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=git&logoColor=white&color=2ea043&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/commits)
-[![Languages](https://img.shields.io/github/languages/count/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=polywork&logoColor=white&color=9b59b6&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028)
-[![License](https://img.shields.io/badge/License-MIT-0f6cbd?style=for-the-badge&labelColor=0d1117)](LICENSE)
+[![Repo Size](https://img.shields.io/github/repo-size/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=databricks&logoColor=white&color=238636&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028)
+[![Stars](https://img.shields.io/github/stars/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=starship&logoColor=white&color=e3b341&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/stargazers)
+[![Forks](https://img.shields.io/github/forks/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=git&logoColor=white&color=58a6ff&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/forks)
+[![Last Commit](https://img.shields.io/github/last-commit/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=github&logoColor=white&color=a371f7&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/commits)
+[![Languages](https://img.shields.io/github/languages/count/Manthanvinzuda007/Academic-Projects-2024-2028?style=for-the-badge&logo=polywork&logoColor=white&color=f0883e&labelColor=0d1117)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028)
+
+</div>
+
+---
+
+## 📊 GitHub Language Statistics
+
+<div align="center">
+
+[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Manthanvinzuda007&repo=Academic-Projects-2024-2028&layout=donut-vertical&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10)](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028)
+
+[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Manthanvinzuda007&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=e3b341&text_color=c9d1d9&include_all_commits=true)](https://github.com/Manthanvinzuda007)
+
+[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Manthanvinzuda007&bg_color=0d1117&color=58a6ff&line=238636&point=58a6ff&area=true&area_color=238636&hide_border=true)](https://github.com/Manthanvinzuda007)
 
 </div>
 
@@ -22,285 +36,326 @@
 
 <div align="center">
 
-| 📁 Structure | 💻 Languages | 🎮 Games | ⭐ Projects | 🛠️ Setup | 👤 Author |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| [Repository Structure](#-repository-structure) | [C / C++ / C#](#-c--c--c-projects) · [Python](#-python-projects) · [Java](#-java-projects) | [JavaScript Games](#-javascript-games-showcase) | [Featured Projects](#-featured-projects) | [Installation](#-installation-guide) | [About Me](#-about-the-author) |
-
-</div>
-
-<div align="center">
-
-[Repository Structure](#-repository-structure) &nbsp;•&nbsp;
-[C / C++ / C# Projects](#-c--c--c-projects) &nbsp;•&nbsp;
-[Java Projects](#-java-projects) &nbsp;•&nbsp;
-[Python Projects](#-python-projects) &nbsp;•&nbsp;
-[JavaScript Games](#-javascript-games-showcase) &nbsp;•&nbsp;
-[Ruby Projects](#-ruby-projects) &nbsp;•&nbsp;
-[Rust Projects](#-rust-projects) &nbsp;•&nbsp;
-[Featured Projects](#-featured-projects) &nbsp;•&nbsp;
-[Installation](#-installation-guide) &nbsp;•&nbsp;
-[Author](#-about-the-author)
+[📋 Repository Map](#-repository-map) &nbsp;|&nbsp;
+[📁 Folder Explorer](#-folder-explorer) &nbsp;|&nbsp;
+[🔧 C / C++ / C#](#-c--c--c-projects) &nbsp;|&nbsp;
+[☕ Java](#-java-projects) &nbsp;|&nbsp;
+[🐍 Python](#-python-projects) &nbsp;|&nbsp;
+[🌐 JavaScript Games](#-javascript-games-showcase) &nbsp;|&nbsp;
+[💎 Ruby](#-ruby-projects) &nbsp;|&nbsp;
+[🦀 Rust](#-rust-projects) &nbsp;|&nbsp;
+[⭐ Featured](#-featured-projects) &nbsp;|&nbsp;
+[⚙️ Installation](#%EF%B8%8F-installation-guide) &nbsp;|&nbsp;
+[👤 Author](#-about-the-author)
 
 </div>
 
 ---
 
-## 🗂️ Repository Structure
+## 📋 Repository Map
 
-> A top-level view of the entire repository, organized by language and project category.
+### 🧠 Project Ecosystem — Mindmap
+
+```mermaid
+mindmap
+  root((Academic Projects))
+    Languages
+      C and C++
+        System Programming
+        Data Structures
+        Networking
+      C Sharp
+        OOP
+        Calculator
+      Python
+        Games
+        Banking
+        GUI
+      Java
+        OOP
+        Banking
+      JavaScript
+        20 Plus Browser Games
+        Map Generator
+      Ruby
+        Banking
+        Algorithms
+      Rust
+        Task Manager
+        Basics
+    Domains
+      Algorithms
+        AVL Tree
+        BST
+        Sorting
+        Recursion
+      Games
+        Chess
+        Snake
+        Tetris
+        Sudoku
+        Ludo
+        Minesweeper
+      System Programming
+        Fork
+        Threads
+        Process Control
+      Networking
+        TCP Server
+        Multi-Client
+        Sockets
+      Banking Systems
+        Auth
+        Admin
+        Transactions
+      Student Management
+        CRUD
+        JSON Storage
+        File Handling
+```
+
+---
+
+## 📁 Folder Explorer
+
+> Click any folder to jump directly to it on GitHub.
+
+<div align="center">
+
+| 📂 Folder | 🔗 Quick Link | 🌐 Languages | 📊 Projects |
+|-----------|-------------|-------------|------------|
+| 🔧 **C / C++ / C# Projects** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/C%20C%2B%2B%20C%23%20Projects) | C · C++ · C# | Data Structures · Networking · System Programming |
+| ☕ **Java Projects** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Java%20Projects) | Java | OOP · Banking · Games |
+| 🐍 **Python Projects** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects) | Python | Banking · Games · GUI · Utilities |
+| 🌐 **JavaScript Games** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Games%20Using%20Vanilla%20JS) | HTML · CSS · JS | 20+ Browser Games |
+| 💎 **Ruby Projects** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Ruby%20Projects) | Ruby | Banking · Algorithms |
+| 🦀 **Rust Projects** | [Browse Folder →](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Rust%20Projects) | Rust | Task Manager · Basics |
+
+</div>
+
+---
+
+## 🗂️ Full Repository Structure
 
 ```mermaid
 flowchart TD
-    ROOT[Academic Projects 2024-2028] --> CC[C / C++ / C# Projects]
-    ROOT --> PY[Python Projects]
-    ROOT --> JV[Java Projects]
-    ROOT --> JS[Games Using Vanilla JS]
-    ROOT --> RB[Ruby Projects]
-    ROOT --> RS[Rust Projects]
+    ROOT["🎓 Academic Projects 2024–2028"] --> CC["🔧 C / C++ / C# Projects"]
+    ROOT --> PY["🐍 Python Projects"]
+    ROOT --> JV["☕ Java Projects"]
+    ROOT --> JS["🌐 Games Using Vanilla JS"]
+    ROOT --> RB["💎 Ruby Projects"]
+    ROOT --> RS["🦀 Rust Projects"]
 
-    CC --> C[C Language Project]
-    CC --> CPP[C++ Language Project]
-    CC --> CS[C# Language Project]
+    CC --> C_L["📁 C Language Project"]
+    CC --> CPP_L["📁 C++ Language Project"]
+    CC --> CS_L["📁 C# Language Project"]
 
-    C --> C_DS[Data Structures\nAVL Tree · BST]
-    C --> C_NET[Networking\nTCP Multi-Client Server]
-    C --> C_SYS[System Programming\nFork · Thread Pool]
-    C --> C_UTIL[Utilities\nCalculator · Matrix · Patterns]
+    C_L --> C1["🌳 AVL Tree · BST"]
+    C_L --> C2["🌐 TCP Multi-Client Server"]
+    C_L --> C3["⚙️ Fork · Thread Pool"]
+    C_L --> C4["📐 Matrix · Patterns · Animations"]
+    C_L --> C5["🔢 Calculators"]
 
-    CPP --> CPP_STU[Student Management]
-    CPP --> CPP_GAME[Games - XO]
-    CPP --> CPP_PAT[Pattern Programs]
+    CPP_L --> CPP1["🏫 Student Management"]
+    CPP_L --> CPP2["🎮 XO Game"]
+    CPP_L --> CPP3["📐 Pattern Programs 1–7"]
 
-    CS --> CS_CALC[Calculator]
-    CS --> CS_HW[Hello World]
+    CS_L --> CS1["🔢 Calculator"]
+    CS_L --> CS2["👋 Hello World"]
 
-    PY --> PY_BANK[Banking System V1\nmain · auth · banking · admin]
-    PY --> PY_STU[Student Manager\nmain · model · database]
-    PY --> PY_GAMES[Games\nChess · Snake · Sudoku · Maze]
-    PY --> PY_GUI[GUI Apps\nClock · Solar System · QR Gen]
-    PY --> PY_UTIL[Utilities\nScientific Calc · Task Manager]
+    PY --> PY_B["🏦 Banking System V1\nmain · auth · banking · admin · db"]
+    PY --> PY_S["🏫 Student Manager\nmain · model · database"]
+    PY --> PY_G["🎮 Games\nChess · Snake · Maze · Sudoku · Slide Puzzle"]
+    PY --> PY_UI["🖥️ GUI Apps\nClock · Solar System · QR Gen"]
+    PY --> PY_U["🔬 Utilities\nScientific Calc · Task Manager · Study Alert"]
 
-    JV --> JV_BANK[Bank Account]
-    JV --> JV_OOP[OOP - Abstraction]
-    JV --> JV_GAME[Guess Game]
-    JV --> JV_CALC[Calculator]
+    JV --> JV1["🏦 BankAccount · Saving Account"]
+    JV --> JV2["🏛️ Abstraction · Interfaces"]
+    JV --> JV3["🎮 Guess Game"]
+    JV --> JV4["🔢 Calculator"]
 
-    JS --> JS_BOARD[Board Games\nChess · Checkers · Ludo · Backgammon]
-    JS --> JS_PUZZLE[Puzzle Games\nSudoku · Minesweeper · Crossword]
-    JS --> JS_ACTION[Action Games\nSnake · Tetris · Whack-A-Mole]
-    JS --> JS_MAP[Generators\nMap · Random Map]
-    JS --> JS_OTHER[More Games\nReversi · Dominoes · Connect4 · Battleship]
+    JS --> JS_B["♟️ Board\nChess · Ludo · Backgammon · Checkers"]
+    JS --> JS_P["🧩 Puzzle\nSudoku · Minesweeper · Crossword · XO"]
+    JS --> JS_A["🕹️ Action\nSnake · Tetris · Whack-A-Mole · Table Tennis"]
+    JS --> JS_S["🧠 Strategy\nReversi · Connect 4 · Battleship · Dominoes"]
+    JS --> JS_G["🗺️ Generators\nMap · Random Map · Holi Game"]
+    JS --> JS_O["🏘️ Other\nMonopoly"]
 
-    RB --> RB_BANK[Banking System]
-    RB --> RB_LOGIC[Armstrong Number · Palindrome]
-    RB --> RB_GAME[Ruby Game]
+    RB --> RB1["🏦 Banking System"]
+    RB --> RB2["💡 Armstrong · Palindrome"]
+    RB --> RB3["🎮 Ruby Game"]
 
-    RS --> RS_TASK[Task Manager]
-    RS --> RS_INPUT[User Input]
+    RS --> RS1["✅ Task Manager"]
+    RS --> RS2["📥 User Input"]
 ```
 
 ---
 
 ## 🔧 C / C++ / C# Projects
 
-> Low-level systems, data structures, networking, and pattern programming — the foundation of computer science.
-
-### Internal Structure
+> The core of systems programming — data structures, networking, multithreading, process control, and pattern algorithms.
 
 ```mermaid
 flowchart LR
-    CC[C / C++ / C# Projects] --> C[C Language]
-    CC --> CPP[C++ Language]
-    CC --> CS[C# Language]
+    CC["C / C++ / C# Projects"] --> C["⚙️ C Language"]
+    CC --> CPP["🔧 C++ Language"]
+    CC --> CS["🔷 C# Language"]
 
-    C --> DS[Data Structures]
-    C --> NET[Networking]
-    C --> SYS[System / OS]
-    C --> CALC[Calculators]
-    C --> ANIM[Animations]
+    C --> DS["Data Structures\nAVL Tree · BST"]
+    C --> NET["Networking\nTCP Server"]
+    C --> SYS["System\nFork · Threads"]
+    C --> VIS["Visual\nAnimations · Patterns"]
+    C --> CALC["Utilities\nCalculators"]
 
-    CPP --> STU[Student Mgmt]
-    CPP --> GAME[XO Game]
-    CPP --> PAT[Patterns]
+    CPP --> OOP["OOP\nStudent Mgmt"]
+    CPP --> GAME["Games\nXO"]
+    CPP --> PAT["Patterns"]
 
-    CS --> CSCALC[Calculator]
-    CS --> CSHW[Hello World]
+    CS --> CSCALC["Calculator"]
+    CS --> CSHW["Hello World"]
 ```
 
 ### 📄 C Language — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `SELF-BALANCING AVL TREE.c` | 🌳 Data Structures | Self-balancing binary search tree with LL/RR/LR/RL rotations |
-| `Binary Search Tree.c` | 🌳 Data Structures | BST with insert, delete, and traversal |
-| `TCP Multi Client Server.c` | 🌐 Networking | Multi-client TCP server using POSIX sockets and threads |
-| `Multithreaded Thread Pool.c` | ⚙️ System | Thread pool implementation using pthreads |
-| `Fork .c` / `Fork 1–4.c` | ⚙️ System | Process creation and management using fork() |
-| `Matrix .c` | 🔢 Math | Matrix operations and computations |
-| `Full Calculator.c` | 🔢 Utility | Complete arithmetic calculator in C |
-| `Calculate in C.c` | 🔢 Utility | Basic calculation program |
-| `File Student MGT.c` | 🏫 Management | File-based student record management |
-| `Latter Animation.c` | 🎨 Visual | Letter animation effects in terminal |
-| `MANTHAN .c` / `MATHAN ANIMATION.c` | 🎨 Visual | Name animation in terminal |
-| `Typing Ani.c` | 🎨 Visual | Typing animation effect |
-| `Pattern 1–2.c` / `Pattern.c` | 📐 Patterns | Star and character pattern generators |
-| `Hello world.c` | 👋 Basics | Hello World in C |
+| [`SELF-BALANCING AVL TREE.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/SELF-BALANCING%20AVL%20TREE.c) | 🌳 Data Structures | Self-balancing BST with LL/RR/LR/RL rotations |
+| [`Binary Search Tree.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/Binary%20Search%20Tree.c) | 🌳 Data Structures | BST with insert, delete, traversal |
+| [`TCP Multi Client Server.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/TCP%20Multi%20Client%20Server.c) | 🌐 Networking | Multi-client TCP server using POSIX sockets |
+| [`Multithreaded Thread Pool.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/Multithreaded%20Thread%20Pool.c) | ⚙️ System | Thread pool with pthreads |
+| `Fork .c` · `Fork 1–4.c` | ⚙️ System | Process creation with fork() — 5 variations |
+| [`Matrix .c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/Matrix%20.c) | 🔢 Math | Matrix operations and computations |
+| [`Full Calculator.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/Full%20Calculator.c) | 🔢 Utility | Complete arithmetic calculator |
+| [`File Student MGT.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/File%20Student%20MGT.c) | 🏫 Management | File-based student record management |
+| `Latter Animation.c` · `Typing Ani.c` | 🎨 Visual | Terminal letter and typing animations |
+| `MANTHAN .c` · `MATHAN ANIMATION.c` | 🎨 Visual | Personalised name animations in terminal |
+| `Pattern 1–2.c` · `Pattern.c` | 📐 Patterns | Star and character pattern generators |
 
 ### 📄 C++ Language — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `Student Management.cpp` | 🏫 Management | Full student management system using OOP |
-| `Games/XO.cpp` | 🎮 Game | Console Tic-Tac-Toe game |
-| `Pattern 1–7.cpp` | 📐 Patterns | Seven different pattern programs |
-| `Calculate in C++.cpp` | 🔢 Utility | Calculator in C++ |
-| `Hello world.cpp` | 👋 Basics | Hello World in C++ |
+| [`Student Management.cpp`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%2B%2B%20Language%20Project/Student%20Management.cpp) | 🏫 Management | Full OOP student system |
+| [`Games/XO.cpp`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%2B%2B%20Language%20Project/Games/XO.cpp) | 🎮 Game | Console Tic-Tac-Toe |
+| `Pattern 1–7.cpp` | 📐 Patterns | Seven pattern programs |
+| `Calculate in C++.cpp` | 🔢 Utility | C++ calculator |
 
 ### 📄 C# Language — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `Calculate in C#.cs` | 🔢 Utility | Calculator implemented in C# |
-| `Hello World.cs` | 👋 Basics | Hello World in C# |
+| `Calculate in C#.cs` | 🔢 Utility | Calculator in C# |
+| `Hello World.cs` | 👋 Basics | Hello World |
 
 ---
 
 ## ☕ Java Projects
 
-> Object-oriented programming, banking simulations, and beginner-to-intermediate Java applications.
-
-### Internal Structure
+> Object-oriented programming, banking simulations, and foundational Java development.
 
 ```mermaid
 flowchart LR
-    JV[Java Projects] --> BANK[Banking\nBankAccount · Saving Account]
-    JV --> OOP[OOP Concepts\nAbstraction · Interfaces]
-    JV --> GAME[Games\nGuess Game]
-    JV --> UTIL[Utilities\nCalculator]
-    JV --> BASICS[Basics\nHello World]
+    JV["☕ Java Projects"] --> BANK["🏦 Banking\nBankAccount · Saving Account"]
+    JV --> OOP["🏛️ OOP\nAbstraction · Interfaces"]
+    JV --> GAME["🎮 Guess Game"]
+    JV --> UTIL["🔢 Calculator"]
+    JV --> HW["👋 Hello World"]
 ```
 
 ### 📄 Java — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `BankAccount.java` | 🏦 Banking | Full bank account with deposit and withdrawal |
-| `Saving Account.java` | 🏦 Banking | Savings account with interest logic |
-| `Abstraction & Interfaces.java` | 🏛️ OOP | Demonstrates Java abstraction and interface patterns |
-| `Gessgame.java` | 🎮 Game | Number guessing game |
-| `Calculator.java` | 🔢 Utility | Console calculator in Java |
-| `HelloWorld.java` | 👋 Basics | Hello World in Java |
+| [`BankAccount.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/BankAccount.java) | 🏦 Banking | Full bank account with deposit and withdrawal |
+| [`Saving Account.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/Saving%20Account.java) | 🏦 Banking | Savings account with interest logic |
+| [`Abstraction & Interfaces.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/Abstraction%20%26%20Interfaces.java) | 🏛️ OOP | Java abstraction and interface demonstration |
+| [`Gessgame.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/Gessgame.java) | 🎮 Game | Number guessing game |
+| [`Calculator.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/Calculator.java) | 🔢 Utility | Console calculator |
+| [`HelloWorld.java`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Java%20Projects/HelloWorld.java) | 👋 Basics | Hello World |
 
 ---
 
 ## 🐍 Python Projects
 
-> The most feature-rich section — banking systems, GUI apps, games, and experimental tools.
-
-### Internal Structure
+> The largest section — banking systems, GUI applications, games, and experimental programming tools.
 
 ```mermaid
 flowchart LR
-    PY[Python Projects] --> BANK[Banking System V1\nModular MVC Architecture]
-    PY --> STU[Student Manager\nJSON Storage]
-    PY --> GAMES[Games\nChess · Snake · Maze · Sudoku]
-    PY --> GUI[GUI Applications\nClock · Solar System · QR]
-    PY --> UTIL[Utilities\nScientific Calc · Task Manager]
-    PY --> EXP[Experimental\nMetaclass · Function Wrapper]
+    PY["🐍 Python Projects"] --> BANK["🏦 Banking System V1\n6 modules - MVC"]
+    PY --> STU["🏫 Student Manager\nJSON + CRUD"]
+    PY --> GAMES["🎮 Games\nChess · Snake · Maze · Sudoku"]
+    PY --> GUI["🖥️ GUI Apps\nClock · Solar · QR"]
+    PY --> UTIL["🔬 Utilities\nCalc · Tasks · Alerts"]
+    PY --> EXP["🧪 Experiments\nMetaclass · Decorators"]
 
-    GAMES --> SLIDE[Slide Puzzle\nFull Pygame Module]
-    GAMES --> CHESS[Chess\nSprites + Sound]
+    GAMES --> SLIDE["🧩 Slide Puzzle\nFull Pygame module\nboard · effects · sound"]
 ```
 
-### 📄 Python — Major Project Files
+### 📄 Python — File Index
 
 | File / Folder | Category | Description |
 |---------------|----------|-------------|
-| `Banking System V1/` | 🏦 System | Modular banking — auth, admin, database, utils |
-| `Student_Maneg/` | 🏫 System | JSON-backed student management system |
-| `Games/Chess.py` | 🎮 Game | Full chess with Pygame, sprites, and sounds |
-| `Games/Snake Game.py` | 🎮 Game | Classic snake with score and collision |
-| `Games/Sudoku.py` | 🎮 Game | Sudoku solver and generator |
-| `Games/Maze.py` | 🎮 Game | Recursive maze generation |
-| `Games/Map Gen.py` | 🎮 Game | Procedural terrain map generator |
-| `Games/Table Tennis.py` | 🎮 Game | Paddle game with Pygame |
-| `Games/Connect 4.py` | 🎮 Game | Console Connect 4 |
-| `Games/Slide Puzzle/` | 🎮 Game | Full Pygame slide puzzle with board, effects, sound |
-| `Scientific Calculator.py` | 🔬 Utility | Scientific calculator with trig and logarithms |
-| `Digital Clock .py` | 🕐 GUI | Animated digital clock |
-| `Circle Watch.py` | 🕐 GUI | Circular animated clock |
-| `Solar System .py` | 🌌 GUI | Animated solar system simulation |
-| `QR Gen.py` | 📱 Utility | QR code generator |
-| `Pythagoras Tree.py` | 🌿 Visual | Fractal Pythagoras tree renderer |
-| `Task Mangar.py` | ✅ Utility | Terminal task manager |
-| `StudyAlert.py` | ⏰ Utility | Study reminder and alert system |
-| `The Mataclass.py` | 🧪 Experiment | Python metaclass demonstration |
-| `The Function Wrapper Pattern.py` | 🧪 Experiment | Decorator and wrapper patterns |
+| [`Banking System V1/`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects/Banking%20System%20V1) | 🏦 System | `main` · `auth` · `banking` · `admin` · `database` · `utils` |
+| [`Student_Maneg/`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects/Student_Maneg) | 🏫 System | `main` · `model` · `database` · JSON storage |
+| [`Games/Chess.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Chess.py) | 🎮 Game | Full chess with Pygame, sprites, sounds |
+| [`Games/Snake Game.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Snake%20Game.py) | 🎮 Game | Classic snake with collision and scoring |
+| [`Games/Sudoku.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Sudoku.py) | 🎮 Game | Sudoku solver and generator |
+| [`Games/Maze.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Maze.py) | 🎮 Game | Recursive maze generation |
+| [`Games/Map Gen.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Map%20Gen.py) | 🎮 Game | Procedural terrain map |
+| [`Games/Slide Puzzle/`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects/Games/Slide%20Puzzle) | 🧩 Game | Full Pygame puzzle — `board` · `effects` · `ui` · `sound_manager` |
+| [`Games/Table Tennis.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Table%20Tennis.py) | 🎮 Game | Pygame table tennis |
+| [`Games/Connect 4.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Connect%204.py) | 🎮 Game | Console Connect 4 |
+| [`Scientific Calculator.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Scientific%20Calculator.py) | 🔬 Utility | Trig, log, sqrt, power operations |
+| [`Digital Clock .py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Digital%20Clock%20.py) | 🕐 GUI | Animated digital clock |
+| [`Solar System .py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Solar%20System%20.py) | 🌌 GUI | Animated solar system simulation |
+| [`QR Gen.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/QR%20Gen.py) | 📱 Utility | QR code generator |
+| [`Pythagoras Tree.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Pythagoras%20Tree.py) | 🌿 Visual | Fractal Pythagoras tree |
+| [`Task Mangar.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Task%20Mangar.py) | ✅ Utility | Terminal task manager |
+| [`StudyAlert.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/StudyAlert.py) | ⏰ Utility | Study session reminder |
+| [`The Mataclass.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/The%20Mataclass.py) | 🧪 Experiment | Python metaclass patterns |
+| [`The Function Wrapper Pattern.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/The%20Function%20Wrapper%20Pattern.py) | 🧪 Experiment | Decorators and wrapper patterns |
 
 ---
 
 ## 🌐 JavaScript Games Showcase
 
-> 20 browser-ready games built with **pure Vanilla JavaScript** — no frameworks, no dependencies. Open and play instantly.
-
-### Games Map
+> **20 browser-ready games** built entirely with **Vanilla HTML · CSS · JavaScript** — no frameworks, no dependencies.
 
 ```mermaid
 flowchart TD
-    JS[Games Using Vanilla JS] --> BOARD[Board Games]
-    JS --> PUZZLE[Puzzle Games]
-    JS --> ACTION[Action Games]
-    JS --> STRATEGY[Strategy Games]
-    JS --> GEN[Generators]
+    JS["🌐 Vanilla JS Games"] --> BOARD["♟️ Board Games"]
+    JS --> PUZZLE["🧩 Puzzle Games"]
+    JS --> ACTION["🕹️ Action Games"]
+    JS --> STRAT["🧠 Strategy Games"]
+    JS --> GEN["🗺️ Generators"]
 
-    BOARD --> B1[Chess]
-    BOARD --> B2[Ludo]
-    BOARD --> B3[Backgammon]
-    BOARD --> B4[Checkers]
-    BOARD --> B5[Monopoly]
-    BOARD --> B6[Dominoes]
-
-    PUZZLE --> P1[Sudoku]
-    PUZZLE --> P2[Minesweeper]
-    PUZZLE --> P3[Crossword]
-    PUZZLE --> P4[XO Game]
-
-    ACTION --> A1[Snake]
-    ACTION --> A2[Tetris]
-    ACTION --> A3[Whack-A-Mole]
-    ACTION --> A4[Table Tennis]
-    ACTION --> A5[Battleship]
-    ACTION --> A6[Holi Game]
-
-    STRATEGY --> S1[Reversi]
-    STRATEGY --> S2[Connect 4]
-
-    GEN --> G1[Map Generator]
-    GEN --> G2[Random Map Gen]
+    BOARD --> B1["Chess"] & B2["Ludo"] & B3["Backgammon"] & B4["Checkers"] & B5["Monopoly"]
+    PUZZLE --> P1["Sudoku"] & P2["Minesweeper"] & P3["Crossword"] & P4["XO Game"]
+    ACTION --> A1["Snake"] & A2["Tetris"] & A3["Whack-A-Mole"] & A4["Table Tennis"] & A5["Battleship"] & A6["Holi Game"]
+    STRAT --> S1["Reversi"] & S2["Connect 4"] & S3["Dominoes"]
+    GEN --> G1["Map Generator"] & G2["Random Map Gen"]
 ```
-
-### 🎮 Full Games Table
 
 | # | 🎮 Game | 🔧 Stack | 📝 Description |
 |---|---------|---------|---------------|
-| 01 | ♟️ **Chess** | HTML · CSS · JS | Complete chess engine with full move validation and piece sprites |
-| 02 | 🎯 **Tetris** | HTML · CSS · JS | Classic falling-block game with score and progressive levels |
-| 03 | 🔢 **Sudoku** | HTML · CSS · JS | Puzzle generator and validator with multiple difficulties |
-| 04 | 🐍 **Snake** | HTML · CSS · JS | Canvas-based snake with growing tail and collision detection |
-| 05 | 🎲 **Ludo** | HTML · CSS · JS | Full Ludo board with dice rolling and token movement logic |
-| 06 | 💣 **Minesweeper** | HTML · CSS · JS | Flag-based mine sweeper with safe first-click guarantee |
-| 07 | 🎭 **Backgammon** | HTML · CSS · JS | Strategic board game with complete rule implementation |
-| 08 | 🔃 **Reversi** | HTML · CSS · JS | Disc-flipping Othello with valid move highlighting |
-| 09 | 🁣 **Dominoes** | HTML · CSS · JS | Tile-matching game with chain and scoring logic |
-| 10 | 🔴 **Connect 4** | HTML · CSS · JS | Two-player vertical token drop with win detection |
+| 01 | ♟️ **Chess** | HTML · CSS · JS | Full chess engine — move validation, en passant, castling, sprites |
+| 02 | 🎯 **Tetris** | HTML · CSS · JS | Block-falling game with progressive levels and score |
+| 03 | 🔢 **Sudoku** | HTML · CSS · JS | Puzzle generator and validator with difficulty modes |
+| 04 | 🐍 **Snake** | HTML · CSS · JS | Canvas snake with growing tail and collision |
+| 05 | 🎲 **Ludo** | HTML · CSS · JS | Full Ludo with dice rolling and token logic |
+| 06 | 💣 **Minesweeper** | HTML · CSS · JS | Flag-based sweeper with safe first-click |
+| 07 | 🎭 **Backgammon** | HTML · CSS · JS | Complete rule implementation for Backgammon |
+| 08 | 🔃 **Reversi** | HTML · CSS · JS | Othello with valid-move highlighting |
+| 09 | 🁣 **Dominoes** | HTML · CSS · JS | Tile-matching with chain and scoring |
+| 10 | 🔴 **Connect 4** | HTML · CSS · JS | Two-player drop game with win detection |
 | 11 | ✅ **Checkers** | HTML · CSS · JS | Diagonal jump game with king promotion |
 | 12 | 🔤 **Crossword** | HTML · CSS · JS | Word grid puzzle with clue navigation |
-| 13 | 🚢 **Battleship** | HTML · CSS · JS | Naval fleet placement and attack game |
-| 14 | 🏓 **Table Tennis** | HTML · CSS · JS | Ping pong simulation with paddle controls |
-| 15 | 🦔 **Whack-A-Mole** | HTML · CSS · JS | Timed reflex game with randomized mole appearances |
+| 13 | 🚢 **Battleship** | HTML · CSS · JS | Naval fleet attack game |
+| 14 | 🏓 **Table Tennis** | HTML · CSS · JS | Ping pong with paddle controls |
+| 15 | 🦔 **Whack-A-Mole** | HTML · CSS · JS | Timed reflex game with randomised moles |
 | 16 | ❌ **XO Game** | HTML · CSS · JS | Tic-Tac-Toe with animated win detection |
-| 17 | 🗺️ **Map Generator** | HTML · CSS · JS | Procedural terrain map with seed-based rendering |
-| 18 | 🌈 **Holi Game** | HTML · CSS · JS | Interactive colour-splash festive game |
+| 17 | 🗺️ **Map Generator** | HTML · CSS · JS | Procedural terrain with seed-based rendering |
+| 18 | 🌈 **Holi Game** | HTML · CSS · JS | Festive colour-splash interactive game |
 | 19 | 🏘️ **Monopoly** | HTML · CSS · JS | Property trading board game |
 | 20 | 🗺️ **Random Map Gen** | HTML · CSS · JS | Advanced dungeon and world generator |
 
@@ -308,66 +363,62 @@ flowchart TD
 
 ## 💎 Ruby Projects
 
-> Banking, algorithms, logic challenges, and introductory Ruby programs.
-
-### Internal Structure
+> Banking systems, algorithmic challenges, and introductory Ruby programming.
 
 ```mermaid
 flowchart LR
-    RB[Ruby Projects] --> BANK[Banking System]
-    RB --> LOGIC[Logic Programs\nArmstrong · Palindrome]
-    RB --> GAME[Ruby Game]
-    RB --> BASICS[Basics\nHello World · User Input]
+    RB["💎 Ruby Projects"] --> BANK["🏦 Banking System"]
+    RB --> ALG["💡 Algorithms\nArmstrong · Palindrome"]
+    RB --> GAME["🎮 Ruby Game"]
+    RB --> BASICS["👋 Basics\nHello World · User Input"]
 ```
 
 ### 📄 Ruby — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `Banking System.rb` | 🏦 System | Full banking system in Ruby |
-| `Armstrong Number Logic.rb` | 🔢 Algorithm | Armstrong number checker |
-| `Longest Palindromic Substring .rb` | 🔢 Algorithm | Dynamic programming palindrome solution |
-| `Ruby game .rb` | 🎮 Game | Console game in Ruby |
-| `User Input.rb` | 📥 Basics | User input and output handling |
-| `Hello World.rb` | 👋 Basics | Hello World in Ruby |
+| [`Banking System.rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/Banking%20System.rb) | 🏦 System | Full banking system in Ruby |
+| [`Armstrong Number  Logic.rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/Armstrong%20Number%20%20Logic.rb) | 💡 Algorithm | Armstrong number checker |
+| [`Longest Palindromic Substring .rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/Longest%20Palindromic%20Substring%20.rb) | 💡 Algorithm | Dynamic programming palindrome solution |
+| [`Ruby game .rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/Ruby%20game%20.rb) | 🎮 Game | Console game in Ruby |
+| [`User Input.rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/User%20Input.rb) | 📥 Basics | Input and output handling |
+| [`Hello World.rb`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Ruby%20Projects/Hello%20World.rb) | 👋 Basics | Hello World |
 
 ---
 
 ## 🦀 Rust Projects
 
-> First steps in Rust — memory safety, ownership, and systems programming foundations.
-
-### Internal Structure
+> Memory safety, ownership concepts, and Rust fundamentals.
 
 ```mermaid
 flowchart LR
-    RS[Rust Projects] --> TASK[Task Manager\nOwnership + Structs]
-    RS --> INPUT[User Input\nStdin Handling]
-    RS --> HW[Hello World]
+    RS["🦀 Rust Projects"] --> TASK["✅ Task Manager\nOwnership · Structs"]
+    RS --> INPUT["📥 User Input\nStdin Handling"]
+    RS --> HW["👋 Hello World"]
 ```
 
 ### 📄 Rust — File Index
 
 | File | Category | Description |
 |------|----------|-------------|
-| `Task Maneger.rs` | ✅ Utility | CLI task manager demonstrating Rust ownership and structs |
-| `User Input.rs` | 📥 Basics | Standard input and output in Rust |
-| `Hello World.rs` | 👋 Basics | Hello World in Rust |
+| [`Task Maneger.rs`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Rust%20Projects/Task%20Maneger.rs) | ✅ Utility | CLI task manager using Rust ownership and structs |
+| [`User Input.rs`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Rust%20Projects/User%20Input.rs) | 📥 Basics | Standard input/output in Rust |
+| [`Hello World.rs`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Rust%20Projects/Hello%20World.rs) | 👋 Basics | Hello World in Rust |
 
 ---
 
 ## ⭐ Featured Projects
 
 <details>
-<summary><b>🏦 Banking System — Python (Modular MVC)</b></summary>
+<summary><b>🏦 Banking System V1 — Python (Full MVC Architecture)</b></summary>
 <br/>
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `Python Projects/Banking System V1/` |
+| 📁 **Location** | [`Python Projects/Banking System V1/`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects/Banking%20System%20V1) |
 | 🐍 **Language** | Python |
-| 📄 **Modules** | `main.py` · `auth.py` · `banking.py` · `admin.py` · `database.py` · `utils.py` |
-| ✨ **Key Features** | Secure login and authentication · Admin dashboard · Deposits, withdrawals, transfers · File-based persistent database · Clean MVC modular architecture |
+| 📄 **Files** | `main.py` · `auth.py` · `banking.py` · `admin.py` · `database.py` · `utils.py` |
+| ✨ **Key Features** | Secure login and auth system · Admin control panel · Deposits, withdrawals, balance check · File-backed persistent database · Clean MVC modular architecture |
 
 </details>
 
@@ -377,9 +428,9 @@ flowchart LR
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `C Language Project/SELF-BALANCING AVL TREE.c` |
+| 📁 **Location** | [`C Language Project/SELF-BALANCING AVL TREE.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/SELF-BALANCING%20AVL%20TREE.c) |
 | 💡 **Language** | C |
-| ✨ **Key Features** | LL · RR · LR · RL rotations · Automatic height rebalancing · Insert, delete, search · In-order, pre-order traversal · O(log n) operations |
+| ✨ **Key Features** | LL · RR · LR · RL rotations · Auto height rebalancing · O(log n) insert/delete/search · Full traversal methods |
 
 </details>
 
@@ -389,21 +440,22 @@ flowchart LR
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `C Language Project/TCP Multi Client Server.c` |
+| 📁 **Location** | [`C Language Project/TCP Multi Client Server.c`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%20Language%20Project/TCP%20Multi%20Client%20Server.c) |
 | 💡 **Language** | C |
-| ✨ **Key Features** | POSIX socket programming · Concurrent multi-client connections · POSIX threads (pthreads) · Real-time bidirectional messaging |
+| ✨ **Key Features** | POSIX socket programming · Concurrent multi-client support · pthreads for parallel handling · Real-time bidirectional messaging |
 
 </details>
 
 <details>
-<summary><b>♟️ Chess Engine — Python & JavaScript</b></summary>
+<summary><b>♟️ Chess — Python & JavaScript (Dual Implementation)</b></summary>
 <br/>
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `Python Projects/Games/Chess.py` and `Games Using Vanilla JS/Chess Index.html` |
-| 💡 **Language** | Python (Pygame) + Vanilla JavaScript |
-| ✨ **Key Features** | Full legal move generation · En passant and castling · Piece sprites from `/images/` · Sound effects (move, capture, game over) · Two-player local mode |
+| 📁 **Python** | [`Python Projects/Games/Chess.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Games/Chess.py) |
+| 📁 **JavaScript** | [`Games Using Vanilla JS/Chess Index.html`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Games%20Using%20Vanilla%20JS/Chess%20Index.html) |
+| 💡 **Languages** | Python (Pygame) + Vanilla JavaScript |
+| ✨ **Key Features** | Full legal move generation · En passant and castling · Piece sprites · Sound effects (move, capture, game over) · Two-player local mode |
 
 </details>
 
@@ -413,9 +465,10 @@ flowchart LR
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `C++ Language Project/Student Management.cpp` and `Python Projects/Student_Maneg/` |
-| 💡 **Language** | C++ / Python |
-| ✨ **Key Features** | Add, delete, update, search students · JSON-backed persistent storage · OOP design patterns · Model-View separation |
+| 📁 **C++** | [`C++ Language Project/Student Management.cpp`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/C%20C%2B%2B%20C%23%20Projects/C%2B%2B%20Language%20Project/Student%20Management.cpp) |
+| 📁 **Python** | [`Python Projects/Student_Maneg/`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/tree/main/Python%20Projects/Student_Maneg) |
+| 💡 **Languages** | C++ / Python |
+| ✨ **Key Features** | Add · Delete · Update · Search · JSON-backed storage · OOP design |
 
 </details>
 
@@ -425,21 +478,9 @@ flowchart LR
 
 | Attribute | Details |
 |-----------|---------|
-| 📁 **Location** | `Python Projects/Scientific Calculator.py` |
+| 📁 **Location** | [`Python Projects/Scientific Calculator.py`](https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028/blob/main/Python%20Projects/Scientific%20Calculator.py) |
 | 💡 **Language** | Python |
-| ✨ **Key Features** | Trigonometry (sin, cos, tan) · Logarithms · Square root · Power · GUI interface |
-
-</details>
-
-<details>
-<summary><b>🗺️ Random Map Generator — Python & JavaScript</b></summary>
-<br/>
-
-| Attribute | Details |
-|-----------|---------|
-| 📁 **Location** | `Python Projects/Games/Map Gen.py` and `Games Using Vanilla JS/Random Map Gen Index.html` |
-| 💡 **Language** | Python + JavaScript |
-| ✨ **Key Features** | Procedural terrain generation · Randomized seeding · Biome colour mapping · Canvas rendering |
+| ✨ **Key Features** | Trigonometry · Logarithms · Square root · Power operations · GUI interface |
 
 </details>
 
@@ -447,7 +488,7 @@ flowchart LR
 
 ## 📊 Languages Used
 
-### Distribution Chart
+### Distribution
 
 ```
 Python       ███████████░░░░░░░░░  35%   🐍
@@ -459,8 +500,6 @@ Rust         ██░░░░░░░░░░░░░░░░░░   5%  
 C#           ██░░░░░░░░░░░░░░░░░░   4%   🔷
 HTML / CSS   █░░░░░░░░░░░░░░░░░░░   2%   🌍
 ```
-
-### Language Badges
 
 <div align="center">
 
@@ -481,139 +520,113 @@ HTML / CSS   █░░░░░░░░░░░░░░░░░░░   2%  
 
 ## ⚙️ Installation Guide
 
-### 🐍 Python Projects
+### 🐍 Python
 
 ```bash
-# Clone the repository
 git clone https://github.com/Manthanvinzuda007/Academic-Projects-2024-2028.git
 cd Academic-Projects-2024-2028
 
-# Install dependencies for GUI and game projects
-pip install pygame
+pip install pygame          # For GUI and Pygame games
 
-# Run examples
 python "Python Projects/Banking System V1/main.py"
 python "Python Projects/Games/Chess.py"
 python "Python Projects/Games/Snake Game.py"
 python "Python Projects/Student_Maneg/main.py"
 python "Python Projects/Scientific Calculator.py"
-python "Python Projects/Digital Clock .py"
 ```
 
-### ⚙️ C Programs
+### ⚙️ C
 
 ```bash
 cd "C C++ C# Projects/C Language Project"
 
-# Standard compilation
 gcc program.c -o program && ./program
-
-# With threading (pthreads)
-gcc "Multithreaded Thread Pool.c" -o threadpool -lpthread && ./threadpool
-
-# Networking server
 gcc "TCP Multi Client Server.c" -o server -lpthread && ./server
-
-# Data structures
+gcc "Multithreaded Thread Pool.c" -o pool -lpthread && ./pool
 gcc "SELF-BALANCING AVL TREE.c" -o avl && ./avl
-gcc "Binary Search Tree.c" -o bst && ./bst
 ```
 
-### 🔧 C++ Programs
+### 🔧 C++
 
 ```bash
 cd "C C++ C# Projects/C++ Language Project"
 
 g++ program.cpp -o program && ./program
-
-# Student Management System
-g++ "Student Management.cpp" -o student_mgr && ./student_mgr
-
-# XO Game
+g++ "Student Management.cpp" -o student && ./student
 g++ "Games/XO.cpp" -o xo && ./xo
 ```
 
-### ☕ Java Programs
+### ☕ Java
 
 ```bash
 cd "Java Projects"
 
-# Compile and run
 javac BankAccount.java && java BankAccount
 javac Calculator.java && java Calculator
 javac Gessgame.java && java Gessgame
-javac "Abstraction & Interfaces.java" && java "Abstraction & Interfaces"
 ```
 
-### 🌐 JavaScript Browser Games
+### 🌐 JavaScript
 
 ```bash
-# No build tools required
-
-# Option 1: Python HTTP server (recommended)
 cd "Games Using Vanilla JS"
+
+# Option 1 — Python HTTP server
 python -m http.server 8080
-# Open: http://localhost:8080
+# Visit: http://localhost:8080
 
-# Option 2: Open directly in browser
+# Option 2 — Open directly
 open "Chess Index.html"
-open "Tetris Index.html"
-open "Sudoku Index.html"
 
-# Option 3: VS Code Live Server
-# Right-click any .html file -> Open with Live Server
+# Option 3 — VS Code Live Server
+# Right-click .html → Open with Live Server
 ```
 
-### 💎 Ruby Programs
+### 💎 Ruby
 
 ```bash
 cd "Ruby Projects"
 ruby "Banking System.rb"
 ruby "Armstrong Number  Logic.rb"
-ruby "Hello World.rb"
 ```
 
-### 🦀 Rust Programs
+### 🦀 Rust
 
 ```bash
 cd "Rust Projects"
-
-# Compile and run
 rustc "Task Maneger.rs" -o task_manager && ./task_manager
-rustc "User Input.rs" -o user_input && ./user_input
 ```
 
 ---
 
 ## 🎓 Programming Concepts Covered
 
-| Concept | Description | Languages |
-|---------|-------------|-----------|
-| 🏛️ **Object Oriented Programming** | Encapsulation, Inheritance, Polymorphism, Abstraction | Python · Java · C++ · C# · Ruby |
-| 🔁 **Algorithms** | Sorting, Searching, Recursion, Tree Traversal | C · C++ · Python · Ruby |
-| 🌳 **Data Structures** | AVL Tree, BST, Stack, Queue, Matrix | C · Python · Java |
-| 🌐 **Networking** | TCP Sockets, Multi-Client Server, Socket APIs | C |
-| ⚡ **Multithreading** | POSIX Threads, Thread Pool, Fork / Processes | C |
-| 🎮 **Game Development** | Canvas API, Pygame, Collision, AI Logic | Python · JavaScript |
-| 💾 **File Handling** | JSON Storage, Text Files, File-Backed Databases | Python · C · C++ · Ruby |
-| 🖥️ **GUI Programming** | Pygame, Tkinter, Canvas API, CSS Animations | Python · JavaScript |
+| Concept | Topics | Languages |
+|---------|--------|-----------|
+| 🏛️ **Object Oriented Programming** | Encapsulation · Inheritance · Polymorphism · Abstraction | Python · Java · C++ · C# · Ruby |
+| 🔁 **Algorithms** | Sorting · Searching · Recursion · Tree Traversal | C · C++ · Python · Ruby |
+| 🌳 **Data Structures** | AVL Tree · BST · Stack · Queue · Matrix | C · Python · Java |
+| 🌐 **Networking** | TCP Sockets · Multi-Client Server · POSIX Sockets | C |
+| ⚡ **Multithreading** | POSIX Threads · Thread Pool · Fork & Processes | C |
+| 🎮 **Game Development** | Canvas API · Pygame · Collision Detection · AI Logic | Python · JavaScript |
+| 💾 **File Handling** | JSON Storage · Text Files · File-Backed Databases | Python · C · C++ · Ruby |
+| 🖥️ **GUI Programming** | Pygame · Tkinter · Canvas API · CSS Animations | Python · JavaScript |
 
 ---
 
-## 📈 Repository Stats
+## 📈 Repository Statistics
 
 <div align="center">
 
 | 📊 Metric | 🔢 Count |
 |-----------|---------|
 | 🗂️ **Total Projects** | 55+ |
-| 🌐 **Languages** | 8 |
+| 🌐 **Languages Used** | 8 |
 | 🎮 **Games Built** | 25+ |
 | ⚙️ **System Programs** | 10+ |
 | 📄 **Source Files** | 150+ |
 | 📅 **Active Since** | 2024 |
-
-[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Manthanvinzuda007&bg_color=0d1117&color=4d9de0&line=0f6cbd&point=ffffff&area=true&hide_border=true)](https://github.com/Manthanvinzuda007)
+| 🎯 **Target Year** | 2028 |
 
 </div>
 
@@ -621,23 +634,16 @@ rustc "User Input.rs" -o user_input && ./user_input
 
 ## 🤝 Contributing
 
-This is a **personal academic portfolio**. Suggestions, improvements, and collaborations are welcome!
-
 ```bash
-# 1. Fork this repository
-# 2. Create your feature branch
+# Fork, branch, commit, push, PR
+
 git checkout -b feature/your-idea
-
-# 3. Commit your work
-git commit -m "Add: brief description of change"
-
-# 4. Push your branch
+git commit -m "Add: brief description"
 git push origin feature/your-idea
-
-# 5. Open a Pull Request
+# Then open a Pull Request on GitHub
 ```
 
-> Please maintain the existing folder structure and naming conventions.
+> Please maintain the existing folder naming structure.
 
 ---
 
@@ -649,25 +655,25 @@ git push origin feature/your-idea
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║                  M . S . V I N Z U D A                          ║
-║              ───────────────────────────                         ║
+║              ─────────────────────────────                       ║
 ║                                                                  ║
 ║   A passionate developer exploring the full spectrum of          ║
-║   programming — from low-level systems in C and Rust to          ║
-║   browser games in JavaScript, OOP in Java and Python,           ║
-║   and algorithms that push the boundaries of logic.              ║
+║   programming — from low-level systems in C and Rust,            ║
+║   to browser games in JavaScript, OOP in Java and Python,        ║
+║   and algorithms that challenge the boundaries of logic.         ║
 ║                                                                  ║
-║   Every commit is a step forward. Every project is a lesson.     ║
+║   Every commit is a step forward. Every file is a lesson.        ║
 ║                                                                  ║
-║   🐍 Python    ⚙️  C / C++    🌐 JavaScript    ☕ Java            ║
-║   💎 Ruby      🦀  Rust       🔷 C#            🖥️  Systems        ║
+║   🐍 Python   ⚙️ C / C++   🌐 JavaScript   ☕ Java              ║
+║   💎 Ruby     🦀 Rust      🔷 C#           🖥️ Systems            ║
 ║                                                                  ║
 ║   📅 Academic Journey: 2024 → 2028                               ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-[![GitHub Follow](https://img.shields.io/github/followers/Manthanvinzuda007?style=for-the-badge&logo=github&label=Follow&color=0f6cbd&labelColor=0d1117)](https://github.com/Manthanvinzuda007)
-[![GitHub Profile](https://img.shields.io/badge/View%20Profile-Manthanvinzuda007-0f6cbd?style=for-the-badge&logo=github&labelColor=0d1117)](https://github.com/Manthanvinzuda007)
+[![GitHub Follow](https://img.shields.io/github/followers/Manthanvinzuda007?style=for-the-badge&logo=github&label=Follow%20on%20GitHub&color=238636&labelColor=0d1117)](https://github.com/Manthanvinzuda007)
+[![View Profile](https://img.shields.io/badge/View%20Profile-Manthanvinzuda007-58a6ff?style=for-the-badge&logo=github&labelColor=0d1117)](https://github.com/Manthanvinzuda007)
 
 </div>
 
@@ -691,6 +697,6 @@ git push origin feature/your-idea
 
 <br/>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:2d6db5,40:1a4a7a,80:0f2942,100:0d1117&height=130&section=footer"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=130&section=footer"/>
 
 </div>
