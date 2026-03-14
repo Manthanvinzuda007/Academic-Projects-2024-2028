@@ -1,109 +1,124 @@
-<p align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=C%20Projects" width="100%" alt="Header Banner" />
-</p>
+[⬅️ Back to C/C++/C# Projects](../README.md)
 
-<h3><p align="center">
-  <b>My journey of learning, building, and mastering C language</b>
-</p></h3>
+---
+<h1 align="center">🔷 C Language Projects</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&logo=c&logoColor=white" />
-  <img src="https://img.shields.io/badge/Status-Learning%20%26%20Building-orange?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Projects-Growing-brightgreen?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Focus-Low%20Level%20Programming-purple?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Open%20Source-Yes-2ea44f?style=for-the-badge" alt="Open Source"/>
-  <img src="https://img.shields.io/badge/Level-Growing%20Developer-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" />
+  <img src="https://img.shields.io/badge/POSIX-Threads-4D4D4D?style=for-the-badge&logoColor=white" />
+  <img src="https://img.shields.io/badge/TCP/IP-Networking-0078D4?style=for-the-badge&logoColor=white" />
+</p>
+
+<p align="center">
+  <i>Low-level systems, POSIX threading, TCP networking, and foundational data structures in pure C.</i>
 </p>
 
 ---
 
-## 📘 About This Repository
-
-Welcome! 👋  
-
-This repository contains the C projects I built while learning and exploring the C programming language. It represents my journey from understanding basic concepts to working on more advanced topics like data structures, multithreading, and networking.
-
-I created these projects to improve my logic, strengthen my fundamentals, and gain real hands-on experience in low-level programming.
+## 🗂️ Quick Navigation
+| 🏠 | ⚙️ | 🎮 | ☕ | 🐍 | 💎 | 🦀 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| [Main](../../README.md) | [C/C++/C#](../README.md) | [JS Games](../../Games%20Using%20Vanilla%20JS/README.md) | [Java](../../Java%20Projects/README.md) | [Python](../../Python%20Projects/README.md) | [Ruby](../../Ruby%20Projects/README.md) | [Rust](../../Rust%20Projects/README.md) |
 
 ---
 
-## 🎯 Purpose
-
-- Practice C programming
-- Build strong fundamentals
-- Track my learning progress
-- Experiment with real problems
-- Improve problem-solving skills
-
----
-
-## 📂 Projects Included
-
-- 🌳 Binary Search Tree
-- ⚖️ Self Balancing AVL Tree
-- 🧵 Multithreaded Thread Pool
-- 🌐 TCP Multi Client Server
-- 📁 File Student Management System
-- 🔢 Calculator Programs
-- 💠 Pattern Programs
-- 👋 Hello World
-
-Each project helped me learn something new about C.
+## 📋 Table of Contents
+- [About the Project](#-about-the-project)
+- [Folder Structure](#-folder-structure)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Author](#-author)
 
 ---
 
-## 🚀 Learning Journey
+## 📖 About the Project
 
-I am continuously learning C and will keep adding new projects as I explore more concepts.
-
-Future ideas include:
-
-- Custom memory allocator
-- Advanced system tools
-- Networking experiments
-- Performance optimization
-- OS-level concepts
-- Complex algorithms
+> A comprehensive collection of **C programming projects** underscoring low-level system interactions, data structures, and foundational algorithms. Spanning from simple calculators and dynamic animations to complex multi-threaded worker pools and TCP servers using `select()`, this directory demonstrates deep memory management and C systems programming.
 
 ---
 
-## 🛠️ Skills I’m Developing
+## 📂 Folder Structure
 
-- Memory management
-- Pointers and structures
-- File handling
-- Multithreading
-- Socket programming
-- Data structures
-- Debugging
-- Algorithmic thinking
+```mermaid
+graph TD
+    Root[🔷 C Language Project] --> DSA[📊 Data Structures]
+    Root --> Sys[⚙️ Systems Programming]
+    Root --> Utils[🛠️ Utilities]
+    Root --> Anim[🎨 Animations]
+    Root --> Proc[🔀 Process Management]
 
----
+    DSA --> node1["Binary Search Tree.c"]
+    DSA --> node2["SELF-BALANCING AVL TREE.c"]
 
-## 📈 Future Plans
+    Sys --> node3["Multithreaded Thread Pool.c"]
+    Sys --> node4["TCP Multi Client Server.c"]
 
-This repository will grow as I:
+    Proc --> node5["Fork .c / Fork 1-4.c"]
 
-- Learn deeper concepts
-- Build more complex systems
-- Write cleaner code
-- Explore real-world applications
+    Utils --> node6["File Student MGT.c"]
+    Utils --> node7["Full Calculator.c"]
+    Utils --> node8["Matrix .c"]
 
-My goal is to become strong in systems programming.
-
----
-
-## 🤝 Feedback
-
-Suggestions and feedback are always welcome — I’m here to learn and improve.
+    Anim --> node9["Typing Ani.c"]
+    Anim --> node10["MATHAN ANIMATION.c"]
+    Anim --> node11["Latter Animation.c"]
+```
 
 ---
 
-<h3><p align="center">
-  ⭐ More projects coming soon — stay tuned!
-</p></h3>
+## ✨ Key Features
+- **TCP Multi-Client Server**: Implements a concurrent `select()`-based server capable of handling up to 30 simultaneous clients, returning HTTP-formatted HTML responses.
+- **Multithreaded Worker Pool**: Uses POSIX `pthread` API (mutex locks + condition variables) to create a task queue dispatched across 4 worker threads — demonstrating efficient resource management.
+- **Self-Balancing AVL Tree**: Full implementation of left/right rotations for balanced binary search on insertion, keeping O(log n) complexity intact.
+- **Fork-Based Concurrency**: Multiple `fork()` examples demonstrating parent/child process lifecycle and IPC.
+- **Console Animations**: Text-based terminal animations using `sleep()`, `system("clear")`, and ANSI terminal sequences.
 
+---
 
-<h1><p align="center">
-<img src="https://capsule-render.vercel.app/api?type=soft&height=100&color=gradient&text=By-%20M.S.Vinzuda&section=footer&fontAlign=50&reversal=true&descAlign=11&descAlignY=14&fontSize=36" width="100%" />
-</p></h1>
+## 🔧 Tech Stack
+| Category | Details |
+|---|---|
+| **Language** | C (C99/C11) |
+| **Compiler** | GCC, Clang (MinGW on Windows) |
+| **Libraries** | `pthread.h`, `sys/socket.h`, `netinet/in.h`, `unistd.h`, `stdlib.h` |
+| **APIs** | POSIX Threads, BSD Sockets |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+Install **GCC** on your system.
+- **Linux/macOS**: `sudo apt install gcc` or `brew install gcc`
+- **Windows**: Install [MinGW-w64](https://www.mingw-w64.org/)
+
+### Run Instructions
+
+1. Navigate into this directory:
+   ```bash
+   cd "Academic-Projects-2024-2028/C C++ C# Projects/C Language Project"
+   ```
+
+2. **Compile** the desired file. Examples:
+
+   | Program | Compile Command |
+   |---|---|
+   | Thread Pool | `gcc "Multithreaded Thread Pool.c" -o threadpool -pthread` |
+   | TCP Server | `gcc "TCP Multi Client Server.c" -o server` |
+   | AVL Tree | `gcc "SELF-BALANCING AVL TREE.c" -o avl` |
+   | Calculator | `gcc "Full Calculator.c" -o calc` |
+
+3. **Run** the compiled binary:
+   ```bash
+   ./threadpool
+   ./server
+   ```
+   > ⚠️ Note: TCP-based programs require Linux/macOS or WSL on Windows due to POSIX socket dependencies.
+
+---
+
+## 👤 Author
+
+**Manthan Vinzuda**
+> *Academic Projects · 2024–2028*
