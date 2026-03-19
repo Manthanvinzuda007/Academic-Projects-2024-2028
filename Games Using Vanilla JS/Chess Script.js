@@ -1,6 +1,118 @@
-/** This Code Made By MANTHAN VINZUDA */
+// Manthan Vinzuda 
+        const LobbyUI = {
+            selectedMode: 'friend',
 
-/**
+            init() {
+                this.setupNameObserver();
+            },
+
+            showPanel(panelId) {
+                document.querySelectorAll('.gold-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(panelId).classList.remove('hidden');
+            },
+
+            openSetup(mode) {
+                this.selectedMode = mode;
+                // If vs AI, hide player 2 name input
+                const p2Row = document.getElementById('p2-row');
+                if (p2Row) {
+                    p2Row.style.display = (mode === 'ai') ? 'none' : 'flex';
+                }
+                this.showPanel('lobby-setup');
+            },
+
+            startGame() {
+                // Show the board wrapper
+                document.body.classList.add('game-active');
+
+                // Trigger original game logic safely!
+                // Your original code uses setMode('friend') or setMode('ai') which auto-resets the board!
+                if(typeof setMode === 'function') {
+                    setMode(this.selectedMode); 
+                }
+
+                // Force name update instantly
+                this.updateNamesInstantly();
+            },
+
+            exitToLobby() {
+                document.body.classList.remove('game-active');
+                this.toggleSidePanel(false);
+                this.showPanel('lobby-main');
+            },
+
+            toggleSidePanel(open) {
+                const panel = document.getElementById('side-panel');
+                const overlay = document.getElementById('side-overlay');
+                if (open) {
+                    panel.classList.add('open');
+                    overlay.classList.add('open');
+                } else {
+                    panel.classList.remove('open');
+                    overlay.classList.remove('open');
+                }
+            },
+
+            updateNamesInstantly() {
+                // Read custom names
+                const p1 = document.getElementById('p1-name').value || "Gold";
+                const p2 = this.selectedMode === 'ai' ? "AI" : (document.getElementById('p2-name').value || "Black");
+
+                // Update Status Box
+                const statusBox = document.getElementById('status');
+                if (statusBox) {
+                    statusBox.dataset.modifying = "true"; // flag to prevent infinite observer loops
+                    if (statusBox.innerText.includes("Gold's Turn") || statusBox.innerText.includes("GOLD'S TURN")) {
+                        statusBox.innerText = p1.toUpperCase() + "'S TURN";
+                    } else if (statusBox.innerText.includes("Black's Turn") || statusBox.innerText.includes("BLACK'S TURN")) {
+                        statusBox.innerText = p2.toUpperCase() + "'S TURN";
+                    }
+                    statusBox.dataset.modifying = "";
+                }
+            },
+
+            setupNameObserver() {
+                // Because your original game script overwrites #status text dynamically on every move,
+                // we use a MutationObserver to instantly swap "Gold" or "Black" with Custom Names.
+                const observer = new MutationObserver(() => {
+                    const customP1 = document.getElementById('p1-name').value || "Gold";
+                    const customP2 = this.selectedMode === 'ai' ? "AI" : (document.getElementById('p2-name').value || "Black");
+                    
+                    const statusBox = document.getElementById('status');
+                    if (statusBox && !statusBox.dataset.modifying) {
+                        statusBox.dataset.modifying = "true";
+                        if (statusBox.innerText === "Gold's Turn") {
+                            statusBox.innerText = customP1.toUpperCase() + "'S TURN";
+                        } else if (statusBox.innerText === "Black's Turn") {
+                            statusBox.innerText = customP2.toUpperCase() + "'S TURN";
+                        }
+                        statusBox.dataset.modifying = "";
+                    }
+
+                    const msgBox = document.getElementById('game-over-msg');
+                    if (msgBox && !msgBox.dataset.modifying && !msgBox.classList.contains('hidden')) {
+                        msgBox.dataset.modifying = "true";
+                        let text = msgBox.innerText;
+                        text = text.replace("Gold", customP1.toUpperCase());
+                        text = text.replace("Black", customP2.toUpperCase());
+                        msgBox.innerText = text;
+                        msgBox.dataset.modifying = "";
+                    }
+                });
+
+                // Observe the original game wrapper for any changes
+                const wrapper = document.getElementById('original-game-wrapper');
+                if(wrapper) {
+                    observer.observe(wrapper, { childList: true, subtree: true, characterData: true });
+                }
+            }
+        };
+
+        // Initialize Observer
+        LobbyUI.init();
+  
+
+        /**
          * GAME STATE (Single Source of Truth)
          */
         let gameState = {
@@ -296,3 +408,4 @@
 
         // Start
         initBoard();
+

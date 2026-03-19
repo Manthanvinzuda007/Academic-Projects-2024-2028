@@ -1,33 +1,102 @@
-<!-- Manthan Vinzuda-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Royal Chess</title>
-    <link  rel="stylesheet" href="Chess Styles.css">
+    <title>Premium Royal Chess</title>
+    <link rel="stylesheet" href="Chess Style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Royal Chess</h1>
-        <div class="mode-selector">
-            <button id="btn-friend" class="btn active" onclick="setMode('friend')">Friend</button>
-            <button id="btn-ai" class="btn" onclick="setMode('ai')">AI</button>
-            <button class="btn" style="opacity: 0.5;" disabled>Online (Soon)</button>
+    <!-- =========================================
+         LOBBY UI (Premium Royal Theme)
+         ========================================= -->
+    <div id="lobby-layer">
+        
+        <!-- Main Menu -->
+        <div class="gold-panel" id="lobby-main">
+            <div class="lobby-title">Royal<br>Chess</div>
+            <button class="gold-btn" onclick="LobbyUI.openSetup('friend')">Player vs Player</button>
+            <button class="gold-btn" onclick="LobbyUI.openSetup('ai')">Player vs AI</button>
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="gold-btn secondary" onclick="LobbyUI.showPanel('lobby-help')">How to Play</button>
+            </div>
         </div>
-    </header>
 
-    <div id="board-outer">
-        <div id="board-inner-line"></div>
-        <div id="board"></div>
+        <!-- Setup Menu -->
+        <div class="gold-panel hidden" id="lobby-setup">
+            <div class="lobby-title" style="font-size: 2rem;">Match Setup</div>
+            
+            <div class="form-row">
+                <label>Player 1 (Gold) Name</label>
+                <input type="text" id="p1-name" class="gold-input" value="Player 1" maxlength="12">
+            </div>
+
+            <div class="form-row" id="p2-row">
+                <label>Player 2 (Black) Name</label>
+                <input type="text" id="p2-name" class="gold-input" value="Player 2" maxlength="12">
+            </div>
+
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="gold-btn secondary" onclick="LobbyUI.showPanel('lobby-main')">Go Back</button>
+                <button class="gold-btn" onclick="LobbyUI.startGame()">Start Match</button>
+            </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="gold-panel hidden" id="lobby-help" style="width: min(90vw, 550px);">
+            <div class="lobby-title" style="font-size: 2rem;">Rules of Play</div>
+            <div class="help-text" style="max-height: 250px; overflow-y: auto; padding-right: 10px;">
+                <p><strong>Objective:</strong> Checkmate the opponent's King.</p>
+                <p><strong>Movement:</strong> Tap a piece to see its valid moves highlighted with dots. Tap a highlighted square to execute the move.</p>
+                <p><strong>Pawn:</strong> Moves forward 1 square (or 2 on first move). Captures diagonally.</p>
+                <p><strong>Knight:</strong> Moves in an 'L' shape (2 squares one direction, 1 square perpendicular) and can jump over pieces.</p>
+                <p><strong>Bishop/Rook/Queen:</strong> Move diagonally, straight, or both across empty squares.</p>
+                <p><strong>King:</strong> Moves 1 square in any direction. The game ends immediately when a King is in Checkmate or Stalemate.</p>
+            </div>
+            <button class="gold-btn" style="margin-top: 15px;" onclick="LobbyUI.showPanel('lobby-main')">Understood</button>
+        </div>
     </div>
 
-    <footer>
-        <div id="status" class="status-box">Gold's Turn</div>
-        <div id="game-over-msg" class="hidden"></div>
-        <button class="btn" onclick="resetGame()">Reset Match</button>
-    </footer>
+    <!-- Floating In-Game Menu Button -->
+    <button id="game-menu-btn" onclick="LobbyUI.toggleSidePanel(true)">☰ Menu</button>
+
+    <!-- Side Panel (In-game settings) -->
+    <div class="side-overlay" id="side-overlay" onclick="LobbyUI.toggleSidePanel(false)"></div>
+    <div id="side-panel">
+        <h2 style="color: var(--gold-royal); text-transform: uppercase; font-size: 1.5rem; margin-bottom: 20px; font-weight: 300; letter-spacing: 4px;">Match Menu</h2>
+        
+        <!-- Triggers the original reset logic -->
+        <button class="gold-btn secondary" onclick="if(typeof resetGame === 'function') resetGame(); LobbyUI.toggleSidePanel(false);">Restart Match</button>
+        
+        <button class="gold-btn" style="margin-top: auto; border-color: #a33; color: #e44;" onclick="LobbyUI.exitToLobby()">Exit to Main Menu</button>
+    </div>
+
+
+    <!-- =========================================
+         ORIGINAL GAME DOM
+         ========================================= -->
+    <div id="original-game-wrapper">
+        <header>
+            <h1>Royal Chess</h1>
+            <div class="mode-selector">
+                <button id="btn-friend" class="btn active" onclick="setMode('friend')">Friend</button>
+                <button id="btn-ai" class="btn" onclick="setMode('ai')">AI</button>
+                <button class="btn" style="opacity: 0.5;" disabled>Online (Soon)</button>
+            </div>
+        </header>
+
+        <div id="board-outer">
+            <div id="board-inner-line"></div>
+            <div id="board"></div>
+        </div>
+
+        <footer>
+            <div id="status" class="status-box">Gold's Turn</div>
+            <div id="game-over-msg" class="hidden"></div>
+            <button class="btn" onclick="resetGame()">Reset Match</button>
+        </footer>
+    </div>
     <script src="Chess Script.js"></script>
 </body>
 </html>

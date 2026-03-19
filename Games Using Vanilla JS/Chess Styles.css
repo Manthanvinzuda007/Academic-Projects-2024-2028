@@ -1,5 +1,9 @@
-/* This Code Made By MANTHAN VINZUDA */
-:root {
+
+
+        /* =========================================
+           ORIGINAL GAME CSS (Untouched)
+           ========================================= */
+        :root {
             --gold-royal: #d4af37;
             --gold-soft: #f1c40f;
             --black-matte: #0a0a0a;
@@ -189,3 +193,93 @@
             .square { font-size: 9vw; }
             .hint-capture { width: 8vw; height: 8vw; }
         }
+
+        /* =========================================
+           NEW LOBBY UI CSS (Premium Royal Theme)
+           ========================================= */
+        
+        /* Hide Lobby when game is active */
+        body.game-active #lobby-layer {
+            opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s ease;
+        }
+
+        /* Hide Original Game completely until started */
+        body:not(.game-active) #original-game-wrapper,
+        body:not(.game-active) #game-menu-btn {
+            opacity: 0 !important; pointer-events: none !important;
+            position: absolute !important; z-index: -100 !important;
+        }
+
+        /* Hide the original mode-selector inside the game since the Lobby handles modes */
+        #original-game-wrapper .mode-selector {
+            display: none !important;
+        }
+
+        #lobby-layer {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 900; background-color: var(--bg-charcoal); transition: opacity 0.5s ease;
+        }
+
+        .gold-panel {
+            background: linear-gradient(to bottom, #111, #0a0a0a); border: 2px solid var(--gold-royal);
+            padding: 40px; border-radius: 8px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(212, 175, 55, 0.1); width: min(90vw, 450px);
+            display: flex; flex-direction: column; gap: 15px; position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .gold-panel.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lobby-title {
+            font-size: 3rem; color: var(--gold-royal); text-transform: uppercase;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.8); margin-bottom: 20px;
+            line-height: 1.1; font-weight: 300; letter-spacing: 4px;
+        }
+
+        .gold-btn {
+            background: #0a0a0a; color: var(--gold-royal); border: 1px solid var(--gold-royal);
+            padding: 15px; font-size: 1.2rem; border-radius: 4px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6); transition: all 0.2s; width: 100%;
+        }
+        .gold-btn:hover { background: var(--gold-royal); color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+        .gold-btn.secondary { background: transparent; font-size: 0.9rem; padding: 10px; border-color: #555; color: #aaa; }
+        .gold-btn.secondary:hover { background: #222; border-color: var(--gold-royal); color: var(--gold-royal); }
+
+        .form-row { display: flex; flex-direction: column; text-align: left; margin-bottom: 15px; }
+        .form-row label { color: #888; font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .gold-input {
+            background: #000; color: var(--gold-royal); border: 1px solid #444;
+            padding: 12px; font-size: 1.1rem; border-radius: 4px; outline: none; width: 100%;
+        }
+        .gold-input:focus { border-color: var(--gold-royal); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+
+        .flex-row { display: flex; gap: 10px; width: 100%; }
+
+        /* Floating Menu Button for in-game */
+        #game-menu-btn { 
+            position: fixed; top: 20px; right: 20px; z-index: 500;
+            background: #0a0a0a; border: 1px solid var(--gold-royal); color: var(--gold-royal);
+            padding: 10px 15px; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: all 0.2s; font-size: 0.8rem;
+        }
+        #game-menu-btn:hover { background: var(--gold-royal); color: #000; }
+
+        /* Side Settings Panel */
+        #side-panel {
+            position: fixed; right: -350px; top: 0; width: 300px; height: 100vh;
+            background: linear-gradient(to right, #111, #000);
+            border-left: 2px solid var(--gold-royal); z-index: 1000;
+            padding: 40px 20px; display: flex; flex-direction: column; gap: 15px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.9); transition: right 0.4s ease;
+        }
+        #side-panel.open { right: 0; }
+        .side-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8); z-index: 999; display: none;
+            backdrop-filter: blur(2px);
+        }
+        .side-overlay.open { display: block; }
+
+        .help-text p { color: #bbb; font-size: 0.95rem; line-height: 1.6; text-align: left; margin-bottom: 10px; }

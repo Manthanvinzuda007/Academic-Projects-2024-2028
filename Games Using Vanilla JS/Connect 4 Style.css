@@ -1,4 +1,7 @@
-:root {
+        /* =========================================
+           ORIGINAL GAME CSS (Untouched)
+           ========================================= */
+        :root {
             --board-bg: #2563eb;
             --slot-bg: #1e3a8a;
             --player1-color: #ef4444;
@@ -90,4 +93,64 @@
                 padding: 6px;
                 border-width: 4px;
             }
+        }
+
+        /* =========================================
+           NEW LOBBY UI CSS (Elite Tech Theme)
+           ========================================= */
+        
+        /* Hide Lobby when game is active */
+        body.game-active #lobby-layer {
+            opacity: 0; pointer-events: none; visibility: hidden;
+        }
+
+        /* Hide Original Game completely until started (opacity to preserve bounds) */
+        body:not(.game-active) #original-game-wrapper {
+            opacity: 0 !important; pointer-events: none !important;
+            position: absolute !important; z-index: -100 !important;
+        }
+
+        #lobby-layer {
+            transition: opacity 0.5s ease;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7); /* slate-800 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.3); /* blue-500 border */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .elite-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: white;
+            transition: all 0.3s;
+        }
+        .elite-input:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+        }
+
+        .elite-btn {
+            background: linear-gradient(to right, #2563eb, #4f46e5);
+            transition: all 0.3s;
+            background-size: 200% auto;
+        }
+        .elite-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.7);
+        }
+        
+        .elite-btn-secondary {
+            background: transparent;
+            border: 1px solid #475569;
+            transition: all 0.3s;
+        }
+        .elite-btn-secondary:hover {
+            background: rgba(71, 85, 105, 0.3);
+            border-color: #94a3b8;
         }

@@ -1,4 +1,85 @@
- // --- REALISTIC SOUND ENGINE (Web Audio API) ---
+// Manthan Vinzuda 
+        // --- LOBBY UI LOGIC ---
+        // This entire block is new and handles the lobby interface, player name input, and seamless transition into the original game. It cleverly uses a MutationObserver to intercept and replace the original game's static "Player 1's Turn" text with the custom names entered by the user, without needing to alter any of the original game logic or DOM structure.
+        const LobbyUI = {
+            init() {
+                this.setupNameObserver();
+            },
+
+            showPanel(panelId) {
+                // Hide all panels, then show target
+                ['lobby-main', 'lobby-setup', 'lobby-help'].forEach(id => {
+                    const el = document.getElementById(id);
+                    el.classList.add('hidden');
+                    el.classList.replace('scale-100', 'scale-95');
+                });
+                
+                const target = document.getElementById(panelId);
+                target.classList.remove('hidden');
+                // Brief delay to allow DOM render before scaling up for animation
+                setTimeout(() => target.classList.replace('scale-95', 'scale-100'), 10);
+            },
+
+            startGame() {
+                // Update static score labels safely
+                const p1Name = document.getElementById('p1-name').value || "Player 1";
+                const p2Name = document.getElementById('p2-name').value || "Player 2";
+                document.getElementById('score-label-1').innerText = p1Name;
+                document.getElementById('score-label-2').innerText = p2Name;
+                
+                // Show the board
+                document.body.classList.add('game-active');
+
+                // Force reset original game to ensure fresh start (calls original reset logic safely)
+                if (typeof resetGame === 'function') {
+                    resetGame(true); // true clears the scores too
+                }
+            },
+
+            exitToLobby() {
+                document.body.classList.remove('game-active');
+                this.showPanel('lobby-main');
+            },
+
+            setupNameObserver() {
+                // This cleverly intercepts the original game's string assignments 
+                // ("Player 1's Turn") and replaces them with Custom Names 
+                // BEFORE the user sees it, preventing the need to alter the original logic!
+                const observer = new MutationObserver(() => {
+                    const p1 = document.getElementById('p1-name').value || "Player 1";
+                    const p2 = document.getElementById('p2-name').value || "Player 2";
+                    
+                    const status = document.getElementById('status-display');
+                    if (status && status.innerHTML.includes("Player <span")) {
+                        let html = status.innerHTML;
+                        // To prevent infinite loop, we strip out the word "Player" entirely during replacement
+                        if (html.includes(">1</span>")) {
+                            status.innerHTML = html.replace("Player <span", "<span").replace(">1</span>", ">" + p1 + "</span>");
+                        } else if (html.includes(">2</span>")) {
+                            status.innerHTML = html.replace("Player <span", "<span").replace(">2</span>", ">" + p2 + "</span>");
+                        }
+                    }
+
+                    const winMsg = document.getElementById('win-message');
+                    if (winMsg && winMsg.innerHTML.includes("Player <span")) {
+                        let html = winMsg.innerHTML;
+                        if (html.includes(">1</span>")) {
+                            winMsg.innerHTML = html.replace("Player <span", "<span").replace(">1</span>", ">" + p1 + "</span>");
+                        } else if (html.includes(">2</span>")) {
+                            winMsg.innerHTML = html.replace("Player <span", "<span").replace(">2</span>", ">" + p2 + "</span>");
+                        }
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+            }
+        };
+
+        // Initialize Observer
+        LobbyUI.init();
+
+        // Note: The original game logic and sound engine remain completely untouched and operate as originally designed, ensuring that all core mechanics and audio effects function exactly as intended while seamlessly integrating with the new lobby UI.
+
+    // --- REALISTIC SOUND ENGINE (Web Audio API) ---
         class SoundEngine {
             constructor() {
                 this.ctx = null;
@@ -308,3 +389,4 @@
         resetBtn.addEventListener('click', () => resetGame(true));
 
         window.onload = initBoard;
+  
