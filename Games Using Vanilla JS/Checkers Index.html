@@ -1,40 +1,106 @@
-<!-- Created By Manthann Vinzuda -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chekaers Game</title>
-    <link rel="stylesheet" href="Checkers Style.css">
+    <title>Checkers</title>
+    <link rel="stylesheet" href="Checkers Style.css" />
 </head>
 <body>
-    <!-- TOP: Player 2 (Black) -->
-    <div class="player-container">
-        <div id="card-p2" class="player-card">
-            <div class="player-name">PLAYER 2 (EBONY)</div>
-            <div id="timer-p2" class="player-timer">05:00</div>
+    <!-- =========================================
+         LOBBY UI ( Checkers Theme)
+         ========================================= -->
+    <div id="lobby-layer">
+        
+        <!-- Main Menu -->
+        <div class="wood-panel" id="lobby-main">
+            <div class="lobby-title">Checkers</div>
+            <button class="wood-btn" onclick="LobbyUI.showPanel('lobby-setup')">Local Multiplayer</button>
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="wood-btn secondary" onclick="LobbyUI.showPanel('lobby-help')">How to Play</button>
+            </div>
+        </div>
+
+        <!-- Setup Menu -->
+        <div class="wood-panel hidden" id="lobby-setup">
+            <div class="lobby-title" style="font-size: 2rem;">Match Setup</div>
+            
+            <div class="form-row">
+                <label>Player 1 (Ivory) Name</label>
+                <input type="text" id="p1-name" class="wood-input" value="Player 1" maxlength="12">
+            </div>
+
+            <div class="form-row">
+                <label>Player 2 (Ebony) Name</label>
+                <input type="text" id="p2-name" class="wood-input" value="Player 2" maxlength="12">
+            </div>
+
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="wood-btn secondary" onclick="LobbyUI.showPanel('lobby-main')">Go Back</button>
+                <button class="wood-btn" onclick="LobbyUI.startGame()">Start Match</button>
+            </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="wood-panel hidden" id="lobby-help" style="width: min(90vw, 550px);">
+            <div class="lobby-title" style="font-size: 2rem;">Rules of Play</div>
+            <div class="help-text" style="max-height: 250px; overflow-y: auto; padding-right: 10px;">
+                <p><strong>Objective:</strong> Capture all of your opponent's pieces or block them so they cannot make a move.</p>
+                <p><strong>Movement:</strong> Pieces move diagonally forward one square at a time. Tap a piece to select it, then tap an highlighted valid cell to move.</p>
+                <p><strong>Jumping:</strong> If an opponent's piece is diagonally adjacent and the square behind it is empty, you must jump over it to capture it. Chain jumps are mandatory if available.</p>
+                <p><strong>Kings:</strong> When a piece reaches the farthest row, it becomes a King (Crown icon). Kings can move diagonally both forward and backward.</p>
+                <p><strong>Time:</strong> Each player has 5 minutes on their clock. If your timer runs out, you lose!</p>
+            </div>
+            <button class="wood-btn" style="margin-top: 15px;" onclick="LobbyUI.showPanel('lobby-main')">Understood</button>
         </div>
     </div>
 
-    <div class="board-wrapper">
-        <div id="board"></div>
+    <!-- Floating In-Game Menu Button -->
+    <button id="game-menu-btn" onclick="LobbyUI.toggleSidePanel(true)">☰ Menu</button>
+
+    <!-- Side Panel (In-game settings) -->
+    <div class="side-overlay" id="side-overlay" onclick="LobbyUI.toggleSidePanel(false)"></div>
+    <div id="side-panel">
+        <h2 style="color: var(--brass); text-transform: uppercase; font-size: 1.8rem; margin-bottom: 20px;">Match Menu</h2>
+        
+        <button class="wood-btn secondary" onclick="document.querySelector('.reset-btn').click(); LobbyUI.toggleSidePanel(false);">Restart Match</button>
+        
+        <button class="wood-btn" style="margin-top: auto; border-color: #a33; color: #e44;" onclick="LobbyUI.exitToLobby()">Exit to Main Menu</button>
     </div>
 
-    <!-- BOTTOM: Player 1 (White) -->
-    <div class="player-container">
-        <div id="card-p1" class="player-card active">
-            <div class="player-name">PLAYER 1 (IVORY)</div>
-            <div id="timer-p1" class="player-timer">05:00</div>
+
+    <!-- =========================================
+         ORIGINAL GAME DOM
+         ========================================= -->
+    <div id="original-game-wrapper">
+        <!-- TOP: Player 2 (Black) -->
+        <div class="player-container">
+            <div id="card-p2" class="player-card">
+                <div class="player-name" id="ui-name-p2">PLAYER 2 (EBONY)</div>
+                <div id="timer-p2" class="player-timer">05:00</div>
+            </div>
         </div>
-    </div>
 
-    <button class="reset-btn" onclick="initGame()">RESET MATCH</button>
+        <div class="board-wrapper">
+            <div id="board"></div>
+        </div>
 
-    <div id="modal">
-        <div class="modal-content">
-            <h2 id="modal-title" style="color:var(--brass); font-size: 2.5rem; margin-top:0">MATCH OVER</h2>
-            <p id="modal-body" style="font-size: 1.2rem; margin-bottom: 30px"></p>
-            <button class="reset-btn" onclick="initGame()">PLAY AGAIN</button>
+        <!-- BOTTOM: Player 1 (White) -->
+        <div class="player-container">
+            <div id="card-p1" class="player-card active">
+                <div class="player-name" id="ui-name-p1">PLAYER 1 (IVORY)</div>
+                <div id="timer-p1" class="player-timer">05:00</div>
+            </div>
+        </div>
+
+        <button class="reset-btn" onclick="initGame()">RESET MATCH</button>
+
+        <div id="modal">
+            <div class="modal-content">
+                <h2 id="modal-title" style="color:var(--brass); font-size: 2.5rem; margin-top:0">MATCH OVER</h2>
+                <p id="modal-body" style="font-size: 1.2rem; margin-bottom: 30px"></p>
+                <button class="reset-btn" onclick="initGame()">PLAY AGAIN</button>
+            </div>
         </div>
     </div>
     <script src="Checkers Script.js"></script>

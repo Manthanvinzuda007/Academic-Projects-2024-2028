@@ -1,4 +1,90 @@
-// Created By Manthan Vinzuda 
+// Manthan Vinzuda 
+        // =========================================
+        // LOBBY UI Logic
+        // =========================================
+        const LobbyUI = {
+            init() {
+                this.setupNameObserver();
+            },
+
+            showPanel(panelId) {
+                document.querySelectorAll('.wood-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(panelId).classList.remove('hidden');
+            },
+
+            startGame() {
+                // Set name in original UI statically so observer catches it
+                const p1Name = document.getElementById('p1-name').value || "Player 1";
+                const p2Name = document.getElementById('p2-name').value || "Player 2";
+                
+                // Keep the suffix so users know which color is theirs
+                document.getElementById('ui-name-p1').innerText = p1Name + " (IVORY)";
+                document.getElementById('ui-name-p2').innerText = p2Name + " (EBONY)";
+                
+                // Show the board
+                document.body.classList.add('game-active');
+
+                // Start original game script safely. Since Checkers timer starts on page load,
+                // calling initGame() cleanly resets the board and starts the timer fresh!
+                if(typeof initGame === 'function') initGame();
+
+                // Make sure resize layout kicks in
+                setTimeout(() => {
+                    if(typeof renderBoard === 'function') renderBoard();
+                }, 100);
+            },
+
+            exitToLobby() {
+                document.body.classList.remove('game-active');
+                this.toggleSidePanel(false);
+                this.showPanel('lobby-main');
+                
+                // Pause timer by clearing the original interval variable securely
+                if (typeof timerInterval !== 'undefined') {
+                    clearInterval(timerInterval);
+                }
+            },
+
+            toggleSidePanel(open) {
+                const panel = document.getElementById('side-panel');
+                const overlay = document.getElementById('side-overlay');
+                if (open) {
+                    panel.classList.add('open');
+                    overlay.classList.add('open');
+                } else {
+                    panel.classList.remove('open');
+                    overlay.classList.remove('open');
+                }
+            },
+
+            setupNameObserver() {
+                // This ensures the custom name also applies dynamically if the original logic replaces texts.
+                // Mostly handles the Game Over modal winner text in Checkers.
+                const observer = new MutationObserver(() => {
+                    const customP1 = document.getElementById('p1-name').value || "PLAYER 1";
+                    const customP2 = document.getElementById('p2-name').value || "PLAYER 2";
+                    
+                    const modalTitle = document.getElementById('modal-title');
+                    if (modalTitle) {
+                        if (modalTitle.innerText === "PLAYER 1 WINS!") {
+                            modalTitle.innerText = customP1.toUpperCase() + " WINS!";
+                        } else if (modalTitle.innerText === "PLAYER 2 WINS!") {
+                            modalTitle.innerText = customP2.toUpperCase() + " WINS!";
+                        }
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+            }
+        };
+
+        // Initialize Observer
+        LobbyUI.init();
+  
+
+        // Game logic variables and constants
+        // Using 1 and 2 for white and black pieces respectively, negative values for kings, and 0 for empty cells
+        // This allows us to easily determine piece type and ownership with simple checks (e.g., Math.abs(board[r][c]) === turn)
+        // Additionally, using a single board array to represent the entire state simplifies move generation and rendering logic.
         const WHITE = 1, BLACK = 2, EMPTY = 0;
         let board = [], turn = WHITE, selected = null, validMoves = [], isBusy = false;
         let timers = { 1: 300, 2: 300 }; // 5 minutes each

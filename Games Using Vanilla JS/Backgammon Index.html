@@ -1,120 +1,180 @@
 <html>
-  <head>
-        <title> Backgammon Game </title>
-        <link rel="stylesheet" href="Backgammon Style.css">
+<head>
+    <title>Premium Backgammon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Backgammon Style.css">
 </head>
 <body>
-  <div class="header">
-        <div class="score-board">
-            <div class="score-box" style="color: var(--checker-p1);">
-                <div class="dot" style="background: var(--checker-p1);"></div>
-                P1 (White) Off: <span id="score-p1">0</span>
-            </div>
-            <div class="score-box" style="color: #bbb;">
-                <div class="dot" style="background: var(--checker-p2);"></div>
-                P2 (Black) Off: <span id="score-p2">0</span>
+
+    <!-- =========================================
+         LOBBY UI (Premium Wood Theme)
+         ========================================= -->
+    <div id="lobby-layer">
+        
+        <!-- Main Menu -->
+        <div class="wood-panel" id="lobby-main">
+            <div class="lobby-title">Backgammon</div>
+            <button class="wood-btn" onclick="LobbyUI.openSetup('pvp')">Player vs Player</button>
+            <button class="wood-btn" onclick="LobbyUI.openSetup('ai')">Player vs AI</button>
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="wood-btn secondary" onclick="LobbyUI.showPanel('lobby-help')">How to Play</button>
             </div>
         </div>
-        <div class="turn-indicator" id="turn-display">Player 1 (White)'s Turn</div>
+
+        <!-- Setup Menu -->
+        <div class="wood-panel hidden" id="lobby-setup">
+            <div class="lobby-title" style="font-size: 2rem;">Game Setup</div>
+            
+            <div class="form-row">
+                <label>Player Name</label>
+                <input type="text" id="player-name" class="wood-input" value="Player 1" maxlength="12">
+            </div>
+
+            <div class="form-row" id="ai-difficulty-row">
+                <label>AI Difficulty</label>
+                <select id="ai-diff-select" class="wood-input">
+                    <option>Easy</option>
+                    <option selected>Medium</option>
+                    <option>Hard</option>
+                </select>
+            </div>
+
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="wood-btn secondary" onclick="LobbyUI.showPanel('lobby-main')">Go Back</button>
+                <button class="wood-btn" onclick="LobbyUI.startGame()">Start Game</button>
+            </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="wood-panel hidden" id="lobby-help" style="width: min(90vw, 550px);">
+            <div class="lobby-title" style="font-size: 2rem;">How to Play</div>
+            <div class="help-text" style="max-height: 250px; overflow-y: auto; padding-right: 10px;">
+                <p><strong>Objective:</strong> Be the first player to move all 15 of your checkers off the board (bearing off).</p>
+                <p><strong>Movement:</strong> Roll the dice to move your checkers. Player 1 (White) moves counter-clockwise. Player 2 (Black) moves clockwise.</p>
+                <p><strong>Hitting:</strong> If you land on a point with exactly ONE opponent checker (a blot), that checker is sent to the Bar.</p>
+                <p><strong>Entering:</strong> A player with a checker on the bar MUST enter it back into the opponent's home board before making any other moves.</p>
+                <p><strong>Bearing Off:</strong> Once all your checkers are in your home quadrant, you can start removing them from the board.</p>
+            </div>
+            <button class="wood-btn" style="margin-top: 15px;" onclick="LobbyUI.showPanel('lobby-main')">Got it!</button>
+        </div>
     </div>
 
-    <div class="game-area">
-        <div class="board-wrapper" id="board">
-            <!-- Left Half -->
-            <div class="board-half left-board">
-                <!-- Top Left (Indices 12-17) -->
-                <div class="point top-row" data-idx="12"></div>
-                <div class="point top-row" data-idx="13"></div>
-                <div class="point top-row" data-idx="14"></div>
-                <div class="point top-row" data-idx="15"></div>
-                <div class="point top-row" data-idx="16"></div>
-                <div class="point top-row" data-idx="17"></div>
+    <!-- Side Panel (In-game settings) -->
+    <div class="side-overlay" id="side-overlay" onclick="LobbyUI.toggleSidePanel(false)"></div>
+    <div id="side-panel">
+        <h2 style="color: #ebdcb9; text-transform: uppercase; font-size: 1.8rem; margin-bottom: 20px;">Settings</h2>
+        
+        <button class="wood-btn secondary" onclick="document.getElementById('btn-sound').click()">Toggle Sound</button>
+        <button class="wood-btn secondary" onclick="document.getElementById('btn-restart').click(); LobbyUI.toggleSidePanel(false);">Restart Match</button>
+        
+        <button class="wood-btn" style="margin-top: auto; border-color: #a33;" onclick="LobbyUI.exitToLobby()">Exit to Main Menu</button>
+    </div>
+
+
+    <!-- =========================================
+         ORIGINAL GAME DOM
+         ========================================= -->
+    <div id="original-game-wrapper">
+        <div class="header">
+            <div class="score-board">
+                <div class="score-box" style="color: var(--checker-p1);">
+                    <div class="dot" style="background: var(--checker-p1);"></div>
+                    <span id="ui-p1-name">P1 (White)</span> Off: <span id="score-p1">0</span>
+                </div>
+                <div class="score-box" style="color: #bbb;">
+                    <div class="dot" style="background: var(--checker-p2);"></div>
+                    P2 (Black) Off: <span id="score-p2">0</span>
+                </div>
+            </div>
+            <div class="turn-indicator" id="turn-display">Player 1 (White)'s Turn</div>
+        </div>
+
+        <div class="game-area">
+            <div class="board-wrapper" id="board">
+                <!-- Left Half -->
+                <div class="board-half left-board">
+                    <div class="point top-row" data-idx="12"></div><div class="point top-row" data-idx="13"></div>
+                    <div class="point top-row" data-idx="14"></div><div class="point top-row" data-idx="15"></div>
+                    <div class="point top-row" data-idx="16"></div><div class="point top-row" data-idx="17"></div>
+                    
+                    <div class="point bottom-row" data-idx="11"></div><div class="point bottom-row" data-idx="10"></div>
+                    <div class="point bottom-row" data-idx="9"></div><div class="point bottom-row" data-idx="8"></div>
+                    <div class="point bottom-row" data-idx="7"></div><div class="point bottom-row" data-idx="6"></div>
+                </div>
+
+                <!-- Bar -->
+                <div class="bar">
+                    <div class="bar-slot" id="bar-p1" data-idx="bar1" style="height:50%; width:100%; position:relative;"></div>
+                    <div class="bar-slot" id="bar-p2" data-idx="bar2" style="height:50%; width:100%; position:relative;"></div>
+                </div>
+
+                <!-- Right Half -->
+                <div class="board-half right-board">
+                    <div class="point top-row" data-idx="18"></div><div class="point top-row" data-idx="19"></div>
+                    <div class="point top-row" data-idx="20"></div><div class="point top-row" data-idx="21"></div>
+                    <div class="point top-row" data-idx="22"></div><div class="point top-row" data-idx="23"></div>
+                    
+                    <div class="point bottom-row" data-idx="5"></div><div class="point bottom-row" data-idx="4"></div>
+                    <div class="point bottom-row" data-idx="3"></div><div class="point bottom-row" data-idx="2"></div>
+                    <div class="point bottom-row" data-idx="1"></div><div class="point bottom-row" data-idx="0"></div>
+                </div>
+
+                <!-- Checkers Container Overlay -->
+                <div id="checkers-layer"></div>
+            </div>
+
+            <!-- Homes / Bear Off Area -->
+            <div class="homes">
+                <div class="home-slot" id="home-p2" data-idx="off2">
+                    <div class="off-count" id="count-off2">0</div>
+                </div>
+                <div class="home-slot" id="home-p1" data-idx="off1">
+                    <div class="off-count" id="count-off1">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="controls-group">
+                <!-- Original dropdown hidden via CSS since Lobby handles this -->
+                <select id="mode-select" style="display: none;">
+                    <option value="pvp">P to P (Player vs Player)</option>
+                    <option value="ai" selected>P to AI (Player vs Computer)</option>
+                </select>
+                <button class="btn" id="btn-restart" style="display:none;">Restart</button>
+                <button class="btn" id="btn-sound" style="display:none;">Sound: ON</button>
                 
-                <!-- Bottom Left (Indices 11-6) -->
-                <div class="point bottom-row" data-idx="11"></div>
-                <div class="point bottom-row" data-idx="10"></div>
-                <div class="point bottom-row" data-idx="9"></div>
-                <div class="point bottom-row" data-idx="8"></div>
-                <div class="point bottom-row" data-idx="7"></div>
-                <div class="point bottom-row" data-idx="6"></div>
+                <!-- New Menu Button injected into controls -->
+                <button class="btn" id="game-menu-btn" onclick="LobbyUI.toggleSidePanel(true)">☰ Menu / Settings</button>
             </div>
-
-            <!-- Bar (Hinge) -->
-            <div class="bar">
-                <div class="bar-slot" id="bar-p1" data-idx="bar1" style="height:50%; width:100%; position:relative;"></div>
-                <div class="bar-slot" id="bar-p2" data-idx="bar2" style="height:50%; width:100%; position:relative;"></div>
-            </div>
-
-            <!-- Right Half -->
-            <div class="board-half right-board">
-                <!-- Top Right (Indices 18-23) -->
-                <div class="point top-row" data-idx="18"></div>
-                <div class="point top-row" data-idx="19"></div>
-                <div class="point top-row" data-idx="20"></div>
-                <div class="point top-row" data-idx="21"></div>
-                <div class="point top-row" data-idx="22"></div>
-                <div class="point top-row" data-idx="23"></div>
-                
-                <!-- Bottom Right (Indices 5-0) -->
-                <div class="point bottom-row" data-idx="5"></div>
-                <div class="point bottom-row" data-idx="4"></div>
-                <div class="point bottom-row" data-idx="3"></div>
-                <div class="point bottom-row" data-idx="2"></div>
-                <div class="point bottom-row" data-idx="1"></div>
-                <div class="point bottom-row" data-idx="0"></div>
-            </div>
-
-            <!-- Checkers Container Overlay -->
-            <div id="checkers-layer"></div>
-        </div>
-
-        <!-- Homes / Bear Off Area -->
-        <div class="homes">
-            <div class="home-slot" id="home-p2" data-idx="off2">
-                <div class="off-count" id="count-off2">0</div>
-            </div>
-            <div class="home-slot" id="home-p1" data-idx="off1">
-                <div class="off-count" id="count-off1">0</div>
+            
+            <div class="dice-container" id="dice-container">
+                <button class="btn" id="btn-undo" disabled>Undo Move</button>
+                <div class="die" id="die1" data-val="1">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+                <div class="die" id="die2" data-val="2">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+                <button class="btn" id="btn-roll">Roll Dice</button>
             </div>
         </div>
+
+        <!-- Modals -->
+        <div class="modal" id="win-modal">
+            <div class="modal-content">
+                <h1 id="win-text">Player 1 Wins!</h1>
+                <p id="win-stats"></p>
+                <button class="btn" id="btn-play-again">Play Again</button>
+            </div>
+        </div>
+
+        <div class="notification" id="notif">No Valid Moves</div>
     </div>
-
-    <div class="controls">
-        <div class="controls-group">
-            <select id="mode-select">
-                <option value="pvp">P to P (Player vs Player)</option>
-                <option value="ai" selected>P to AI (Player vs Computer)</option>
-            </select>
-            <button class="btn" id="btn-restart">Restart</button>
-            <button class="btn" id="btn-sound">Sound: ON</button>
-        </div>
-        <div class="dice-container" id="dice-container">
-            <button class="btn" id="btn-undo" disabled>Undo Move</button>
-            <div class="die" id="die1" data-val="1">
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            </div>
-            <div class="die" id="die2" data-val="2">
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            </div>
-            <button class="btn" id="btn-roll">Roll Dice</button>
-        </div>
-    </div>
-
-    <!-- Modals -->
-    <div class="modal" id="win-modal">
-        <div class="modal-content">
-            <h1 id="win-text">Player 1 Wins!</h1>
-            <p id="win-stats"></p>
-            <button class="btn" id="btn-play-again">Play Again</button>
-        </div>
-    </div>
-
-    <div class="notification" id="notif">No Valid Moves</div>
-  <script src="Backgammon Script.js"></script>
-
-</body>  
+    <script src="Backgammom Script.js"></script>
+</body>
 </html>
