@@ -1,41 +1,91 @@
-<!-- Manthan Vinzuda -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Snake</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Neon Snake</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="Snake Style.css">
 </head>
-    <body>
+<body class="antialiased">
 
-    <div class="mb-4 text-center">
-        <h1 class="text-3xl font-bold text-green-500 mb-1">RETRO SNAKE</h1>
-        <div class="text-xl">Score: <span id="score">0</span> | High Score: <span id="high-score">0</span></div>
-    </div>
+    <!-- =========================================
+         LOBBY UI (Premium Neon Theme)
+         ========================================= -->
+    <div id="lobby-layer">
+        <!-- Main Menu -->
+        <div class="neon-panel" id="lobby-main">
+            <h1 class="lobby-title">NEON<br>SNAKE</h1>
+            <button class="neon-btn" onclick="LobbyUI.startGame()">Play Game</button>
+            <button class="neon-btn secondary mt-2" onclick="LobbyUI.showPanel('lobby-help')">How to Play</button>
+        </div>
 
-    <div id="game-container">
-        <canvas id="snakeGame"></canvas>
-        
-        <div id="overlay">
-            <h2 id="msg-title" class="text-4xl font-bold mb-4 text-white text-center">READY?</h2>
-            <button id="start-btn" class="bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full font-bold text-xl transition-all">
-                START GAME
-            </button>
-            <p class="mt-4 text-gray-400 text-sm">Use Arrow Keys or Buttons</p>
+        <!-- Help Menu -->
+        <div class="neon-panel hidden" id="lobby-help">
+            <h2 class="text-3xl font-extrabold text-green-400 mb-6 drop-shadow-md">SYSTEM RULES</h2>
+            <div class="help-text max-h-[250px] overflow-y-auto pr-2">
+                <p>• <strong>Objective:</strong> Eat the glowing food to grow your snake and increase your score.</p>
+                <p>• <strong>Controls:</strong> Use the arrow keys on your keyboard, or the on-screen buttons to change direction.</p>
+                <p>• <strong>Hazards:</strong> Do not hit the walls of the grid, and never crash into your own tail!</p>
+                <p>• <strong>Speed:</strong> The game maintains a constant retro speed. React quickly to survive.</p>
+            </div>
+            <button class="neon-btn mt-4" onclick="LobbyUI.showPanel('lobby-main')">Acknowledge</button>
         </div>
     </div>
 
-    <!-- Mobile Controls -->
-    <div class="controls md:hidden">
-        <div></div>
-        <div class="control-btn" id="btn-up">▲</div>
-        <div></div>
-        <div class="control-btn" id="btn-left">◀</div>
-        <div class="control-btn" id="btn-down">▼</div>
-        <div class="control-btn" id="btn-right">▶</div>
+    <!-- Floating In-Game Quit Button -->
+    <button id="quit-btn" onclick="window.location.reload()" class="fixed top-6 right-6 z-[500] bg-slate-800 border border-green-500/50 text-green-400 px-6 py-2 rounded-full font-bold shadow-lg hover:bg-green-500 hover:text-slate-900 transition-all uppercase tracking-wider text-sm">
+        Quit Game
+    </button>
+
+    <!-- Premium Game Over Modal -->
+    <div id="premium-game-over" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md flex items-center justify-center hidden z-[2000]">
+        <div class="bg-slate-800 p-10 rounded-2xl border-2 border-green-500 text-center max-w-sm w-[90%] shadow-[0_0_50px_rgba(34,197,94,0.3)]">
+            <h2 class="text-5xl font-extrabold mb-4 text-green-400 drop-shadow-md tracking-tighter">GAME OVER</h2>
+            <p class="text-slate-400 mb-8 text-xl font-medium">Final Score: <span id="premium-score" class="font-bold text-white text-2xl ml-2">0</span></p>
+            
+            <div class="flex flex-col gap-4">
+                <button onclick="LobbyUI.playAgain()" class="neon-btn">Play Again</button>
+                <button onclick="window.location.reload()" class="neon-btn secondary">Main Menu</button>
+            </div>
+        </div>
     </div>
-        <script src="Snake Script.js"></script>
-    </body>
+
+
+    <!-- =========================================
+         ORIGINAL GAME DOM
+         ========================================= -->
+    <div id="original-game-wrapper" class="flex flex-col items-center">
+        <div class="mb-4 text-center">
+            <h1 class="text-3xl font-bold text-green-500 mb-1">RETRO SNAKE</h1>
+            <div class="text-xl text-slate-300">Score: <span id="score" class="font-bold text-white">0</span> | High Score: <span id="high-score" class="font-bold text-white">0</span></div>
+        </div>
+
+        <div id="game-container">
+            <canvas id="snakeGame"></canvas>
+            
+            <!-- This original overlay is hidden via CSS, but kept here because the original JS references it -->
+            <div id="overlay">
+                <h2 id="msg-title" class="text-4xl font-bold mb-4 text-white text-center">READY?</h2>
+                <button id="start-btn" class="bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full font-bold text-xl transition-all">
+                    START GAME
+                </button>
+                <p class="mt-4 text-gray-400 text-sm">Use Arrow Keys or Buttons</p>
+            </div>
+        </div>
+
+        <!-- Mobile Controls -->
+        <div class="controls">
+            <div></div>
+            <div class="control-btn" id="btn-up">↑</div>
+            <div></div>
+            <div class="control-btn" id="btn-left">←</div>
+            <div class="control-btn" id="btn-down">↓</div>
+            <div class="control-btn" id="btn-right">→</div>
+        </div>
+    </div>
+
+    <script src="Snake Script.js"></script>
+
+</body>
 </html>

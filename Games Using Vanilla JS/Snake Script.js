@@ -1,4 +1,68 @@
-/* By Manthan Vinzuda */
+           const LobbyUI = {
+            init() {
+                // Set up observer to perfectly intercept the native Game Over trigger
+                this.setupObserver();
+            },
+
+            showPanel(panelId) {
+                document.querySelectorAll('.neon-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(panelId).classList.remove('hidden');
+            },
+
+            startGame() {
+                // Show original wrapper
+                document.body.classList.add('game-active');
+                document.getElementById('lobby-layer').classList.add('hidden-lobby');
+                
+                // Safely trigger the original logic's Start Button
+                const startBtn = document.getElementById('start-btn');
+                if (startBtn) startBtn.click();
+            },
+
+            showGameOver() {
+                // Show our Premium Game Over Modal
+                document.getElementById('premium-game-over').classList.remove('hidden');
+                
+                // Sync the score from the original UI
+                const currentScore = document.getElementById('score').innerText;
+                document.getElementById('premium-score').innerText = currentScore;
+            },
+
+            playAgain() {
+                // Hide modal and trigger original start logic again
+                document.getElementById('premium-game-over').classList.add('hidden');
+                const startBtn = document.getElementById('start-btn');
+                if (startBtn) startBtn.click();
+            },
+
+            setupObserver() {
+                // The original script sets "overlay.style.display = 'flex'" when you die.
+                // We watch for this inline style change to trigger our Premium Modal safely!
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'style') {
+                            const origOverlay = document.getElementById('overlay');
+                            if (origOverlay && origOverlay.style.display === 'flex') {
+                                // Double check the game wrapper is active so it doesn't trigger in lobby
+                                if (document.body.classList.contains('game-active')) {
+                                    this.showGameOver();
+                                }
+                            }
+                        }
+                    });
+                });
+
+                const overlayEl = document.getElementById('overlay');
+                if (overlayEl) {
+                    observer.observe(overlayEl, { attributes: true, attributeFilter: ['style'] });
+                }
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => LobbyUI.init());
+        // =========================================
+        // END OF LOBBY UI SCRIPT
+        // =========================================
         const canvas = document.getElementById('snakeGame');
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
@@ -39,31 +103,36 @@
         window.addEventListener('resize', resize);
         resize();
 
-        function initGame() {
-            snake = [
-                { x: 10, y: 10 },
-                { x: 10, y: 11 },
-                { x: 10, y: 12 }
-            ];
-            dx = 0;
-            dy = -1;
-            nextDx = 0;
-            nextDy = -1;
-            score = 0;
-            speed = 100;
-            scoreElement.textContent = score;
-            createFood();
+        function drawRect(x, y, color, isFood = false) {
+            ctx.fillStyle = color;
+            if (isFood) {
+                ctx.beginPath();
+                ctx.arc(
+                    x * TILE_SIZE + TILE_SIZE/2, 
+                    y * TILE_SIZE + TILE_SIZE/2, 
+                    TILE_SIZE/2 - 2, 
+                    0, 
+                    Math.PI * 2
+                );
+                ctx.fill();
+            } else {
+                ctx.fillRect(x * TILE_SIZE + 1, y * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+            }
         }
 
-        function createFood() {
-            food = {
-                x: Math.floor(Math.random() * TILE_COUNT),
-                y: Math.floor(Math.random() * TILE_COUNT)
-            };
-            // Prevent food from spawning on snake
-            snake.forEach(part => {
-                if (part.x === food.x && part.y === food.y) createFood();
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#020617';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw snake
+            snake.forEach((segment, index) => {
+                const color = index === 0 ? '#4ade80' : '#22c55e'; // Head is lighter green
+                drawRect(segment.x, segment.y, color);
             });
+
+            // Draw food
+            drawRect(food.x, food.y, '#ef4444', true);
         }
 
         function update() {
@@ -82,7 +151,7 @@
 
             // Self collision
             for (let i = 0; i < snake.length; i++) {
-                if (snake[i].x === head.x && snake[i].y === head.y) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
                     gameOver();
                     return;
                 }
@@ -94,118 +163,65 @@
             if (head.x === food.x && head.y === food.y) {
                 score += 10;
                 scoreElement.textContent = score;
-                if (score > highScore) {
-                    highScore = score;
-                    highScoreElement.textContent = highScore;
-                    localStorage.setItem('snake-high-score', highScore);
-                }
-                createFood();
-                // Increase speed slightly
-                if (speed > 50) {
-                    clearInterval(gameLoop);
-                    speed -= 1;
-                    gameLoop = setInterval(gameStep, speed);
-                }
+                spawnFood();
             } else {
                 snake.pop();
             }
-        }
 
-        function draw() {
-            // Background
-            ctx.fillStyle = '#020617';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Grid lines (subtle)
-            ctx.strokeStyle = '#1e293b';
-            ctx.lineWidth = 0.5;
-            for(let i=0; i<=TILE_COUNT; i++) {
-                ctx.beginPath();
-                ctx.moveTo(i * TILE_SIZE, 0);
-                ctx.lineTo(i * TILE_SIZE, canvas.height);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(0, i * TILE_SIZE);
-                ctx.lineTo(canvas.width, i * TILE_SIZE);
-                ctx.stroke();
-            }
-
-            // Food
-            ctx.fillStyle = '#ef4444';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#ef4444';
-            ctx.beginPath();
-            ctx.arc(
-                food.x * TILE_SIZE + TILE_SIZE/2, 
-                food.y * TILE_SIZE + TILE_SIZE/2, 
-                TILE_SIZE/2.5, 0, Math.PI * 2
-            );
-            ctx.fill();
-            ctx.shadowBlur = 0;
-
-            // Snake
-            snake.forEach((part, index) => {
-                const isHead = index === 0;
-                ctx.fillStyle = isHead ? '#4ade80' : '#22c55e';
-                
-                // Draw rounded segments
-                const r = TILE_SIZE * 0.2;
-                const x = part.x * TILE_SIZE + 1;
-                const y = part.y * TILE_SIZE + 1;
-                const w = TILE_SIZE - 2;
-                const h = TILE_SIZE - 2;
-                
-                ctx.beginPath();
-                ctx.roundRect(x, y, w, h, isHead ? 6 : 4);
-                ctx.fill();
-
-                if (isHead) {
-                    // Eyes
-                    ctx.fillStyle = '#000';
-                    const eyeSize = TILE_SIZE / 6;
-                    if (dx === 1) { // Right
-                        ctx.fillRect(x + w - 6, y + 4, eyeSize, eyeSize);
-                        ctx.fillRect(x + w - 6, y + h - 6, eyeSize, eyeSize);
-                    } else if (dx === -1) { // Left
-                        ctx.fillRect(x + 4, y + 4, eyeSize, eyeSize);
-                        ctx.fillRect(x + 4, y + h - 6, eyeSize, eyeSize);
-                    } else if (dy === -1) { // Up
-                        ctx.fillRect(x + 4, y + 4, eyeSize, eyeSize);
-                        ctx.fillRect(x + w - 6, y + 4, eyeSize, eyeSize);
-                    } else { // Down
-                        ctx.fillRect(x + 4, y + h - 6, eyeSize, eyeSize);
-                        ctx.fillRect(x + w - 6, y + h - 6, eyeSize, eyeSize);
-                    }
-                }
-            });
-        }
-
-        function gameStep() {
-            update();
             draw();
         }
 
+        function spawnFood() {
+            let newX, newY;
+            let onSnake = true;
+            while (onSnake) {
+                newX = Math.floor(Math.random() * TILE_COUNT);
+                newY = Math.floor(Math.random() * TILE_COUNT);
+                onSnake = snake.some(segment => segment.x === newX && segment.y === newY);
+            }
+            food = { x: newX, y: newY };
+        }
+
         function gameOver() {
-            isPaused = true;
             clearInterval(gameLoop);
+            isPaused = true;
             msgTitle.textContent = "GAME OVER";
-            msgTitle.classList.add('text-red-500');
-            startBtn.textContent = "RETRY";
-            overlay.classList.remove('hidden');
+            overlay.style.display = 'flex';
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('snake-high-score', highScore);
+                highScoreElement.textContent = highScore;
+            }
+        }
+
+        function resetGame() {
+            const mid = Math.floor(TILE_COUNT / 2);
+            snake = [
+                { x: mid, y: mid },
+                { x: mid, y: mid + 1 },
+                { x: mid, y: mid + 2 }
+            ];
+            dx = 0;
+            dy = -1;
+            nextDx = 0;
+            nextDy = -1;
+            score = 0;
+            scoreElement.textContent = score;
+            spawnFood();
+            draw();
         }
 
         function startGame() {
-            initGame();
+            resetGame();
+            overlay.style.display = 'none';
             isPaused = false;
-            overlay.classList.add('hidden');
-            msgTitle.classList.remove('text-red-500');
             clearInterval(gameLoop);
-            gameLoop = setInterval(gameStep, speed);
+            gameLoop = setInterval(update, speed);
         }
 
-        // Input Handling
         function handleInput(key) {
-            switch(key) {
+            switch (key) {
                 case 'ArrowUp':
                 case 'w':
                     if (dy !== 1) { nextDx = 0; nextDy = -1; }

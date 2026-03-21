@@ -1,4 +1,7 @@
-body {
+        /* =========================================
+           ORIGINAL GAME CSS (Untouched)
+           ========================================= */
+        body {
             background-color: #0f172a;
             color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -53,19 +56,82 @@ body {
 
         #overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(15, 23, 42, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 10;
             border-radius: 4px;
+            z-index: 10;
         }
 
-        .hidden {
+        /* =========================================
+           NEW LOBBY UI CSS (Premium Neon Theme)
+           ========================================= */
+        
+        /* 1. Force hide the original overlay so the Premium UI can handle it */
+        #overlay {
             display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            z-index: -999 !important;
         }
+
+        /* 2. Hide Original Game components until the game starts */
+        body:not(.game-active) #original-game-wrapper {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            position: absolute !important;
+            z-index: -100 !important;
+        }
+
+        /* 3. Show Premium Quit Button only when game is active */
+        #quit-btn { display: none; }
+        body.game-active #quit-btn { display: block; }
+
+        /* Premium Lobby Layers */
+        #lobby-layer {
+            position: fixed; inset: 0;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.4s ease;
+        }
+
+        #lobby-layer.hidden-lobby {
+            opacity: 0; pointer-events: none;
+        }
+
+        .neon-panel {
+            background: linear-gradient(145deg, #0f172a, #020617); 
+            border: 2px solid rgba(34, 197, 94, 0.4);
+            padding: 40px; border-radius: 20px; text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(34, 197, 94, 0.05); 
+            width: min(90vw, 400px);
+            display: flex; flex-direction: column; gap: 15px; position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .neon-panel.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lobby-title {
+            font-size: 3.5rem; color: #22c55e;
+            font-weight: 900; letter-spacing: 2px; margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+
+        .neon-btn {
+            background: linear-gradient(135deg, #16a34a, #22c55e); color: #020617;
+            border: none; padding: 16px; font-size: 1.2rem; font-weight: 800; border-radius: 12px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); transition: all 0.2s; width: 100%;
+        }
+        .neon-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6); }
+        .neon-btn:active { transform: translateY(2px); }
+        
+        .neon-btn.secondary { background: rgba(34, 197, 94, 0.05); border: 2px solid rgba(34, 197, 94, 0.5); color: #4ade80; box-shadow: none; }
+        .neon-btn.secondary:hover { background: rgba(34, 197, 94, 0.15); color: #fff; }
+
+        .help-text p { color: #94a3b8; font-size: 1rem; line-height: 1.6; text-align: left; margin-bottom: 15px; font-weight: 500;}
