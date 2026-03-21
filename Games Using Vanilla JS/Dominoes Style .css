@@ -1,5 +1,5 @@
         /* =========================================
-           CSS VARIABLES & THEME
+           ORIGINAL GAME CSS (Untouched)
            ========================================= */
         :root {
             /* Light Wood Theme (Default) */
@@ -423,3 +423,69 @@
             pointer-events: none;
             z-index: 150;
         }
+
+
+        /* =========================================
+           NEW LOBBY UI CSS (Premium Wood/Ivory Theme)
+           ========================================= */
+        
+        /* Permanently hide the original basic menu to replace it with the new Lobby */
+        #menu-screen {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            z-index: -999 !important;
+            position: absolute !important;
+        }
+
+        #lobby-layer {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 900; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            transition: opacity 0.5s ease;
+        }
+
+        #lobby-layer.hidden-lobby {
+            opacity: 0; pointer-events: none;
+        }
+
+        .domino-panel {
+            background: linear-gradient(to bottom, #2c1b10, #1a0f08); 
+            border: 3px solid #fffae6; /* Ivory */
+            padding: 40px; border-radius: 16px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(255, 250, 230, 0.05); 
+            width: min(90vw, 450px);
+            display: flex; flex-direction: column; gap: 15px; position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .domino-panel.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lobby-title {
+            font-size: 3rem; color: #fffae6; text-transform: uppercase;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.8); margin-bottom: 20px;
+            line-height: 1.1; font-weight: bold; letter-spacing: 2px;
+        }
+
+        .ivory-btn {
+            background: #fffae6; color: #1a0f08; border: 2px solid #fffae6;
+            padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 6px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6); transition: all 0.2s; width: 100%;
+        }
+        .ivory-btn:hover { background: #e0d8c0; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255, 250, 230, 0.3); }
+        .ivory-btn.secondary { background: transparent; font-size: 1rem; padding: 10px; border-color: #555; color: #ccc; box-shadow: none; }
+        .ivory-btn.secondary:hover { background: #3d2314; border-color: #fffae6; color: #fffae6; }
+
+        .form-row { display: flex; flex-direction: column; text-align: left; margin-bottom: 15px; }
+        .form-row label { color: #aaa; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;}
+        .wood-input {
+            background: #1a0f08; color: #4ade80; border: 2px solid #555;
+            padding: 12px; font-size: 1.1rem; border-radius: 6px; outline: none; width: 100%;
+            font-weight: bold;
+        }
+        .wood-input:focus { border-color: #fffae6; box-shadow: 0 0 10px rgba(255, 250, 230, 0.2); }
+
+        .flex-row { display: flex; gap: 10px; width: 100%; }
+
+        .help-text p { color: #ccc; font-size: 1rem; line-height: 1.5; text-align: left; margin-bottom: 10px; }

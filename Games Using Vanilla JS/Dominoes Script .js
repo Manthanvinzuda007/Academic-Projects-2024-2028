@@ -1,3 +1,78 @@
+        const LobbyUI = {
+            selectedMode: 'pvai',
+
+            init() {
+                // Initialize the observer to watch when the game screen hides or shows.
+                // This cleanly intercepts the native app.quitToMenu() without rewriting JS.
+                this.setupStateObserver();
+                
+                // Automatically show our custom lobby on load
+                document.getElementById('lobby-layer').classList.remove('hidden-lobby');
+            },
+
+            showPanel(panelId) {
+                document.querySelectorAll('.domino-panel').forEach(p => p.classList.add('hidden'));
+                document.getElementById(panelId).classList.remove('hidden');
+            },
+
+            openSetup(mode) {
+                this.selectedMode = mode;
+                // If it's PvP, we don't need difficulty selector
+                const diffRow = document.getElementById('ai-difficulty-row');
+                if (diffRow) {
+                    diffRow.style.display = (mode === 'pvp') ? 'none' : 'flex';
+                }
+                this.showPanel('lobby-setup');
+            },
+
+            startGame() {
+                // 1. Figure out selected mode mapping
+                let targetMode = 'pvp';
+                if (this.selectedMode === 'pvai') {
+                    targetMode = document.getElementById('lobby-mode-select').value;
+                }
+
+                // 2. Sync to the Original Hidden Menu Dropdown
+                const nativeSelect = document.getElementById('mode-select');
+                if (nativeSelect) {
+                    nativeSelect.value = targetMode;
+                }
+                
+                // 3. Hide custom lobby
+                document.getElementById('lobby-layer').classList.add('hidden-lobby');
+
+                // 4. Trigger native game start smoothly
+                if(typeof app !== 'undefined' && typeof app.startGame === 'function') {
+                    app.startGame(); 
+                }
+            },
+
+            setupStateObserver() {
+                // We monitor the original game-screen to detect when it closes (e.g. User clicks Quit to Menu).
+                const observer = new MutationObserver(() => {
+                    const gameScreen = document.getElementById('game-screen');
+                    const lobbyLayer = document.getElementById('lobby-layer');
+                    
+                    if (gameScreen && gameScreen.classList.contains('hidden')) {
+                        // Game screen closed. Show custom lobby and reset to main panel.
+                        lobbyLayer.classList.remove('hidden-lobby');
+                        this.showPanel('lobby-main');
+                    } else {
+                        // Game started, ensure custom lobby is hidden
+                        lobbyLayer.classList.add('hidden-lobby');
+                    }
+                });
+
+                const gameScreen = document.getElementById('game-screen');
+                if(gameScreen) {
+                    observer.observe(gameScreen, { attributes: true, attributeFilter: ['class'] });
+                }
+            }
+        };
+
+        // Boot Lobby instantly
+        LobbyUI.init();
+
 
         /* =========================================
            CONSTANTS & UTILS
@@ -833,4 +908,4 @@
         // Init
         app.init();
 
-
+ 
