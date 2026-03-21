@@ -1,4 +1,7 @@
- :root {
+        /* =========================================
+           ORIGINAL GAME CSS (Untouched)
+           ========================================= */
+        :root {
             --primary: #4a6fa5;
             --bg-selected: #e2ebf3;
             --bg-related: #f0f4f8;
@@ -9,6 +12,14 @@
             --border-thick: #64748b;
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f8fafc;
@@ -17,15 +28,14 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            user-select: none;
+            overflow: hidden;
         }
 
         .game-container {
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 900px;
+            max-width: 600px;
             padding: 20px;
             gap: 20px;
         }
@@ -37,33 +47,33 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .difficulty-selector {
             display: flex;
             gap: 15px;
-            font-size: 14px;
             font-weight: 600;
-            color: #94a3b8;
         }
 
         .difficulty-selector span {
             cursor: pointer;
+            color: #94a3b8;
             transition: color 0.2s;
         }
 
         .difficulty-selector span.active {
             color: var(--primary);
-            text-decoration: underline;
-            text-underline-offset: 4px;
+            border-bottom: 2px solid var(--primary);
         }
 
         .stats-bar {
             display: flex;
             gap: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            align-items: center;
+            font-weight: bold;
         }
 
         .stat-item {
@@ -73,56 +83,60 @@
         }
 
         .stat-label {
-            font-size: 12px;
+            font-size: 0.75rem;
             color: #94a3b8;
             text-transform: uppercase;
         }
 
-        /* Main Game Area */
+        /* Board Layout */
         .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Sudoku Board */
         .board {
             display: grid;
             grid-template-columns: repeat(9, 1fr);
-            aspect-ratio: 1 / 1;
+            grid-template-rows: repeat(9, 1fr);
+            width: min(95vw, 450px);
+            height: min(95vw, 450px);
             border: 2px solid var(--border-thick);
-            background-color: white;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .cell {
-            border: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-weight: 500;
+            color: var(--text-main);
             cursor: pointer;
             position: relative;
             transition: background-color 0.1s;
         }
 
-        .cell.bold-right { border-right: 2px solid var(--border-thick); }
-        .cell.bold-bottom { border-bottom: 2px solid var(--border-thick); }
+        /* Thick borders for 3x3 boxes */
+        .cell:nth-child(3n) { border-right: 2px solid var(--border-thick); }
+        .cell:nth-child(9n) { border-right: none; }
+        .cell:nth-child(n+19):nth-child(-n+27),
+        .cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 2px solid var(--border-thick); }
+        .board > .cell:nth-last-child(-n+9) { border-bottom: none; }
 
+        /* Cell States */
+        .cell.fixed { font-weight: 700; color: #1e293b; }
+        .cell.user-input { color: var(--text-num); }
+        .cell.error { color: var(--error); background-color: #fee2e2 !important; }
         .cell.selected { background-color: var(--bg-selected) !important; }
         .cell.related { background-color: var(--bg-related); }
-        .cell.error { color: var(--error); }
-        .cell.fixed { font-weight: bold; color: #1e293b; }
-        .cell.user-value { color: var(--text-num); }
-        .cell.highlight-same { background-color: #d1d5db; }
+        .cell.same-num { background-color: #c7d2fe; }
 
-        /* Pencil Marks (Notes) */
+        /* Notes Grid */
         .notes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -130,71 +144,71 @@
             width: 100%;
             height: 100%;
             padding: 2px;
-            box-sizing: border-box;
-            pointer-events: none;
         }
-
         .note {
-            font-size: 10px;
-            color: #64748b;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: clamp(0.5rem, 2vw, 0.7rem);
+            color: #64748b;
         }
 
-        /* Controls Panel */
+        /* Controls */
         .controls {
+            width: min(95vw, 450px);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .action-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--primary);
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
-            padding: 10px 5px;
-            border-radius: 8px;
-            transition: background 0.2s;
+            cursor: pointer;
+            position: relative;
         }
+        .action-btn svg { width: 24px; height: 24px; }
+        .action-btn:hover { opacity: 0.8; }
+        .action-btn:active { transform: translateY(2px); }
 
-        .action-btn:hover { background-color: #f1f5f9; }
-        .action-btn svg { width: 24px; height: 24px; stroke-width: 2; }
-        
-        .action-btn.active {
-            color: white;
-            background-color: var(--primary);
+        .notes-badge {
+            position: absolute;
+            top: -5px; right: -10px;
+            background: #94a3b8; color: white;
+            font-size: 0.6rem; padding: 2px 6px;
+            border-radius: 10px;
         }
+        .notes-badge.on { background: var(--primary); }
 
         .numpad {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 5px;
         }
 
         .num-btn {
-            aspect-ratio: 1.2 / 1;
-            background-color: #f1f5f9;
-            border: none;
+            aspect-ratio: 1/1;
+            background: white;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 24px;
-            font-weight: 500;
+            font-size: 1.5rem;
+            font-weight: 600;
             color: var(--text-num);
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .num-btn:hover { background-color: #e2e8f0; }
@@ -211,8 +225,8 @@
             cursor: pointer;
             margin-top: 10px;
             transition: opacity 0.2s;
+            grid-column: span 9;
         }
-
         .new-game-btn:hover { opacity: 0.9; }
 
         /* Modal */
@@ -224,6 +238,7 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
+            backdrop-filter: blur(2px);
         }
 
         .modal {
@@ -233,19 +248,100 @@
             text-align: center;
             max-width: 300px;
             width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease-out;
         }
 
-        .toggle-notes {
-            position: relative;
+        .modal h2 { color: var(--text-main); margin-bottom: 10px; font-size: 1.5rem;}
+        .modal p { color: #64748b; margin-bottom: 20px; }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .notes-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #475569;
-            color: white;
-            font-size: 8px;
-            padding: 2px 4px;
-            border-radius: 4px;
+        /* =========================================
+           NEW LOBBY UI CSS (Premium Zen Theme)
+           ========================================= */
+        
+        /* Hide Lobby when game is active */
+        body.game-active #lobby-layer {
+            opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s ease;
         }
+
+        /* Hide Original Game completely until started */
+        body:not(.game-active) #original-game-wrapper {
+            opacity: 0 !important; pointer-events: none !important;
+            position: absolute !important; z-index: -100 !important;
+        }
+
+        #lobby-layer {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 900; background: rgba(248, 250, 252, 0.9); backdrop-filter: blur(12px);
+            transition: opacity 0.5s ease;
+        }
+
+        /* Ambient Background Pattern for Lobby */
+        .lobby-bg-pattern {
+            position: absolute; inset: 0; z-index: -1; opacity: 0.4;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+        }
+
+        .zen-panel {
+            background: white; 
+            border: 1px solid var(--border);
+            padding: 50px 40px; border-radius: 24px; text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(74, 111, 165, 0.25); 
+            width: min(90vw, 420px);
+            display: flex; flex-direction: column; gap: 20px; position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .zen-panel.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lobby-title {
+            font-size: 2.5rem; color: var(--primary);
+            font-weight: 800; letter-spacing: 2px; margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .lobby-subtitle {
+            color: #64748b; font-size: 1rem; margin-bottom: 20px;
+        }
+
+        .zen-btn {
+            background: var(--primary); color: white;
+            border: none; padding: 16px; font-size: 1.1rem; font-weight: 600; border-radius: 12px;
+            cursor: pointer; letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3); transition: all 0.2s; width: 100%;
+        }
+        .zen-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(74, 111, 165, 0.4); }
+        .zen-btn:active { transform: translateY(2px); }
+        
+        .zen-btn.secondary { background: white; border: 2px solid var(--primary); color: var(--primary); box-shadow: none; }
+        .zen-btn.secondary:hover { background: var(--bg-selected); }
+
+        .form-row { display: flex; flex-direction: column; text-align: left; margin-bottom: 15px; }
+        .form-row label { color: var(--text-main); font-size: 0.9rem; margin-bottom: 8px; font-weight: 600;}
+        
+        .zen-select {
+            background: #f8fafc; color: var(--text-main); border: 2px solid var(--border);
+            padding: 12px; font-size: 1.1rem; border-radius: 8px; outline: none; width: 100%;
+            transition: all 0.2s; font-weight: 500; cursor: pointer;
+        }
+        .zen-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2); }
+
+        .flex-row { display: flex; gap: 10px; width: 100%; }
+
+        /* Floating Menu Button for in-game */
+        #game-menu-btn { 
+            position: fixed; top: 20px; right: 20px; z-index: 500;
+            background: white; border: 1px solid var(--border); color: var(--primary);
+            padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s;
+        }
+        #game-menu-btn:hover { background: var(--bg-selected); transform: translateY(-2px); }
