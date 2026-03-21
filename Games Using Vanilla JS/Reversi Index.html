@@ -3,95 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reversi Pro</title>
+    <title>Premium Reversi Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="Reversi Style.css"> 
+    <link rel="stylesheet" href="Reversi Style.css">
 </head>
-<body class="antialiased selection:bg-green-500 selection:text-white">
+<body>
 
-    <!-- Screen 1: Main Menu -->
-    <div id="screen-menu" class="screen active bg-gradient-to-br from-slate-900 to-slate-800">
-        <div class="text-center mb-12">
-            <h1 class="text-6xl font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 drop-shadow-lg">
-                REVERSI
-            </h1>
-            <p class="text-slate-400 font-medium tracking-widest text-sm uppercase">Pro Edition</p>
-        </div>
-
-        <div class="flex flex-col gap-4 w-64">
-            <button onclick="ui.showScreen('screen-mode')" class="btn py-4 rounded-xl text-lg font-semibold shadow-lg shadow-black/20 flex items-center justify-center gap-2">
-                ▶ Play Game
-            </button>
-        </div>
-    </div>
-
-    <!-- Screen 2: Mode Selection -->
-    <div id="screen-mode" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
-        <h2 class="text-3xl font-bold mb-8">Select Mode</h2>
-        <div class="flex flex-col gap-4 w-64">
-            <button onclick="game.setMode('PVP')" class="btn py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2">
-                👤 Player vs Player
-            </button>
-            <button onclick="ui.showScreen('screen-difficulty')" class="btn py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2">
-                🤖 Player vs AI
-            </button>
-            <button onclick="ui.showScreen('screen-menu')" class="mt-4 text-slate-400 hover:text-white transition">← Back</button>
-        </div>
-    </div>
-
-    <!-- Screen 3: AI Difficulty -->
-    <div id="screen-difficulty" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
-        <h2 class="text-3xl font-bold mb-8">AI Difficulty</h2>
-        <div class="flex flex-col gap-4 w-64">
-            <button onclick="game.setMode('PVAI', 'easy')" class="btn py-4 rounded-xl text-lg font-semibold text-green-400">🟢 Easy</button>
-            <button onclick="game.setMode('PVAI', 'medium')" class="btn py-4 rounded-xl text-lg font-semibold text-yellow-400">🟡 Medium</button>
-            <button onclick="game.setMode('PVAI', 'hard')" class="btn py-4 rounded-xl text-lg font-semibold text-red-400">🔴 Hard</button>
-            <button onclick="ui.showScreen('screen-mode')" class="mt-4 text-slate-400 hover:text-white transition">← Back</button>
-        </div>
-    </div>
-
-    <!-- Screen 4: Side Selection -->
-    <div id="screen-side" class="screen bg-gradient-to-br from-slate-900 to-slate-800">
-        <h2 class="text-3xl font-bold mb-8">Choose Your Side</h2>
-        <p class="text-slate-400 mb-6 text-sm">Black always moves first.</p>
-        <div class="flex gap-6">
-            <button onclick="game.start(1)" class="btn p-6 rounded-2xl flex flex-col items-center gap-4">
-                <div class="w-16 h-16 rounded-full bg-[#111] shadow-lg border-2 border-slate-700"></div>
-                <span class="font-bold">Play Black</span>
-            </button>
-            <button onclick="game.start(2)" class="btn p-6 rounded-2xl flex flex-col items-center gap-4">
-                <div class="w-16 h-16 rounded-full bg-[#eee] shadow-lg border-2 border-slate-300"></div>
-                <span class="font-bold text-slate-900">Play White</span>
-            </button>
-        </div>
-        <button onclick="ui.showScreen('screen-mode')" class="mt-8 text-slate-400 hover:text-white transition">← Back</button>
-    </div>
-
-    <!-- Screen 5: Game Board -->
-    <div id="screen-game" class="screen bg-slate-900">
+    <!-- =========================================
+         LOBBY UI (Premium Emerald & Slate Theme)
+         ========================================= -->
+    <div id="lobby-layer">
         
-        <div id="message-toast" class="message-toast text-white"></div>
-
-        <!-- Top Bar -->
-        <div class="w-full max-w-[450px] flex justify-between items-center mb-6 px-4">
-            <button onclick="game.undo()" class="btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 flex items-center gap-1">
-                ↩ Undo
-            </button>
-            <button onclick="ui.showScreen('screen-menu')" class="btn px-4 py-2 rounded-lg text-sm font-semibold text-rose-400">
-                Exit
-            </button>
+        <!-- Main Menu -->
+        <div class="emerald-panel" id="lobby-main">
+            <h1 class="lobby-title">REVERSI</h1>
+            <button class="lobby-btn" onclick="LobbyUI.openSetup('ai')">Player vs AI</button>
+            <button class="lobby-btn" onclick="LobbyUI.openSetup('pvp')">Player vs Player</button>
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="lobby-btn secondary" onclick="LobbyUI.showPanel('lobby-help')">How to Play</button>
+            </div>
         </div>
 
-        <!-- Score Board -->
-        <div class="flex gap-4 mb-8 w-full max-w-[450px] px-4">
-            <div id="score-black" class="score-pill flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
+        <!-- Setup Menu -->
+        <div class="emerald-panel hidden" id="lobby-setup">
+            <h2 class="lobby-title" style="font-size: 2.2rem; margin-bottom: 15px;">Match Setup</h2>
+            
+            <div class="form-row">
+                <label>Player 1 (Black)</label>
+                <input type="text" id="p1-name" class="emerald-input" value="Player 1" maxlength="12">
+            </div>
+
+            <div class="form-row" id="p2-row">
+                <label>Player 2 (White)</label>
+                <input type="text" id="p2-name" class="emerald-input" value="Player 2" maxlength="12">
+            </div>
+
+            <div class="form-row" id="ai-difficulty-row">
+                <label>AI Difficulty</label>
+                <select id="ai-diff" class="emerald-input">
+                    <option value="easy">Easy (Random)</option>
+                    <option value="medium" selected>Medium (Greedy)</option>
+                    <option value="hard">Hard (Strategic)</option>
+                </select>
+            </div>
+
+            <div class="flex-row" style="margin-top: 10px;">
+                <button class="lobby-btn secondary" onclick="LobbyUI.showPanel('lobby-main')">Back</button>
+                <button class="lobby-btn" onclick="LobbyUI.startGame()">Start Game</button>
+            </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="emerald-panel hidden" id="lobby-help" style="width: min(90vw, 550px);">
+            <h2 class="lobby-title" style="font-size: 2.2rem;">Rules</h2>
+            <div style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; text-align: left; margin-bottom: 20px;">
+                <p>• <strong>Objective:</strong> End the game with more discs of your color than your opponent.</p><br>
+                <p>• <strong>Valid Moves:</strong> You must place a disc so that it flanks one or more opponent's discs between your new disc and an existing disc of your color.</p><br>
+                <p>• <strong>Flipping:</strong> All flanked opponent discs are flipped to your color.</p><br>
+                <p>• If you cannot make a valid move, your turn is skipped.</p>
+            </div>
+            <button class="lobby-btn" onclick="LobbyUI.showPanel('lobby-main')">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Floating In-Game Menu Button -->
+    <button id="game-menu-btn" onclick="LobbyUI.toggleSidePanel(true)">☰ Menu</button>
+
+    <!-- Side Panel (In-game settings) -->
+    <div class="side-overlay" id="side-overlay" onclick="LobbyUI.toggleSidePanel(false)"></div>
+    <div id="side-panel">
+        <h2 style="color: var(--emerald); font-size: 1.8rem; margin-bottom: 20px; font-weight: bold;">Match Menu</h2>
+        
+        <button class="lobby-btn secondary" onclick="game.init(); LobbyUI.toggleSidePanel(false);">Restart Match</button>
+        <button class="lobby-btn secondary" onclick="audio.muted = !audio.muted; this.innerText = audio.muted ? 'Unmute Sound' : 'Mute Sound';">Mute Sound</button>
+        
+        <button class="lobby-btn" style="margin-top: auto; background: rgba(239, 68, 68, 0.1); color: #ef4444;" onclick="LobbyUI.exitToLobby()">Exit to Main Menu</button>
+    </div>
+
+
+    <!-- =========================================
+         ORIGINAL GAME DOM 
+         ========================================= -->
+    <div id="original-game-wrapper" class="w-full h-screen flex flex-col justify-center items-center">
+        
+        <!-- Scoreboard -->
+        <div class="flex justify-between w-full max-w-[400px] px-4 mb-8">
+            <div class="score-pill active-turn" id="pill-black">
                 <div class="flex items-center gap-2">
                     <div class="minidisc black"></div>
                     <span class="font-bold text-slate-300" id="name-black">Black</span>
                 </div>
                 <span class="text-2xl font-black" id="count-black">2</span>
             </div>
-            <div id="score-white" class="score-pill flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
+            <div class="score-pill" id="pill-white">
                 <span class="text-2xl font-black" id="count-white">2</span>
                 <div class="flex items-center gap-2">
                     <span class="font-bold text-slate-300" id="name-white">White</span>
@@ -106,18 +110,21 @@
                 <!-- Cells generated via JS -->
             </div>
         </div>
-    </div>
+        
+        <!-- Status Msg -->
+        <div id="status-msg" class="mt-8 text-xl font-bold text-emerald-400">Black's Turn</div>
 
-    <!-- Screen 6: Game Over -->
-    <div id="screen-result" class="screen bg-slate-900/90 backdrop-blur-sm">
-        <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 text-center max-w-sm w-[90%] shadow-2xl">
-            <div id="winner-icon" class="text-6xl mb-4">🏆</div>
-            <h2 id="winner-text" class="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Black Wins!</h2>
-            <p id="winner-score" class="text-slate-400 mb-8 text-lg">34 - 30</p>
-            
-            <div class="flex flex-col gap-3">
-                <button onclick="game.restart()" class="btn py-3 rounded-xl font-bold bg-white/10">🔄 Play Again</button>
-                <button onclick="ui.showScreen('screen-menu')" class="btn py-3 rounded-xl font-bold text-slate-400">🏠 Main Menu</button>
+        <!-- Modals -->
+        <div id="screen-result" class="fixed inset-0 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center hidden z-50 transition-opacity">
+            <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 text-center max-w-sm w-[90%] shadow-2xl">
+                <div id="winner-icon" class="text-6xl mb-4">🏆</div>
+                <h2 id="winner-text" class="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Black Wins!</h2>
+                <p id="winner-score" class="text-slate-400 mb-8 text-lg">34 - 30</p>
+                
+                <div class="flex flex-col gap-3">
+                    <button onclick="game.init(); document.getElementById('screen-result').classList.add('hidden');" class="btn py-3 rounded-lg font-bold w-full">Play Again</button>
+                    <button onclick="LobbyUI.exitToLobby(); document.getElementById('screen-result').classList.add('hidden');" class="btn py-3 rounded-lg font-bold w-full opacity-70">Main Menu</button>
+                </div>
             </div>
         </div>
     </div>

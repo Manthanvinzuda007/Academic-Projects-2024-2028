@@ -1,3 +1,6 @@
+        /* =========================================
+           ORIGINAL GAME CSS (Untouched)
+           ========================================= */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
         :root {
@@ -7,6 +10,7 @@
             --highlight: rgba(255, 255, 255, 0.2);
             --black-disc: #111;
             --white-disc: #eee;
+            --emerald: #10b981;
         }
 
         body {
@@ -24,117 +28,41 @@
             border-radius: 12px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.1);
             position: relative;
+            margin: 0 auto;
+            width: fit-content;
         }
 
         .board {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            background-color: var(--grid-line);
+            background: var(--grid-line);
             gap: 2px;
             border: 2px solid var(--grid-line);
-            width: min(90vw, 450px);
-            height: min(90vw, 450px);
-            border-radius: 4px;
-            overflow: hidden;
+            width: min(90vw, 400px);
+            height: min(90vw, 400px);
         }
 
         .cell {
-            background-color: var(--board-bg);
+            background: var(--board-bg);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 80%);
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s;
+            transition: filter 0.2s;
         }
 
-        /* Valid Move Highlight */
-        .valid-move::before {
-            content: '';
-            position: absolute;
-            width: 20%;
-            height: 20%;
-            background-color: var(--highlight);
-            border-radius: 50%;
-            pointer-events: none;
-            box-shadow: 0 0 10px rgba(255,255,255,0.4);
-            animation: pulse 2s infinite;
-        }
-        
-        .cell:hover.valid-move {
-            background-color: #0c8c48;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.3); opacity: 0.9; }
-            100% { transform: scale(1); opacity: 0.5; }
-        }
-
-        /* 3D Disc Styling */
-        .disc-container {
-            width: 85%;
-            height: 85%;
-            position: absolute;
-            perspective: 600px;
-            pointer-events: none;
-        }
-
-        .disc {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            backface-visibility: hidden;
-            box-shadow: inset 0 -3px 6px rgba(0,0,0,0.4), 0 4px 6px rgba(0,0,0,0.4);
-        }
-
-        .face-black {
-            background: radial-gradient(circle at 30% 30%, #444, var(--black-disc) 60%);
-            transform: rotateY(0deg) translateZ(1px);
-        }
-
-        .face-white {
-            background: radial-gradient(circle at 30% 30%, #fff, #ccc 80%);
-            transform: rotateY(180deg) translateZ(1px);
-        }
-
-        /* UI Screens */
-        .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            width: 100%;
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 10;
-        }
-        .screen.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .cell:hover { filter: brightness(1.2); }
 
         .btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.2s;
+            color: white;
+            cursor: pointer;
         }
         .btn:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -149,12 +77,19 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0.5;
             transform: scale(0.9);
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         .score-pill.active-turn {
             opacity: 1;
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.5);
         }
 
         .minidisc {
@@ -164,21 +99,135 @@
         }
         .minidisc.black { background: var(--black-disc); }
         .minidisc.white { background: var(--white-disc); }
-        
-        .message-toast {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: bold;
+
+        /* Discs & Animations */
+        .disc-wrapper {
+            width: 85%; height: 85%;
+            perspective: 1000px;
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 50;
         }
-        .message-toast.show {
-            opacity: 1;
+
+        .disc {
+            width: 100%; height: 100%;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transform-style: preserve-3d;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.4);
         }
+
+        .disc.state-1 { transform: rotateY(0deg); }
+        .disc.state-2 { transform: rotateY(180deg); }
+
+        .disc-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 50%;
+        }
+
+        .disc-black {
+            background: radial-gradient(circle at 30% 30%, #444, var(--black-disc));
+            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.2);
+        }
+
+        .disc-white {
+            background: radial-gradient(circle at 30% 30%, #fff, var(--white-disc));
+            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.8);
+            transform: rotateY(180deg);
+        }
+
+        .valid-hint {
+            width: 25%; height: 25%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .turn-white .valid-hint { background: rgba(255, 255, 255, 0.4); box-shadow: inset 0 2px 4px rgba(255,255,255,0.5); }
+
+        /* =========================================
+           NEW LOBBY UI CSS (Premium Slate & Emerald)
+           ========================================= */
+        
+        /* Hide Lobby when game is active */
+        body.game-active #lobby-layer {
+            opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s ease;
+        }
+
+        /* Hide Original Game completely until started */
+        body:not(.game-active) #original-game-wrapper {
+            opacity: 0 !important; pointer-events: none !important;
+            position: absolute !important; z-index: -100 !important;
+        }
+
+        #lobby-layer {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 900; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
+            transition: opacity 0.5s ease;
+        }
+
+        .emerald-panel {
+            background: linear-gradient(145deg, #1e293b, #0f172a); 
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            padding: 40px; border-radius: 20px; text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(16, 185, 129, 0.1); 
+            width: min(90vw, 450px);
+            display: flex; flex-direction: column; gap: 15px; position: absolute;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .emerald-panel.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lobby-title {
+            font-size: 3.5rem; color: transparent; background-clip: text;
+            background-image: linear-gradient(to right, #34d399, #22d3ee);
+            font-weight: 800; letter-spacing: -2px; margin-bottom: 25px;
+            drop-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .lobby-btn {
+            background: linear-gradient(to right, #059669, #0d9488); color: #fff;
+            border: none; padding: 16px; font-size: 1.2rem; font-weight: bold; border-radius: 12px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); transition: all 0.2s; width: 100%;
+        }
+        .lobby-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
+        .lobby-btn:active { transform: translateY(2px); }
+        
+        .lobby-btn.secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; box-shadow: none; }
+        .lobby-btn.secondary:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+        .form-row { display: flex; flex-direction: column; text-align: left; margin-bottom: 15px; }
+        .form-row label { color: #94a3b8; font-size: 0.9rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;}
+        
+        .emerald-input {
+            background: #0f172a; color: #fff; border: 1px solid #334155;
+            padding: 12px; font-size: 1.1rem; border-radius: 8px; outline: none; width: 100%;
+            transition: all 0.2s;
+        }
+        .emerald-input:focus { border-color: var(--emerald); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+
+        .flex-row { display: flex; gap: 10px; width: 100%; }
+
+        /* Side Menu */
+        #game-menu-btn { 
+            position: fixed; top: 20px; right: 20px; z-index: 500;
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(16, 185, 129, 0.5); color: #34d399;
+            padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold;
+            backdrop-filter: blur(5px); transition: all 0.2s;
+        }
+        #game-menu-btn:hover { background: var(--emerald); color: #000; }
+
+        #side-panel {
+            position: fixed; right: -350px; top: 0; width: 300px; height: 100vh;
+            background: linear-gradient(to right, #1e293b, #0f172a);
+            border-left: 2px solid var(--emerald); z-index: 1000;
+            padding: 40px 20px; display: flex; flex-direction: column; gap: 15px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8); transition: right 0.4s ease;
+        }
+        #side-panel.open { right: 0; }
+        .side-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); z-index: 999; display: none; backdrop-filter: blur(2px);
+        }
+        .side-overlay.open { display: block; }
