@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCII Art Maker 🎨</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0f0f1a;
+  --card:    #1a1a2e;
+  --card2:   #16213e;
+  --border:  #2a2a4a;
+  --accent:  #7c3aed;
+  --accent2: #a855f7;
+  --pink:    #ec4899;
+  --cyan:    #06b6d4;
+  --yellow:  #fbbf24;
+  --green:   #10b981;
+  --text:    #e2e8f0;
+  --muted:   #94a3b8;
+  --radius:  16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(236,72,153,0.10) 0%, transparent 50%);
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, var(--accent2), var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.header p {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+.emoji-row { font-size: 1.5rem; margin-bottom: 6px; }
+
+/* ── Main layout ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .container { grid-template-columns: 1fr; }
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+/* ── Upload zone ── */
+#drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 36px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(124,58,237,0.03);
+  margin-bottom: 16px;
+}
+#drop-zone:hover, #drop-zone.over {
+  border-color: var(--accent2);
+  background: rgba(124,58,237,0.08);
+  transform: scale(1.01);
+}
+#drop-zone .big-icon { font-size: 3rem; margin-bottom: 10px; display: block; }
+#drop-zone .drop-text { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+#drop-zone .drop-sub  { font-size: 0.78rem; color: var(--muted); }
+#file-input { display: none; }
+
+/* Preview */
+#preview-box {
+  display: none;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  position: relative;
+}
+#preview-box img { width: 100%; display: block; max-height: 180px; object-fit: cover; }
+#preview-box .change-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s; cursor: pointer;
+  font-weight: 800; font-size: 0.9rem; color: white;
+  gap: 6px;
+}
+#preview-box:hover .change-overlay { opacity: 1; }
+
+/* ── Controls ── */
+.ctrl { margin-bottom: 18px; }
+.ctrl label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.ctrl label .badge {
+  background: rgba(124,58,237,0.2);
+  color: var(--accent2);
+  padding: 1px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 800;
+}
+
+/* Pill selectors */
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.pill:hover { border-color: var(--accent2); color: var(--accent2); }
+.pill.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.4);
+}
+
+/* Range */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.5);
+}
+
+/* Toggle switch */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.toggle-label { font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.switch { position: relative; width: 46px; height: 24px; cursor: pointer; }
+.switch input { display: none; }
+.switch-track {
+  position: absolute; inset: 0;
+  background: var(--border);
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+.switch input:checked ~ .switch-track { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+.switch-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: left 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.switch input:checked ~ .switch-thumb { left: 25px; }
+
+/* ── Convert button ── */
+#convert-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+  margin-top: 4px;
+}
+#convert-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(124,58,237,0.5);
+}
+#convert-btn:active:not(:disabled) { transform: translateY(0); }
+#convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+#convert-btn.spinning { animation: btnSpin 1s ease-in-out infinite alternate; }
+@keyframes btnSpin {
+  from { box-shadow: 0 4px 20px rgba(124,58,237,0.4); }
+  to   { box-shadow: 0 4px 30px rgba(236,72,153,0.6); }
+}
+
+/* Error */
+.err { color: #f87171; font-size: 0.82rem; margin-top: 10px; display: none; font-weight: 700; }
+
+/* ── Output Card ── */
+.output-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.output-top {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: var(--card2);
+}
+.output-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.dim-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--muted);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+.action-btns { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.action-btn:hover:not(:disabled) { border-color: var(--accent2); color: var(--accent2); background: rgba(124,58,237,0.08); }
+.action-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.action-btn.copied { border-color: var(--green); color: var(--green); background: rgba(16,185,129,0.1); }
+
+/* Terminal area */
+.terminal {
+  background: #050508;
+  padding: 20px;
+  overflow: auto;
+  min-height: 300px;
+  max-height: calc(100vh - 260px);
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.terminal::-webkit-scrollbar { width: 6px; height: 6px; }
+.terminal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Placeholder */
+.placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px; text-align: center;
+  pointer-events: none;
+}
+.placeholder .ph-icon { font-size: 4rem; opacity: 0.3; }
+.placeholder p { color: var(--muted); font-size: 0.9rem; font-weight: 700; opacity: 0.6; }
+.placeholder .steps {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.step {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+#ascii-out {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 7px;
+  line-height: 1.2;
+  white-space: pre;
+  color: #a78bfa;
+  display: none;
+  text-shadow: 0 0 4px rgba(167,139,250,0.3);
+}
+#ascii-out.colored { color: inherit; text-shadow: none; }
+
+/* Progress bar */
+.prog-bar { height: 3px; background: var(--border); display: none; overflow: hidden; }
+.prog-bar.show { display: block; }
+.prog-fill {
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--cyan));
+  border-radius: 2px;
+  animation: slide 1.2s ease-in-out infinite;
+}
+@keyframes slide {
+  0%   { margin-left: -30%; }
+  100% { margin-left: 100%; }
+}
+
+/* Fun tip */
+.tip {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.tip span { color: var(--accent2); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="emoji-row">🎨 ✨ 🖼️</div>
+  <h1>ASCII Art Maker</h1>
+  <p>Turn any photo into awesome ASCII art — free & instant!</p>
+</div>
+
+<div class="container">
+
+  <!-- Left: Controls -->
+  <div class="card">
+    <div class="card-title">🖼️ Your Image</div>
+
+    <!-- Drop zone -->
+    <div id="drop-zone">
+      <span class="big-icon">📂</span>
+      <div class="drop-text">Drop your image here</div>
+      <div class="drop-sub">or click to pick a file · JPG, PNG, WEBP · max 5MB</div>
+    </div>
+    <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.bmp">
+
+    <!-- Preview -->
+    <div id="preview-box">
+      <img id="prev-img" src="" alt="">
+      <div class="change-overlay" onclick="document.getElementById('file-input').click()">🔄 Change Image</div>
+    </div>
+
+    <div class="card-title" style="margin-top:4px">⚙️ Settings</div>
+
+    <!-- Width -->
+    <div class="ctrl">
+      <label>Width <span class="badge" id="w-badge">80 chars</span></label>
+      <div class="pills">
+        <button class="pill" data-w="40">Tiny · 40</button>
+        <button class="pill active" data-w="80">Normal · 80</button>
+        <button class="pill" data-w="120">Wide · 120</button>
+        <button class="pill" data-w="160">Max · 160</button>
+      </div>
+    </div>
+
+    <!-- Style -->
+    <div class="ctrl">
+      <label>Character Style</label>
+      <div class="pills">
+        <button class="pill active" data-r="simple">Classic</button>
+        <button class="pill" data-r="blocks">Blocks █▓</button>
+        <button class="pill" data-r="detailed">Detailed</button>
+        <button class="pill" data-r="dots">Dots ●◎</button>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div class="ctrl">
+      <label>Color</label>
+      <div class="pills">
+        <button class="pill active" data-c="purple">💜 Purple</button>
+        <button class="pill" data-c="green">💚 Matrix</button>
+        <button class="pill" data-c="amber">🟡 Amber</button>
+        <button class="pill" data-c="color">🌈 Full Color</button>
+      </div>
+    </div>
+
+    <!-- Contrast -->
+    <div class="ctrl">
+      <label>Contrast <span class="badge" id="con-badge">100%</span></label>
+      <input type="range" id="contrast-r" min="50" max="200" value="100" step="5">
+    </div>
+
+    <!-- Invert -->
+    <div class="ctrl">
+      <div class="toggle-row">
+        <span class="toggle-label">🔄 Invert Colors</span>
+        <label class="switch">
+          <input type="checkbox" id="invert-cb">
+          <div class="switch-track"></div>
+          <div class="switch-thumb"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="err" id="err"></div>
+    <button id="convert-btn" disabled>🎨 Make ASCII Art!</button>
+  </div>
+
+  <!-- Right: Output -->
+  <div class="output-card">
+    <div class="output-top">
+      <div class="output-title">🖥️ ASCII Output</div>
+      <span class="dim-badge" id="dim-info">—</span>
+      <div class="action-btns">
+        <button class="action-btn" id="btn-copy" disabled>📋 Copy</button>
+        <button class="action-btn" id="btn-txt"  disabled>⬇ TXT</button>
+        <button class="action-btn" id="btn-html" disabled>⬇ HTML</button>
+      </div>
+    </div>
+
+    <div class="prog-bar" id="prog"><div class="prog-fill"></div></div>
+
+    <div class="terminal" id="terminal">
+      <div class="placeholder" id="ph">
+        <div class="ph-icon">🎭</div>
+        <p>Your ASCII art will appear here!</p>
+        <div class="steps">
+          <div class="step">① Upload a photo</div>
+          <div class="step">② Pick your style</div>
+          <div class="step">③ Hit the button!</div>
+        </div>
+      </div>
+      <pre id="ascii-out"></pre>
+    </div>
+
+    <div class="tip" id="tip">
+      💡 Tip: Try <span>Blocks style</span> on faces, and <span>Full Color</span> on landscapes!
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────
+let file = null, ascii = "", selW = 80, selR = "simple", selC = "purple";
+const colorMap = { purple:"#a78bfa", green:"#10b981", amber:"#fbbf24" };
+
+// ── Refs ──────────────────────────────────────────────
+const drop    = document.getElementById("drop-zone");
+const finput  = document.getElementById("file-input");
+const prevBox = document.getElementById("preview-box");
+const prevImg = document.getElementById("prev-img");
+const wBadge  = document.getElementById("w-badge");
+const cBadge  = document.getElementById("con-badge");
+const contR   = document.getElementById("contrast-r");
+const invertCB= document.getElementById("invert-cb");
+const cvtBtn  = document.getElementById("convert-btn");
+const asciiOut= document.getElementById("ascii-out");
+const ph      = document.getElementById("ph");
+const dimInfo = document.getElementById("dim-info");
+const btnCopy = document.getElementById("btn-copy");
+const btnTxt  = document.getElementById("btn-txt");
+const btnHtml = document.getElementById("btn-html");
+const prog    = document.getElementById("prog");
+const errEl   = document.getElementById("err");
+const tipEl   = document.getElementById("tip");
+
+// ── Upload ─────────────────────────────────────────────
+drop.addEventListener("click", () => finput.click());
+drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+finput.addEventListener("change", () => { if(finput.files[0]) setFile(finput.files[0]); });
+
+function setFile(f) {
+  if(f.size > 5*1024*1024) { showErr("File too big! Max 5MB please 😅"); return; }
+  hideErr();
+  file = f;
+  const reader = new FileReader();
+  reader.onload = e => { prevImg.src = e.target.result; };
+  reader.readAsDataURL(f);
+  prevBox.style.display = "block";
+  drop.style.display = "none";
+  cvtBtn.disabled = false;
+}
+
+// ── Pill selectors ─────────────────────────────────────
+document.querySelectorAll(".pill[data-w]").forEach(p => {
+  p.addEventListener("click", () => {
+    document.querySelectorAll(".pill[data-w]").forEach(x => x.classList.remove("active"));
+    p.classList.add("active");
+    selW = parseInt(p.dataset.w);
+    wBadge.textContent = selW + " chars";
+  });
+});
+
+document.querySelectorAll(".pill[data-r]").forEach(p => {
+  p.addEventListener("click", () => {
+    document.querySelectorAll(".pill[data-r]").forEach(x => x.classList.remove("active"));
+    p.classList.add("active");
+    selR = p.dataset.r;
+  });
+});
+
+document.querySelectorAll(".pill[data-c]").forEach(p => {
+  p.addEventListener("click", () => {
+    document.querySelectorAll(".pill[data-c]").forEach(x => x.classList.remove("active"));
+    p.classList.add("active");
+    selC = p.dataset.c;
+  });
+});
+
+// ── Contrast ───────────────────────────────────────────
+contR.addEventListener("input", () => { cBadge.textContent = contR.value + "%"; });
+
+// ── Convert ────────────────────────────────────────────
+cvtBtn.addEventListener("click", async () => {
+  if(!file) return;
+  hideErr();
+  cvtBtn.disabled = true;
+  cvtBtn.classList.add("spinning");
+  cvtBtn.textContent = "⏳ Creating your art...";
+  prog.classList.add("show");
+
+  const fd = new FormData();
+  fd.append("image",    file);
+  fd.append("width",    selW);
+  fd.append("ramp",     selR);
+  fd.append("invert",   invertCB.checked ? "true" : "false");
+  fd.append("contrast", (parseInt(contR.value)/100).toFixed(2));
+  fd.append("color",    selC === "color" ? "true" : "false");
+
+  try {
+    const res  = await fetch("/convert", { method:"POST", body:fd });
+    const data = await res.json();
+    if(data.error) { showErr("Oops! " + data.error); return; }
+
+    ascii = data.output;
+    ph.style.display = "none";
+    asciiOut.style.display = "block";
+
+    if(data.is_html) {
+      asciiOut.classList.add("colored");
+      asciiOut.innerHTML = data.output;
+    } else {
+      asciiOut.classList.remove("colored");
+      asciiOut.style.color = colorMap[selC] || colorMap.purple;
+      asciiOut.style.textShadow = `0 0 4px ${colorMap[selC]}55`;
+      asciiOut.textContent = data.output;
+    }
+
+    dimInfo.textContent = `${data.w} × ${data.h} chars`;
+    btnCopy.disabled = false;
+    btnTxt.disabled  = false;
+    btnHtml.disabled = false;
+    tipEl.style.display = "block";
+  } catch(e) {
+    showErr("Something went wrong 😢 Try a different image!");
+  }
+
+  cvtBtn.disabled = false;
+  cvtBtn.classList.remove("spinning");
+  cvtBtn.textContent = "🎨 Make ASCII Art!";
+  prog.classList.remove("show");
+});
+
+// ── Copy ───────────────────────────────────────────────
+btnCopy.addEventListener("click", async () => {
+  await navigator.clipboard.writeText(ascii);
+  btnCopy.textContent = "✅ Copied!";
+  btnCopy.classList.add("copied");
+  setTimeout(() => { btnCopy.textContent = "📋 Copy"; btnCopy.classList.remove("copied"); }, 2000);
+});
+
+// ── Download TXT ───────────────────────────────────────
+btnTxt.addEventListener("click", () => dl("ascii_art.txt", ascii, "text/plain"));
+
+// ── Download HTML ──────────────────────────────────────
+btnHtml.addEventListener("click", () => {
+  const col = selC === "color" ? "inherit" : (colorMap[selC] || colorMap.purple);
+  const content = ascii.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  dl("ascii_art.html",
+    `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>body{background:#050508;margin:0;padding:20px}pre{font-family:monospace;font-size:7px;line-height:1.2;color:${col};white-space:pre}</style>
+</head><body><pre>${content}</pre></body></html>`,
+    "text/html"
+  );
+});
+
+function dl(name, content, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([content],{type}));
+  a.download = name; a.click();
+}
+function showErr(msg) { errEl.textContent = "⚠️ " + msg; errEl.style.display = "block"; }
+function hideErr()    { errEl.style.display = "none"; }
+</script>
+</body>
+</html>
