@@ -18,9 +18,9 @@ cd prithvi-frontend && npm install && npm run dev
 ### Demo Logins
 | Role | Email | Password |
 |------|-------|----------|
-| 🎒 Student | arjun@school.edu | prithvi123 |
+| 🎒 Student | arjun@school.edu  | prithvi123 |
 | 🎒 Student | ananya@school.edu | prithvi123 |
-| 👩‍🏫 Teacher | priya@school.edu | prithvi123 |
+| 👩‍🏫 Teacher | priya@school.edu  | prithvi123 |
 
 ---
 
