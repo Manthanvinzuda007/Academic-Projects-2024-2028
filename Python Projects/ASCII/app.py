@@ -1,3 +1,5 @@
+# By Manthan Vinzuda 
+
 from flask import Flask, request, jsonify, render_template
 from PIL import Image, ImageEnhance
 import numpy as np
