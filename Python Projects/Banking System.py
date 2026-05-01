@@ -1,3 +1,4 @@
+# --- By Manthan Vinzuda ---
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import sqlite3
